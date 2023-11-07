@@ -5,7 +5,7 @@ import { Paper, Typography, Stack } from "@mui/material";
 const Navbar = () => {
   return (
     <nav>
-      <Paper>
+      <Paper sx={{ height: "9vh" }} elevation={10}>
         <Stack gap={2} direction="row">
           <Typography variant="p" color="initial">
             SignUp

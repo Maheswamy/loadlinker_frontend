@@ -1,4 +1,4 @@
-import { Paper, Stack, TextField, Button } from "@mui/material";
+import { Paper, Stack, TextField, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { isEmail } from "validator";
 
@@ -39,53 +39,49 @@ const Login = () => {
     }
   };
   return (
-    <Paper sx={{ width: "4", padding: "20px" }}>
-      <form onSubmit={handleLogIn}>
-        <Stack gap={2} type="form">
-          <TextField
-            id="username"
-            label="Email or Number"
-            variant="outlined"
-            value={username}
-            size="small"
-            onChange={(e) => setUsername(e.target.value)}
-            error={fromError.username && true}
-            helperText={fromError.username && fromError.username}
-          />
-          <TextField
-            type="password"
-            id="password-login"
-            label="Password"
-            variant="outlined"
-            value={password}
-            size="small"
-            onChange={(e) => setPassword(e.target.value)}
-            error={fromError.password&& true}
-            helperText={fromError.password && fromError.password}
-          />
+    <form onSubmit={handleLogIn}>
+      <Stack gap={2} type="form">
+        <Typography variant="h2" color='text'>
+          Log In
+        </Typography>
+        <TextField
+          id="username"
+          label="Email or Number"
+          variant="outlined"
+          value={username}
+          size="small"
+          onChange={(e) => setUsername(e.target.value)}
+          error={fromError.username && true}
+          helperText={fromError.username && fromError.username}
+        />
+        <TextField
+          type="password"
+          id="password-login"
+          label="Password"
+          variant="outlined"
+          value={password}
+          size="small"
+          onChange={(e) => setPassword(e.target.value)}
+          error={fromError.password && true}
+          helperText={fromError.password && fromError.password}
+        />
 
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            type="submit"
-          >
-            Log In
-          </Button>
-          <Button
-            variant="text"
-            size="small"
-            sx={{
-              "&:hover": {
-                backgroundColor: "inherit",
-              },
-            }}
-          >
-            don't have an account?
-          </Button>
-        </Stack>
-      </form>
-    </Paper>
+        <Button variant="contained" color="primary" size="small" type="submit">
+          Log In
+        </Button>
+        <Button
+          variant="text"
+          size="small"
+          sx={{
+            "&:hover": {
+              backgroundColor: "inherit",
+            },
+          }}
+        >
+          don't have an account?
+        </Button>
+      </Stack>
+    </form>
   );
 };
 

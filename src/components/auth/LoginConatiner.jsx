@@ -1,10 +1,9 @@
-import { Grid, Stack, Box, Paper, Typography } from "@mui/material";
 import React from "react";
-import Register from "./Register";
 import Login from "./Login";
 import HeroImage from "./HeroImage";
+import { Grid, Box, Paper } from "@mui/material";
 
-const RegisterContainer = () => {
+const LoginConatiner = () => {
   return (
     <Grid container component="main" sx={{ height: "91vh" }}>
       <HeroImage />
@@ -15,11 +14,11 @@ const RegisterContainer = () => {
             mx: 4,
           }}
         >
-          <Register />
+          <Login />
         </Box>
       </Grid>
     </Grid>
   );
 };
 
-export default RegisterContainer;
+export default LoginConatiner;

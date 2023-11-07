@@ -6,6 +6,7 @@ import RegisterContainer from "./components/auth/RegisterContainer";
 import { useReducer } from "react";
 import { UserContext } from "./contextAPI/UserContext";
 import userReducer from "./contextAPI/userReducer";
+import LoginConatiner from './components/auth/LoginConatiner';
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -18,11 +19,10 @@ function App() {
       <UserContext.Provider value={{ userState, userDispatch }}>
         <Grid container direction="column">
           <Navbar />
-          <Container maxWidth="xl">
-            <Grid>
-              <RegisterContainer />
-            </Grid>
-          </Container>
+          <Grid>
+            <RegisterContainer />
+            {/* <LoginConatiner/> */}
+          </Grid>
         </Grid>
       </UserContext.Provider>
     </ThemeProvider>
