@@ -1,6 +1,7 @@
 import { Stack, Box } from "@mui/material";
 import React from "react";
 import Register from "./Register";
+import Login from "./Login";
 
 const RegisterContainer = () => {
   return (
@@ -16,6 +17,7 @@ const RegisterContainer = () => {
       <Box>
         {" "}
         <Register />
+        <Login />
       </Box>
     </Stack>
   );

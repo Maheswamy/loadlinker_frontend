@@ -3,19 +3,28 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./config/theme";
 import Navbar from "./components/Navbar";
 import RegisterContainer from "./components/auth/RegisterContainer";
+import { useReducer } from "react";
+import { UserContext } from "./contextAPI/UserContext";
+import userReducer from "./contextAPI/userReducer";
 
 function App() {
+  const [userState, userDispatch] = useReducer(userReducer, {
+    user: {},
+    serverError: {},
+  });
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Grid container direction="column">
-        <Navbar />
-        <Container maxWidth="xl">
-          <Grid>
-            <RegisterContainer />
-          </Grid>
-        </Container>
-      </Grid>
+      <UserContext.Provider value={{ userState, userDispatch }}>
+        <Grid container direction="column">
+          <Navbar />
+          <Container maxWidth="xl">
+            <Grid>
+              <RegisterContainer />
+            </Grid>
+          </Container>
+        </Grid>
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

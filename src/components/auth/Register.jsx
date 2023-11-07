@@ -64,10 +64,9 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(role, firstName, lastName, email, password, confirmPassword);
-    const result = validation();
-    console.log(errors);
-    if (result === 0) {
+    const validationResult = validation();
+    if (validationResult === 0) {
+      console.log(role, firstName, lastName, email, password, confirmPassword);
       setFormError({});
     }
   };
@@ -83,7 +82,7 @@ const Register = () => {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             size="small"
-            error={fromError.firstName}
+            error={fromError.firstName && true}
             helperText={fromError.firstName && fromError.firstName}
           />
           <TextField
@@ -93,6 +92,7 @@ const Register = () => {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             size="small"
+            helperText="Optional"
           />
           <TextField
             id="email"
@@ -101,7 +101,7 @@ const Register = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             size="small"
-            error={fromError.email}
+            error={fromError.email && true}
             helperText={fromError.email && fromError.email}
           />
           <TextField
@@ -111,7 +111,7 @@ const Register = () => {
             value={mobileNumber}
             onChange={(e) => setMobileNumber(e.target.value)}
             size="small"
-            error={fromError.mobileNumber}
+            error={fromError.mobileNumber && true}
             helperText={fromError.mobileNumber && fromError.mobileNumber}
           />
           <TextField
@@ -122,7 +122,7 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             size="small"
-            error={fromError.password}
+            error={fromError.password && true}
             helperText={fromError.password && fromError.password}
           />
           <TextField
@@ -130,7 +130,7 @@ const Register = () => {
             id="confirmPassword"
             label="Confirm Password"
             variant="outlined"
-            value={confirmPassword}
+            value={confirmPassword && true}
             onChange={(e) => setConfirmPassword(e.target.value)}
             size="small"
             error={fromError.confirmPassword}
