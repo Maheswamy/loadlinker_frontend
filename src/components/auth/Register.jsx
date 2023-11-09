@@ -114,16 +114,20 @@ const Register = () => {
     };
     try {
       const otpResponse = await axios.post("/api/register/otp", body);
+      toast.success("verification successful", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setRegisterSuccess(false);
       navigate("/login");
     } catch (e) {
-      console.log(e);
+      setServerError(e.response.data.errors)
     }
   };
 
   return (
     <Box>
       <ToastContainer />
+
       <form onSubmit={handleRegister}>
         <Stack gap={2} type="form">
           <Typography variant="h2" color="text">
@@ -236,18 +240,19 @@ const Register = () => {
           </Button>
         </Stack>
       </form>
+
       {registerSuccess && (
-        <Box>
+        <Stack gap={2}>
           <MuiOtpInput
             autoFocus={true}
-            length={6}
+            length={4}
             value={otp}
             onChange={(value) => setOtp(value)}
           />
           <Button variant="contained" onClick={handleOtpVerification}>
             Submit
           </Button>
-        </Box>
+        </Stack>
       )}
     </Box>
   );

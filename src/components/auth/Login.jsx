@@ -1,7 +1,11 @@
 import { Paper, Stack, TextField, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
+import axios from "../../config/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../contextAPI/UserContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -10,9 +14,12 @@ const Login = () => {
   const [serverError, setServerError] = useState({});
   const errors = {};
   const navigate = useNavigate();
+  const { userState, userDispatch } = useContext(UserContext);
 
   const validation = () => {
-    if (username.includes("@")) {
+    console.log(username);
+    if (username.includes(".")) {
+      console.log("kj");
       if (username.trim().length === 0) {
         errors.username = "email or mobile number is required";
       } else if (!isEmail(username)) {
@@ -32,16 +39,44 @@ const Login = () => {
     return Object.keys(errors).length;
   };
 
-  const handleLogIn = (e) => {
+  const handleLogIn = async (e) => {
+    setServerError({});
     e.preventDefault();
-    console.log("kkld");
     const validationResult = validation();
+    console.log(validationResult);
     if (validationResult === 0) {
-      console.log(username, password);
+      const body = { username, password };
+      try {
+        const loginResponse = await axios.post("/api/login", body);
+        localStorage.setItem("token", loginResponse.data.token);
+        const userResponse = await axios.get("/api/users/profile", {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        });
+        userDispatch({
+          type: "USER_LOGIN",
+          payload: userResponse.data.userData,
+        });
+        navigate("/");
+      } catch (e) {
+        console.log(e.response.data);
+        if (e.response.data.error.includes("verify")) {
+          return toast.error("Please verify your account before SignIn", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+        setServerError({
+          username: e.response.data.error,
+          password: e.response.data.error,
+        });
+      }
     }
   };
+
   return (
     <form onSubmit={handleLogIn}>
+      <ToastContainer />
       <Stack gap={2} type="form">
         <Typography variant="h2" color="text">
           Log In
@@ -53,8 +88,8 @@ const Login = () => {
           value={username}
           size="small"
           onChange={(e) => setUsername(e.target.value)}
-          error={fromError.username && true}
-          helperText={fromError.username && fromError.username}
+          error={fromError.username || (serverError.username && true)}
+          helperText={fromError.username || serverError.username}
         />
         <TextField
           type="password"
@@ -64,8 +99,8 @@ const Login = () => {
           value={password}
           size="small"
           onChange={(e) => setPassword(e.target.value)}
-          error={fromError.password && true}
-          helperText={fromError.password && fromError.password}
+          error={fromError.password || (serverError.username && true)}
+          helperText={fromError.password || serverError.password}
         />
 
         <Button variant="contained" color="primary" size="small" type="submit">

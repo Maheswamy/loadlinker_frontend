@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Paper, Typography, Stack, Box, Grid } from "@mui/material";
+import { Typography, Stack, Box } from "@mui/material";
+import { UserContext } from "./../contextAPI/UserContext";
+import { isEmpty } from "lodash";
 
 const Navbar = () => {
+  const { userState, userDispatch } = useContext(UserContext);
+  const handleLogOut = () => {
+    userDispatch({ type: "USER_LOGOUT", payload: {} });
+  };
   return (
-    <Box  maxWidth="xl">
+    <Box maxWidth="xl">
       <Stack
         elevation={1}
         square="true"
@@ -26,7 +32,7 @@ const Navbar = () => {
             }}
           />
           <Typography
-            variant="h6"
+            variant="p1"
             sx={{ fontSize: "32px" }}
             color="primary"
             gutterBottom={false}
@@ -37,24 +43,57 @@ const Navbar = () => {
         <Stack gap={2} direction="row" align="center">
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
-              variant="h6"
+              variant="p1"
               color="text"
               sx={{ textDecoration: "none" }}
             >
               Market
             </Typography>
           </Link>
-          <Link to="/register" style={{ textDecoration: "none" }}>
-            <Typography variant="h6" color="text">
-              Register
-            </Typography>
-          </Link>
 
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Typography variant="h6" color="text">
-              Login
-            </Typography>
-          </Link>
+          {isEmpty(userState.user) ? (
+            <Stack direction={"row"} gap={2}>
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                <Typography variant="p1" color="text">
+                  Register
+                </Typography>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Typography variant="p1" color="text">
+                  Login
+                </Typography>
+              </Link>
+            </Stack>
+          ) : (
+            <Stack direction={"row"} gap={2}>
+              <Link to="/mybids" style={{ textDecoration: "none" }}>
+                <Typography variant="p1" color="text">
+                  My Bids
+                </Typography>
+              </Link>
+              <Link to="/addvehicle" style={{ textDecoration: "none" }}>
+                <Typography variant="p1" color="text">
+                  Add Vehicle
+                </Typography>
+              </Link>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                <Typography variant="p1" color="text">
+                  Profile
+                </Typography>
+              </Link>
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="p1"
+                  color="text"
+                  onClick={() => {
+                    handleLogOut();
+                  }}
+                >
+                  Logout
+                </Typography>
+              </Link>
+            </Stack>
+          )}
         </Stack>
       </Stack>
     </Box>
