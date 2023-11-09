@@ -1,5 +1,6 @@
 import { Paper, Stack, TextField, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
   const [fromError, setFormError] = useState({});
   const [serverError, setServerError] = useState({});
   const errors = {};
+  const navigate = useNavigate();
 
   const validation = () => {
     if (username.includes("@")) {
@@ -41,7 +43,7 @@ const Login = () => {
   return (
     <form onSubmit={handleLogIn}>
       <Stack gap={2} type="form">
-        <Typography variant="h2" color='text'>
+        <Typography variant="h2" color="text">
           Log In
         </Typography>
         <TextField
@@ -77,6 +79,7 @@ const Login = () => {
               backgroundColor: "inherit",
             },
           }}
+          onClick={() => navigate("/register")}
         >
           don't have an account?
         </Button>

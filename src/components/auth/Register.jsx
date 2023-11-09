@@ -9,8 +9,13 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { isEmail, isStrongPassword } from "validator";
+import { MuiOtpInput } from "mui-one-time-password-input";
+import axios from "./../../config/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,7 +27,10 @@ const Register = () => {
   const [role, setRole] = useState("");
   const [fromError, setFormError] = useState({});
   const [serverError, setServerError] = useState({});
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [otp, setOtp] = useState("");
   const errors = {};
+  const navigate = useNavigate();
 
   const validation = () => {
     if (firstName.trim().length === 0) {
@@ -64,115 +72,184 @@ const Register = () => {
     return Object.keys(errors).length;
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const validationResult = validation();
     if (validationResult === 0) {
-      console.log(role, firstName, lastName, email, password, confirmPassword);
+      const body = {
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        mobileNumber,
+      };
+      console.log(body);
       setFormError({});
+      setServerError({});
+      try {
+        const registerRespone = await axios.post("/api/register", body);
+        localStorage.setItem("email", registerRespone.data.email);
+        toast.success("OTP sent your email!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setRegisterSuccess(true);
+      } catch (e) {
+        console.log(e.response.data.errors);
+        const serverErrorsArray = e.response.data.errors;
+        const serverErrorObject = serverErrorsArray.reduce((pv, cv) => {
+          pv[cv.path] = cv.msg;
+          return pv;
+        }, {});
+        setServerError(serverErrorObject);
+      }
+    }
+  };
+
+  const handleOtpVerification = async () => {
+    console.log(otp);
+    const body = {
+      email: localStorage.getItem("email"),
+      otp,
+    };
+    try {
+      const otpResponse = await axios.post("/api/register/otp", body);
+      setRegisterSuccess(false);
+      navigate("/login");
+    } catch (e) {
+      console.log(e);
     }
   };
 
   return (
-    <form onSubmit={handleRegister}>
-      <Stack gap={2} type="form">
-        <Typography variant="h2" color="text">
-          Register
-        </Typography>
-        <TextField
-          id="firstName"
-          label="First Name"
-          variant="outlined"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          size="small"
-          error={fromError.firstName && true}
-          helperText={fromError.firstName && fromError.firstName}
-        />
-        <TextField
-          id="lastName"
-          label="Last Name"
-          variant="outlined"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          size="small"
-        />
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          size="small"
-          error={fromError.email && true}
-          helperText={fromError.email && fromError.email}
-        />
-        <TextField
-          id="mobileNumber"
-          label="Phone Number"
-          variant="outlined"
-          value={mobileNumber}
-          onChange={(e) => setMobileNumber(e.target.value)}
-          size="small"
-          error={fromError.mobileNumber && true}
-          helperText={fromError.mobileNumber && fromError.mobileNumber}
-        />
-        <TextField
-          type="password"
-          id="password-register"
-          label="Password"
-          variant="outlined"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          size="small"
-          error={fromError.password && true}
-          helperText={fromError.password && fromError.password}
-        />
-        <TextField
-          type="password"
-          id="confirmPassword"
-          label="Confirm Password"
-          variant="outlined"
-          value={confirmPassword && true}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          size="small"
-          error={fromError.confirmPassword}
-          helperText={fromError.confirmPassword && fromError.confirmPassword}
-        />
+    <Box>
+      <ToastContainer />
+      <form onSubmit={handleRegister}>
+        <Stack gap={2} type="form">
+          <Typography variant="h2" color="text">
+            Register
+          </Typography>
+          <TextField
+            id="firstName"
+            label="First Name"
+            variant="outlined"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            size="small"
+            error={fromError.firstName || (serverError.firstName && true)}
+            helperText={fromError.firstName || serverError.firstName}
+          />
+          <TextField
+            id="lastName"
+            label="Last Name"
+            variant="outlined"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            size="small"
+          />
+          <TextField
+            id="email"
+            label="Email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            size="small"
+            error={fromError.email || (serverError.email && true)}
+            helperText={fromError.email || serverError.email}
+          />
+          <TextField
+            id="mobileNumber"
+            label="Phone Number"
+            variant="outlined"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
+            size="small"
+            error={fromError.mobileNumber || (serverError.mobileNumber && true)}
+            helperText={fromError.mobileNumber || serverError.mobileNumber}
+          />
+          <TextField
+            type="password"
+            id="password-register"
+            label="Password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            size="small"
+            error={fromError.password || serverError.password}
+            helperText={fromError.password || serverError.password}
+          />
+          <TextField
+            type="password"
+            id="confirmPassword"
+            label="Confirm Password"
+            variant="outlined"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            size="small"
+            error={fromError.confirmPassword}
+            helperText={fromError.confirmPassword}
+          />
 
-        <RadioGroup row value={role} onChange={(e) => setRole(e.target.value)}>
-          <FormControlLabel
-            value="owner"
-            control={<Radio size="small" />}
-            label="Vehicle Owner"
+          <RadioGroup
+            row
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <FormControlLabel
+              value="owner"
+              control={<Radio size="small" />}
+              label="Vehicle Owner"
+              size="small"
+            />
+            <FormControlLabel
+              value="shipper"
+              control={<Radio size="small" />}
+              label="Shipper"
+              size="small"
+            />
+          </RadioGroup>
+          {fromError.role ||
+            (serverError.role && (
+              <p style={{ color: "red", marginTop: "-10px" }}>
+                {fromError.role}
+              </p>
+            ))}
+          <Button
+            variant="contained"
+            color="primary"
             size="small"
-          />
-          <FormControlLabel
-            value="shipper"
-            control={<Radio size="small" />}
-            label="Shipper"
+            type="submit"
+          >
+            Register
+          </Button>
+          <Button
+            variant="text"
             size="small"
+            sx={{
+              "&:hover": {
+                backgroundColor: "inherit",
+              },
+            }}
+            onClick={() => navigate("/login")}
+          >
+            already have an account?
+          </Button>
+        </Stack>
+      </form>
+      {registerSuccess && (
+        <Box>
+          <MuiOtpInput
+            autoFocus={true}
+            length={6}
+            value={otp}
+            onChange={(value) => setOtp(value)}
           />
-        </RadioGroup>
-        {fromError.role && (
-          <p style={{ color: "red", marginTop: "-10px" }}>{fromError.role}</p>
-        )}
-        <Button variant="contained" color="primary" size="small" type="submit">
-          Register
-        </Button>
-        <Button
-          variant="text"
-          size="small"
-          sx={{
-            "&:hover": {
-              backgroundColor: "inherit",
-            },
-          }}
-        >
-          already have an account?
-        </Button>
-      </Stack>
-    </form>
+          <Button variant="contained" onClick={handleOtpVerification}>
+            Submit
+          </Button>
+        </Box>
+      )}
+    </Box>
   );
 };
 
