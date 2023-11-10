@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Stack, Box } from "@mui/material";
+import { Typography, Stack, Box,Paper } from "@mui/material";
 import { UserContext } from "./../contextAPI/UserContext";
 import { isEmpty } from "lodash";
 
@@ -11,8 +11,9 @@ const Navbar = () => {
     userDispatch({ type: "USER_LOGOUT", payload: {} });
   };
   return (
-    <Box maxWidth="xl">
+    <Paper elevation={2}  my={2}>
       <Stack
+        maxWidth={'xl'}
         elevation={1}
         square="true"
         bgcolor="#ffffff"
@@ -97,7 +98,7 @@ const Navbar = () => {
           )}
         </Stack>
       </Stack>
-    </Box>
+    </Paper>
   );
 };
 

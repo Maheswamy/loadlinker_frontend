@@ -35,8 +35,7 @@ export const startAddVehicle = (body) => {
       const addVehicleResponse = await axios.post("/api/vehicles", body, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization:
-            "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDhiZDJkYmEwMjQ5ZDk1OWVjMDk5ZSIsImVtYWlsIjoic3dhbXlAZ21haWwuY29tIiwicm9sZSI6Im93bmVyIiwiaWF0IjoxNjk5NjE4NzgyLCJleHAiOjE3MDAyMjM1ODJ9.r-SAw0KbhRMMNd8Z8BTtgxQEG8o4v4s988nomKbE4dI",
+          Authorization: localStorage.getItem("token"),
         },
       });
       console.log(addVehicleResponse.data);

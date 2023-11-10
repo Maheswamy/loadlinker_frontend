@@ -51,13 +51,15 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Navbar />
-        <Routes>
-          <Route path="/register" element={<RegisterContainer />} />
-          <Route path="/login" element={<LoginConatiner />} />
-          <Route path="/" element={<MarketContainer />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/addvehicle" element={<AddVehicleContainer />} />
-        </Routes>
+        <Container maxWidth="xl">
+          <Routes>
+            <Route path="/register" element={<RegisterContainer />} />
+            <Route path="/login" element={<LoginConatiner />} />
+            <Route path="/" element={<MarketContainer />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/addvehicle" element={<AddVehicleContainer />} />
+          </Routes>
+        </Container>
       </ThemeProvider>
     </UserContext.Provider>
   );
