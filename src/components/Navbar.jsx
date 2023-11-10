@@ -7,6 +7,7 @@ import { isEmpty } from "lodash";
 const Navbar = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const handleLogOut = () => {
+    localStorage.removeItem('token')
     userDispatch({ type: "USER_LOGOUT", payload: {} });
   };
   return (

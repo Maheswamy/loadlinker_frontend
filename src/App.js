@@ -13,6 +13,7 @@ import { startGetMarketList } from "./redux/action/marketAction";
 import MarketContainer from "./components/market/MarketContainer";
 import axios from "./config/axios";
 import Profile from "./components/auth/Profile";
+import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -23,6 +24,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // console.log(Jwt.verify(process.env.SECRET_KEY,localStorage.getItem('token')))
     dispatch(startGetMarketList());
     if (localStorage.getItem("token")) {
       (async () => {
@@ -43,9 +45,7 @@ function App() {
       })();
     }
   }, []);
-  useEffect(() => {
-    console.log(userState);
-  }, [userState]);
+
   return (
     <UserContext.Provider value={{ userState, userDispatch }}>
       <ThemeProvider theme={theme}>
@@ -56,6 +56,7 @@ function App() {
           <Route path="/login" element={<LoginConatiner />} />
           <Route path="/" element={<MarketContainer />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/addvehicle" element={<AddVehicleContainer />} />
         </Routes>
       </ThemeProvider>
     </UserContext.Provider>

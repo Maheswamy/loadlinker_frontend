@@ -120,7 +120,7 @@ const Register = () => {
       setRegisterSuccess(false);
       navigate("/login");
     } catch (e) {
-      setServerError(e.response.data.errors)
+      setServerError(e.response.data.errors);
     }
   };
 
