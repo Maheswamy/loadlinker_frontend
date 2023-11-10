@@ -25,7 +25,6 @@ const ReactSelect = ({ permit, getSelectedPermit }) => {
 
   return (
     <Select
-        
       isMulti
       options={[{ value: "selectAll", label: "All India Permit" }, ...options]}
       value={options.filter((option) => selectedOptions.includes(option.value))}

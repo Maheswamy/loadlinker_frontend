@@ -38,7 +38,7 @@ export const startAddVehicle = (body) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(addVehicleResponse.data);
+      dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
       console.log(e);
     }
@@ -51,4 +51,11 @@ const getVehicleType = (data) => {
 
 const getPermitList = (data) => {
   return { type: "GET_PERMIT_LIST", payload: data };
+};
+
+const addVehicle = (data) => {
+  return {
+    type: "ADD_VEHICLE",
+    payload: data,
+  };
 };

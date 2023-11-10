@@ -113,7 +113,7 @@ const AddVehicleForm = () => {
   const handleAddVehicle = (e) => {
     e.preventDefault();
     const validationResult = runValidation();
-    if (!isEmpty(validationResult)) {
+    if (isEmpty(validationResult)) {
       setFormError({});
       const body = new FormData();
       console.log("sdjh");
@@ -135,20 +135,24 @@ const AddVehicleForm = () => {
     }
   };
   return (
-    <Paper width='7'>
+    <Box width="7">
       <Typography variant="h5">Add Vehicle</Typography>
-      <Stack component="form" onSubmit={handleAddVehicle}>
+      <Stack component="form" onSubmit={handleAddVehicle} gap={2}>
         <TextField
           id="vehicleNumber"
           label="Vehicle Number"
           value={vehicleNumber}
           onChange={(e) => setVehicleNumber(e.target.value)}
+          error={formError.vehicleNumber && true}
+          helperText={formError.vehicleNumber}
         />
         <TextField
           id="rcNumber"
           label="RC Number"
           value={rcNumber}
           onChange={(e) => setRcNumber(e.target.value)}
+          error={formError.rcNumber && true}
+          helperText={formError.rcNumber}
         />
         <TextField
           id="permittedLoadCapacity"
@@ -156,6 +160,8 @@ const AddVehicleForm = () => {
           value={permittedLoadCapacity}
           type="number"
           onChange={(e) => setPermittedLoadCapacity(e.target.value)}
+          error={formError.permittedLoadCapacity && true}
+          helperText={formError.permittedLoadCapacity}
         />
 
         {/* <InputLabel id="vehcile-Type-label">Vehicle Type</InputLabel> */}
@@ -164,6 +170,8 @@ const AddVehicleForm = () => {
           value={vehicleType}
           label="Vehicle type"
           onChange={(e) => setVehicleType(e.target.value)}
+          error={formError.vehicleType && true}
+          helperText={formError.vehicleType}
         >
           <MenuItem value="">
             <Typography>None</Typography>
@@ -208,7 +216,7 @@ const AddVehicleForm = () => {
           Add Vehicle
         </Button>
       </Stack>
-    </Paper>
+    </Box>
   );
 };
 

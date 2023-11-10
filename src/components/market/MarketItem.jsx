@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   Typography,
@@ -11,6 +12,7 @@ import {
 } from "@mui/material";
 
 const MarketItem = ({
+  _id,
   loadType,
   loadWeight,
   pickUpLocation,
@@ -80,14 +82,16 @@ const MarketItem = ({
             Amount:
           </Typography>
           <Typography gutterBottom variant="p" component="span">
-          ₹ {Math.round(amount)}
+            ₹ {Math.round(amount)}
           </Typography>
         </Box>
       </CardContent>
       <CardActions>
-        <Button size="large" variant="contained">
-          BID
-        </Button>
+        <Link to={`/market/${_id}`}>
+          <Button size="large" variant="contained">
+            BID
+          </Button>
+        </Link>
         <Button size="large" variant="text">
           Show more
         </Button>

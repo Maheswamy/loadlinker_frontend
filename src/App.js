@@ -14,6 +14,7 @@ import MarketContainer from "./components/market/MarketContainer";
 import axios from "./config/axios";
 import Profile from "./components/auth/Profile";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
+import Enquirycontainer from "./components/enquiry/Enquirycontainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -58,6 +59,7 @@ function App() {
             <Route path="/" element={<MarketContainer />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addvehicle" element={<AddVehicleContainer />} />
+            <Route path="/market/:id" element={<Enquirycontainer />} />
           </Routes>
         </Container>
       </ThemeProvider>

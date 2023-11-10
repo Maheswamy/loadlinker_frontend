@@ -12,9 +12,31 @@ export const startGetMarketList = () => {
   };
 };
 
+export const startGetSingleEnquiry = (id) => {
+  return async (dispatch) => {
+    try {
+      const singleEnquiryResponse = await axios.get(`/api/marketplace/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      dispatch(getSingleEnquiry(singleEnquiryResponse.data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 const getMarketList = (data) => {
   return {
     type: "GET_MARKET_LIST",
+    payload: data,
+  };
+};
+
+const getSingleEnquiry = (data) => {
+  return {
+    type: "GET_SINGLE_ENQUIRY",
     payload: data,
   };
 };
