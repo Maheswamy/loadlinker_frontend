@@ -20,6 +20,7 @@ export const startGetSingleEnquiry = (id) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      console.log(singleEnquiryResponse.data)
       dispatch(getSingleEnquiry(singleEnquiryResponse.data));
     } catch (e) {
       console.log(e);

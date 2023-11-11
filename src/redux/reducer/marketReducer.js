@@ -6,6 +6,7 @@ export const marketReducer = (state = intialState, action) => {
       return { ...state, marketList: action.payload };
     }
     case "GET_SINGLE_ENQUIRY": {
+      console.log(action.payload);
       return { ...state, singleEnquiry: { ...action.payload } };
     }
     default: {

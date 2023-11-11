@@ -7,7 +7,7 @@ const LoginConatiner = () => {
   return (
     <Grid container component="main" sx={{ height: "91vh" }}>
       <HeroImage />
-      <Grid item xs={12} sm={6} md={4} component={Paper} elevation={1} square>
+      <Grid item xs={12} sm={6} md={4} component={Paper}  square>
         <Box
           sx={{
             my: 8,

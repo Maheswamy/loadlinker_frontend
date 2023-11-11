@@ -1,19 +1,86 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Stack, Box,Paper } from "@mui/material";
+import { Typography, Stack, Box, Paper } from "@mui/material";
 import { UserContext } from "./../contextAPI/UserContext";
 import { isEmpty } from "lodash";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const handleLogOut = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     userDispatch({ type: "USER_LOGOUT", payload: {} });
   };
+  const navbarCondition = () => {
+    const role = jwtDecode(localStorage.getItem("token")).role;
+    console.log(role);
+    if (role === "owner") {
+      return (
+        <Stack direction={"row"} gap={2}>
+          <Link to="/mybids" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              My Bids
+            </Typography>
+          </Link>
+          <Link to="/addvehicle" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              Add Vehicle
+            </Typography>
+          </Link>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              Profile
+            </Typography>
+          </Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Typography
+              variant="p1"
+              color="text"
+              onClick={() => {
+                handleLogOut();
+              }}
+            >
+              Logout
+            </Typography>
+          </Link>
+        </Stack>
+      );
+    }else if(role==='shipper'){
+      return (
+        <Stack direction={"row"} gap={2}>
+          <Link to="/myloads" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              My Loads
+            </Typography>
+          </Link>
+          <Link to="/myenquiry" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              My Enquiry
+            </Typography>
+          </Link>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <Typography variant="p1" color="text">
+              Profile
+            </Typography>
+          </Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Typography
+              variant="p1"
+              color="text"
+              onClick={() => {
+                handleLogOut();
+              }}
+            >
+              Logout
+            </Typography>
+          </Link>
+        </Stack>
+      );
+    }
+  };
   return (
-    <Paper elevation={2}  my={2}>
+    <Box elevation={2} my={2}>
       <Stack
-        maxWidth={'xl'}
         elevation={1}
         square="true"
         bgcolor="#ffffff"
@@ -67,38 +134,11 @@ const Navbar = () => {
               </Link>
             </Stack>
           ) : (
-            <Stack direction={"row"} gap={2}>
-              <Link to="/mybids" style={{ textDecoration: "none" }}>
-                <Typography variant="p1" color="text">
-                  My Bids
-                </Typography>
-              </Link>
-              <Link to="/addvehicle" style={{ textDecoration: "none" }}>
-                <Typography variant="p1" color="text">
-                  Add Vehicle
-                </Typography>
-              </Link>
-              <Link to="/profile" style={{ textDecoration: "none" }}>
-                <Typography variant="p1" color="text">
-                  Profile
-                </Typography>
-              </Link>
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <Typography
-                  variant="p1"
-                  color="text"
-                  onClick={() => {
-                    handleLogOut();
-                  }}
-                >
-                  Logout
-                </Typography>
-              </Link>
-            </Stack>
+            navbarCondition()
           )}
         </Stack>
       </Stack>
-    </Paper>
+    </Box>
   );
 };
 

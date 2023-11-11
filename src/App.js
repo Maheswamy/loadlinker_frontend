@@ -25,7 +25,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log(Jwt.verify(process.env.SECRET_KEY,localStorage.getItem('token')))
     dispatch(startGetMarketList());
     if (localStorage.getItem("token")) {
       (async () => {
@@ -35,7 +34,6 @@ function App() {
               Authorization: localStorage.getItem("token"),
             },
           });
-          console.log(userResponse.data);
           userDispatch({
             type: "USER_LOGIN",
             payload: userResponse.data.userData,
@@ -45,14 +43,16 @@ function App() {
         }
       })();
     }
+
   }, []);
 
   return (
     <UserContext.Provider value={{ userState, userDispatch }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navbar />
-        <Container maxWidth="xl">
+
+        <Container maxWidth="lg">
+          <Navbar />
           <Routes>
             <Route path="/register" element={<RegisterContainer />} />
             <Route path="/login" element={<LoginConatiner />} />
