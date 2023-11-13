@@ -10,7 +10,7 @@ export const startVehicleType = () => {
       });
       dispatch(getVehicleType(vehicleTypeResponse.data));
     } catch (e) {
-      console.log(e);
+      alert(e.message);
     }
   };
 };
@@ -24,7 +24,7 @@ export const startPermitList = () => {
       });
       dispatch(getPermitList(permitListResponse.data));
     } catch (e) {
-      console.log(e);
+      alert(e.message);
     }
   };
 };
@@ -40,7 +40,8 @@ export const startAddVehicle = (body) => {
       });
       dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
-      console.log(e);
+      console.log(e)
+      alert(e.message);
     }
   };
 };

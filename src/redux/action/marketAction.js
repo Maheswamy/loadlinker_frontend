@@ -7,7 +7,7 @@ export const startGetMarketList = () => {
       console.log(marketResponse.data);
       dispatch(getMarketList(marketResponse.data));
     } catch (e) {
-      console.log(e);
+      alert(e.message);
     }
   };
 };
@@ -23,7 +23,8 @@ export const startGetSingleEnquiry = (id) => {
       console.log(singleEnquiryResponse.data)
       dispatch(getSingleEnquiry(singleEnquiryResponse.data));
     } catch (e) {
-      console.log(e);
+      alert(e.message);
+
     }
   };
 };

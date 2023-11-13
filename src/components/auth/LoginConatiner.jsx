@@ -1,13 +1,34 @@
 import React from "react";
 import Login from "./Login";
-import HeroImage from "./HeroImage";
 import { Grid, Box, Paper } from "@mui/material";
 
 const LoginConatiner = () => {
   return (
-    <Grid container component="main" sx={{ height: "91vh" }}>
-      <HeroImage />
-      <Grid item xs={12} sm={6} md={4} component={Paper}  square>
+    <Grid
+      container
+      component="main"
+      sx={{
+        height: "91vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        component={Paper}
+        sx={{
+          backgroundColor:'#ffece6',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 4,
+        }}
+      >
         <Box
           sx={{
             my: 8,

@@ -54,6 +54,7 @@ const Login = () => {
             Authorization: localStorage.getItem("token"),
           },
         });
+        console.log(userResponse.data.userData)
         userDispatch({
           type: "USER_LOGIN",
           payload: userResponse.data.userData,
@@ -77,7 +78,11 @@ const Login = () => {
   return (
     <form onSubmit={handleLogIn}>
       <ToastContainer />
-      <Stack gap={2} type="form">
+      <Stack gap={2} type="form" sx={{
+        display:'flex',
+        justifyContent:"center",
+        alignItems:'center'
+      }}>
         <Typography variant="h2" color="text">
           Log In
         </Typography>

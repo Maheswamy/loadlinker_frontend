@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
+import { isEmpty } from "lodash";
 
 const EnquiryDetail = ({
   loadType,
@@ -11,63 +12,66 @@ const EnquiryDetail = ({
   amount,
   paymentType,
 }) => {
-  console.log(loadType)
+  console.log(loadType);
   return (
     <Box>
-      <Typography variant="h6" color="initial">
-        Load Weight:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {loadWeight}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Load Type:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {loadType}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Pickup Date
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {dateOfPickUp}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Drop Date:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {dateOfUnload}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Pickup Address:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Pickup Address:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Drop Address:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Drop Address:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Amount:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {amount}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Payment Type:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        {paymentType}
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Shipper Name:
-      </Typography>
-      <Typography variant="h6" color="initial">
-        Shipper Name:
-      </Typography>
+      {isEmpty(EnquiryDetail) && (
+        <Grid container spacing={5}>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              Load Weight:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {loadWeight} Kg
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              Load Type:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {loadType}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              Pickup Date:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {new Date(dateOfPickUp).toLocaleDateString()}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              Drop Date:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {new Date(dateOfUnload).toLocaleDateString()}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textSecondary">
+              Pickup Addess:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {pickUpLocation?.address},{pickUpLocation?.area},
+              {pickUpLocation?.district} district,{pickUpLocation?.state}-
+              {pickUpLocation?.pin}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textSecondary">
+              Drop Addess:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {dropUpLocation?.address},{dropUpLocation?.area},
+              {dropUpLocation?.district} district,{dropUpLocation?.state}-
+              {dropUpLocation?.pin}
+            </Typography>
+          </Grid>
+          {/* Add more grid items as needed */}
+        </Grid>
+      )}
     </Box>
   );
 };

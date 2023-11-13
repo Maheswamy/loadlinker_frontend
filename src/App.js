@@ -15,6 +15,8 @@ import axios from "./config/axios";
 import Profile from "./components/auth/Profile";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 import Enquirycontainer from "./components/enquiry/Enquirycontainer";
+import { jwtDecode } from "jwt-decode";
+import AddEnquiryConatiner from "./components/enquiry/AddEnquiryContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -43,25 +45,31 @@ function App() {
         }
       })();
     }
-
   }, []);
 
   return (
     <UserContext.Provider value={{ userState, userDispatch }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
-        <Container maxWidth="lg">
-          <Navbar />
-          <Routes>
-            <Route path="/register" element={<RegisterContainer />} />
-            <Route path="/login" element={<LoginConatiner />} />
-            <Route path="/" element={<MarketContainer />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/addvehicle" element={<AddVehicleContainer />} />
-            <Route path="/market/:id" element={<Enquirycontainer />} />
-          </Routes>
-        </Container>
+        <div
+          style={{
+            backgroundColor: "#fff",
+            minHeight: "100vh",
+          }}
+        >
+          <Container maxWidth="xl">
+            <Navbar />
+            <Routes>
+              <Route path="/register" element={<RegisterContainer />} />
+              <Route path="/login" element={<LoginConatiner />} />
+              <Route path="/" element={<MarketContainer />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/addvehicle" element={<AddVehicleContainer />} />
+              <Route path="/market/:id" element={<Enquirycontainer />} />
+              <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
+            </Routes>
+          </Container>
+        </div>
       </ThemeProvider>
     </UserContext.Provider>
   );

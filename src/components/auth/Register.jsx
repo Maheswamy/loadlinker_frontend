@@ -125,11 +125,11 @@ const Register = () => {
   };
 
   return (
-    <Box>
+    <Box >
       <ToastContainer />
 
       <form onSubmit={handleRegister}>
-        <Stack gap={2} type="form">
+        <Stack gap={2} type="form" alignItems={'center'} justifyContent={'center'} >
           <Typography variant="h2" color="text">
             Register
           </Typography>
@@ -214,18 +214,18 @@ const Register = () => {
           </RadioGroup>
           {fromError.role ||
             (serverError.role && (
-              <p style={{ color: "red", marginTop: "-10px" }}>
+              <p style={{ color: "red", marginTop: "-10px", display: "block" }}>
                 {fromError.role}
               </p>
             ))}
-          <Button
+          {!registerSuccess&&<Button
             variant="contained"
             color="primary"
             size="small"
             type="submit"
           >
             Register
-          </Button>
+          </Button>}
           <Button
             variant="text"
             size="small"
@@ -250,7 +250,7 @@ const Register = () => {
             onChange={(value) => setOtp(value)}
           />
           <Button variant="contained" onClick={handleOtpVerification}>
-            Submit
+            Verify OTP
           </Button>
         </Stack>
       )}

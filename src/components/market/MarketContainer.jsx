@@ -1,11 +1,12 @@
 import React from "react";
 import MarketList from "./MarketList";
+import { Box, Grid } from "@mui/material";
 
 const MarketContainer = () => {
   return (
-    <div>
+    <Box > 
       <MarketList />
-    </div>
+    </Box>
   );
 };
 

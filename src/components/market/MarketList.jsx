@@ -1,16 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import MarketItem from "./MarketItem";
-import { Grid, Stack } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 const MarketList = () => {
   const marketList = useSelector((state) => state.market.marketList);
   return (
-    <Stack direction="row" wrap="wrap"gap={2} >
+    <Grid container spacing={2}>
       {marketList.map((ele) => (
-        <MarketItem {...ele} key={ele._id}/>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={ele._id}>
+          <MarketItem {...ele} />
+        </Grid>
       ))}
-    </Stack>
+    </Grid>
   );
 };
 

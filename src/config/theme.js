@@ -4,6 +4,7 @@ const customTheme = createTheme({
   palette: {
     primary: {
       main: '#FF4000', // Change the primary color2196F3
+      shade:'#ffb399'
     },
     secondary: {
       main: '#2196F3', // Change the secondary color

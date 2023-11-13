@@ -1,4 +1,12 @@
-import { Stack, TextField, Button, Select, MenuItem } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import React, { useContext, useState } from "react";
 import { UserContext } from "./../../contextAPI/UserContext";
 import { isEmpty } from "lodash";
@@ -34,38 +42,71 @@ const BidForm = ({ id }) => {
         bidAmount: Number(bidAmount),
         vehicleId,
       };
-      console.log(formData)
+      console.log(formData);
       dispatch(startAddBid(formData));
     }
   };
   return (
-    <Stack component="form" onSubmit={handleBidPost}>
-      <TextField
-        id="amount"
-        label="Bid Amount"
-        value={bidAmount}
-        onChange={(e) => setBidAmount(e.target.value)}
-        variant="outlined"
-        type="number"
-        error={formError.bidAmount && true}
-        helperText={formError.bidAmount}
-      />
-      <Select
-        id="demo-simple-select"
-        value={vehicleId}
-        label="Age"
-        error={formError.vehicleId && true}
-        onChange={(e) => setVehicleId(e.target.value)}
-      >
-        <MenuItem value="">Select your vehicle</MenuItem>
-        {vehicles?.map((ele) => (
-          <MenuItem value={ele._id}>{ele.vehicleNumber}</MenuItem>
-        ))}
-      </Select>
-      <Button variant="contained" color="primary" type="submit" size="large">
-        Submit Bid
-      </Button>
-    </Stack>
+    <Grid
+      container
+      xs={12}
+      component="form"
+      onSubmit={handleBidPost}
+      alignItems={"center"}
+      justifyContent={"center"}
+      rowGap={1}
+      my={2}
+    >
+      <Grid container item xs={12} spacing={2}>
+        <Grid item xs={6}>
+          <TextField
+            id="amount"
+            label="Bid Amount"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+            variant="outlined"
+            type="number"
+            fullWidth
+            error={formError.bidAmount && true}
+            helperText={formError.bidAmount}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="vehicle" error={formError.vehicleId && true}>
+              Select your Vehicle
+            </InputLabel>
+            <Select
+              id="vehicle"
+              value={vehicleId}
+              onChange={(e) => setVehicleId(e.target.value)}
+              label="Select your Vehicle"
+              error={formError.vehicleId && true}
+              fullWidth
+            >
+              <MenuItem value="">Select your vehicle</MenuItem>
+              {vehicles?.map((ele) => (
+                <MenuItem key={ele._id} value={ele._id}>
+                  {ele.vehicleNumber}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      <Grid xs={12}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          size="large"
+          fullWidth
+        >
+          Submit Bid
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

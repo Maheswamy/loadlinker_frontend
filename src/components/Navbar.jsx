@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Stack, Box, Paper } from "@mui/material";
+import { Typography, Stack, Box, Paper, Grid } from "@mui/material";
 import { UserContext } from "./../contextAPI/UserContext";
 import { isEmpty } from "lodash";
 import { jwtDecode } from "jwt-decode";
@@ -18,24 +18,24 @@ const Navbar = () => {
       return (
         <Stack direction={"row"} gap={2}>
           <Link to="/mybids" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
+            <Typography variant='button' color="primary">
               My Bids
             </Typography>
           </Link>
           <Link to="/addvehicle" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
+            <Typography variant='button' color="primary">
               Add Vehicle
             </Typography>
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
+            <Typography variant='button' color="primary">
               Profile
             </Typography>
           </Link>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <Typography
-              variant="p1"
-              color="text"
+              variant='button'
+              color="primary"
               onClick={() => {
                 handleLogOut();
               }}
@@ -45,28 +45,33 @@ const Navbar = () => {
           </Link>
         </Stack>
       );
-    }else if(role==='shipper'){
+    } else if (role === "shipper") {
       return (
-        <Stack direction={"row"} gap={2}>
-          <Link to="/myloads" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
-              My Loads
+        <Stack direction={"row"} gap={1}>
+          <Link to="/shipments" style={{ textDecoration: "none" }}>
+            <Typography variant='button' color="primary">
+              My Shipments
             </Typography>
           </Link>
-          <Link to="/myenquiry" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
-              My Enquiry
+          <Link to="/enquiries" style={{ textDecoration: "none" }}>
+            <Typography variant='button' color="primary">
+              My Enquiries
+            </Typography>
+          </Link>
+          <Link to="/addenquiry" style={{ textDecoration: "none" }}>
+            <Typography variant='button' color="primary">
+              Add Enquire
             </Typography>
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant="p1" color="text">
+            <Typography variant='button' color="primary">
               Profile
             </Typography>
           </Link>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <Typography
-              variant="p1"
-              color="text"
+              variant='button'
+              color="primary"
               onClick={() => {
                 handleLogOut();
               }}
@@ -79,41 +84,54 @@ const Navbar = () => {
     }
   };
   return (
-    <Box elevation={2} my={2}>
-      <Stack
-        elevation={1}
-        square="true"
-        bgcolor="#ffffff"
-        gap={2}
-        height={"9vh"}
-        direction="row"
-        alignItems="center"
-        justifyContent={"space-between"}
-        mx="2"
-      >
-        <Stack gap={1} direction="row" alignItems="center">
-          <img
-            src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/_042d902d-1b10-4c45-aa2f-965175cc4544.jpg"
-            alt="Logo"
-            style={{
-              maxWidth: "auto",
-              maxHeight: "9vh",
-            }}
-          />
-          <Typography
-            variant="p1"
-            sx={{ fontSize: "32px" }}
-            color="primary"
-            gutterBottom={false}
-          >
-            LoadLinker
-          </Typography>
+    <Grid
+      container
+      alignItems="center"
+      justifyContent="center"
+      component={"nav"}
+      maxWidth="xl"
+      elevation={10}
+    >
+      <Grid item xs={12} sm={6} md={4}>
+        <Stack
+          elevation={1}
+          square
+          gap={2}
+          height={"9vh"}
+          direction="row"
+          alignItems="center"
+          justifyContent={"space-between"}
+          mx="2"
+        >
+          <Stack gap={1} direction="row" alignItems="center">
+            <Box display="flex" alignItems="center">
+              <img
+                src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/_042d902d-1b10-4c45-aa2f-965175cc4544.jpg"
+                alt="Logo"
+                style={{ maxWidth: "auto", maxHeight: "50px" }}
+              />
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: 1, fontWeight: "900" }}
+                color="primary.main"
+              >
+                LOADLINKER
+              </Typography>
+            </Box>
+          </Stack>
         </Stack>
-        <Stack gap={2} direction="row" align="center">
+      </Grid>
+      <Grid item xs={12} sm={6} md={8}>
+        <Stack
+          gap={2}
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
-              variant="p1"
-              color="text"
+              variant='button'
+              color="primary"
               sx={{ textDecoration: "none" }}
             >
               Market
@@ -121,14 +139,14 @@ const Navbar = () => {
           </Link>
 
           {isEmpty(userState.user) ? (
-            <Stack direction={"row"} gap={2}>
+            <Stack direction="row" gap={2}>
               <Link to="/register" style={{ textDecoration: "none" }}>
-                <Typography variant="p1" color="text">
+                <Typography variant='button' color="primary">
                   Register
                 </Typography>
               </Link>
               <Link to="/login" style={{ textDecoration: "none" }}>
-                <Typography variant="p1" color="text">
+                <Typography variant='button' color="primary">
                   Login
                 </Typography>
               </Link>
@@ -137,8 +155,8 @@ const Navbar = () => {
             navbarCondition()
           )}
         </Stack>
-      </Stack>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 

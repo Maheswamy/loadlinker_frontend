@@ -8,9 +8,11 @@ export const startAddBid = (formData) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      dispatch(addBid(addBidResponse.data))
       console.log(addBidResponse);
     } catch (e) {
-      console.log(e);
+      console.log(e)
+        alert(e.message);
     }
   };
 };

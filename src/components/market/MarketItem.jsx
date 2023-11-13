@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -9,7 +9,10 @@ import {
   Box,
   Stack,
   CardMedia,
+  Grid
 } from "@mui/material";
+import { isEmpty } from "lodash";
+import { UserContext } from "./../../contextAPI/UserContext";
 
 const MarketItem = ({
   _id,
@@ -20,83 +23,84 @@ const MarketItem = ({
   paymentType,
   amount,
 }) => {
+  const { userState } = useContext(UserContext);
   return (
-    <Card sx={{ maxWidth: 400 }} elevation={2}>
-      <CardContent>
-        <Stack direction="row" gap={2}>
-          <Box>
-            <Typography gutterBottom variant="p" component="span">
-              Load Type:
-            </Typography>
-            <Typography gutterBottom variant="h5" component="span">
-              {loadType}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography gutterBottom variant="p" component="span">
-              Load Weigth:
-            </Typography>
-            <Typography gutterBottom variant="h5" component="span">
-              {Number(loadWeight) / 1000} Tonnes
-            </Typography>
-          </Box>
-        </Stack>
-        <Stack direction="row" justifyContent={"space-evenly"} gap={3}>
-          <Box>
-            <CardMedia
-              sx={{ height: 100, width: 100, objectFit: "cover" }}
-              image="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/2108.jpg"
-              title="goods image"
-              component="span"
-            />
-          </Box>
-          <Stack direction="column" gap={2}>
+      <Card sx={{ maxWidth: 400 }} elevation={2} >
+        <CardContent>
+          <Stack direction="row" gap={2}>
             <Box>
               <Typography gutterBottom variant="p" component="span">
-                Pickup location:
+                Load Type:
               </Typography>
-              <Typography gutterBottom variant="h5" component="span">
-                {pickUpLocation.district}
+              <Typography gutterBottom variant="p" component="span">
+                {loadType}
               </Typography>
             </Box>
             <Box>
               <Typography gutterBottom variant="p" component="span">
-                Drop location:
+                Load Weigth:
               </Typography>
-              <Typography gutterBottom variant="h5" component="span">
-                {dropUpLocation.district}
+              <Typography gutterBottom variant="p" component="span">
+                {Number(loadWeight) / 1000} Tonnes
               </Typography>
             </Box>
           </Stack>
-        </Stack>
-        <Box>
-          <Typography gutterBottom variant="subtitle1" component="span">
-            Payment Type:
-          </Typography>
-          <Typography gutterBottom variant="p" component="span">
-            {paymentType}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography gutterBottom variant="subtitle1" component="span">
-            Amount:
-          </Typography>
-          <Typography gutterBottom variant="p" component="span">
-            ₹ {Math.round(amount)}
-          </Typography>
-        </Box>
-      </CardContent>
-      <CardActions>
-        <Link to={`/market/${_id}`}>
-          <Button size="large" variant="contained">
-            BID
+          <Stack direction="row" justifyContent={"space-evenly"} gap={3}>
+            <Box>
+              <CardMedia
+                sx={{ height: 100, width: 100, objectFit: "cover" }}
+                image="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/2108.jpg"
+                title="goods image"
+                component="span"
+              />
+            </Box>
+            <Stack direction="column" gap={2}>
+              <Box>
+                <Typography gutterBottom variant="p" component="span">
+                  Pickup location:
+                </Typography>
+                <Typography gutterBottom variant="p" component="span">
+                  {pickUpLocation.district}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography gutterBottom variant="p" component="span">
+                  Drop location:
+                </Typography>
+                <Typography gutterBottom variant="p" component="span">
+                  {dropUpLocation.district}
+                </Typography>
+              </Box>
+            </Stack>
+          </Stack>
+          <Box>
+            <Typography gutterBottom variant="subtitle1" component="span">
+              Payment Type:
+            </Typography>
+            <Typography gutterBottom variant="p" component="span">
+              {paymentType}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography gutterBottom variant="subtitle1" component="span">
+              Amount:
+            </Typography>
+            <Typography gutterBottom variant="p" component="span">
+              ₹ {Math.round(amount)}
+            </Typography>
+          </Box>
+        </CardContent>
+        <CardActions>
+          <Link to={isEmpty(userState.user) ? "/login" : `/market/${_id}`}>
+            <Button size="large" variant="contained">
+              BID
+            </Button>
+          </Link>
+          <Button size="large" variant="text">
+            Show more
           </Button>
-        </Link>
-        <Button size="large" variant="text">
-          Show more
-        </Button>
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
   );
 };
 
