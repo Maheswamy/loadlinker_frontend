@@ -94,7 +94,8 @@ const MarketItem = ({
       <CardActions>
         <Link to={isEmpty(userState.user) ? "/login" : `/market/${_id}`}>
           <Button size="large" variant="contained">
-            {jwtDecode(localStorage.getItem('token')).role === "owner"
+            {localStorage.getItem("token") &&
+            jwtDecode(localStorage.getItem("token"))?.role === "owner"
               ? "BID"
               : "SHOW MORE"}
           </Button>
