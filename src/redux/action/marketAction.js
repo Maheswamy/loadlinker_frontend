@@ -15,16 +15,15 @@ export const startGetMarketList = () => {
 export const startGetSingleEnquiry = (id) => {
   return async (dispatch) => {
     try {
-      const singleEnquiryResponse = await axios.get(`/api/marketplace/${id}`, {
+      const singleEnquiryResponse = await axios.get(`/api/enquiries/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(singleEnquiryResponse.data)
+      console.log(singleEnquiryResponse.data);
       dispatch(getSingleEnquiry(singleEnquiryResponse.data));
     } catch (e) {
       alert(e.message);
-
     }
   };
 };

@@ -10,7 +10,7 @@ import {
 import React, { useContext, useState } from "react";
 import { UserContext } from "./../../contextAPI/UserContext";
 import { isEmpty } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { startAddBid } from "../../redux/action/bidAction";
 
 const BidForm = ({ id }) => {
@@ -19,8 +19,8 @@ const BidForm = ({ id }) => {
   const [formError, setFormError] = useState({});
   const errors = {};
   const dispatch = useDispatch();
-  const { userState } = useContext(UserContext);
-  const { vehicles } = userState.user;
+  const {myVehicle}=useSelector((state)=>state.vehicle)
+
 
   const runValidation = () => {
     if (bidAmount <= 0) {
@@ -85,7 +85,7 @@ const BidForm = ({ id }) => {
               fullWidth
             >
               <MenuItem value="">Select your vehicle</MenuItem>
-              {vehicles?.map((ele) => (
+              {myVehicle?.map((ele) => (
                 <MenuItem key={ele._id} value={ele._id}>
                   {ele.vehicleNumber}
                 </MenuItem>

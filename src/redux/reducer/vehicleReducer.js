@@ -2,6 +2,10 @@ const intialState = { vehicleType: [], permit: [], myVehicle: [] };
 
 const vehicleReducer = (state = intialState, action) => {
   switch (action.type) {
+    case "GET_VEHICLE": {
+      console.log(action.payload)
+      return { ...state, myVehicle: action.payload };
+    }
     case "GET_VEHICLE_TYPE_LIST": {
       return { ...state, vehicleType: [...action.payload] };
     }

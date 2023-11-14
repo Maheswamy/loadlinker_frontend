@@ -40,8 +40,25 @@ export const startAddVehicle = (body) => {
       });
       dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
-      console.log(e)
+      console.log(e);
       alert(e.message);
+    }
+  };
+};
+
+export const startGetVehicle = () => {
+  return async (dispatch) => {
+    try {
+      const getVehicles = await axios.get("/api/vehicles", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(getVehicles.data);
+      dispatch(getVehicle(getVehicles.data))
+    } catch (e) {
+      console.log(e);
+      alert(e);
     }
   };
 };
@@ -57,6 +74,13 @@ const getPermitList = (data) => {
 const addVehicle = (data) => {
   return {
     type: "ADD_VEHICLE",
+    payload: data,
+  };
+};
+
+const getVehicle = (data) => {
+  return {
+    type: "GET_VEHICLE",
     payload: data,
   };
 };

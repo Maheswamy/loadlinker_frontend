@@ -17,6 +17,9 @@ import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 import Enquirycontainer from "./components/enquiry/Enquirycontainer";
 import { jwtDecode } from "jwt-decode";
 import AddEnquiryConatiner from "./components/enquiry/AddEnquiryContainer";
+import { startGetVehicle } from "./redux/action/vehicleAction";
+import { startGetMyBid } from "./redux/action/bidAction";
+import BidContainer from "./components/bid/BidContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -40,6 +43,10 @@ function App() {
             type: "USER_LOGIN",
             payload: userResponse.data.userData,
           });
+          if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+            dispatch(startGetVehicle());
+            dispatch(startGetMyBid());
+          }
         } catch (e) {
           console.log(e);
         }
@@ -57,7 +64,7 @@ function App() {
             minHeight: "100vh",
           }}
         >
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <Navbar />
             <Routes>
               <Route path="/register" element={<RegisterContainer />} />
@@ -67,6 +74,8 @@ function App() {
               <Route path="/addvehicle" element={<AddVehicleContainer />} />
               <Route path="/market/:id" element={<Enquirycontainer />} />
               <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
+              <Route path="/mybids" element={<BidContainer />} />
+
             </Routes>
           </Container>
         </div>

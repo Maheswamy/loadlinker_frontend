@@ -8,11 +8,28 @@ export const startAddBid = (formData) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      dispatch(addBid(addBidResponse.data))
+      dispatch(addBid(addBidResponse.data));
       console.log(addBidResponse);
     } catch (e) {
-      console.log(e)
-        alert(e.message);
+      console.log(e);
+      alert(e.message);
+    }
+  };
+};
+
+export const startGetMyBid = () => {
+  return async (disaptch) => {
+    try {
+      const myBidResponse = await axios.get("/api/bids", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(myBidResponse.data);
+      disaptch(getMyBids(myBidResponse.data));
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
     }
   };
 };
@@ -20,6 +37,13 @@ export const startAddBid = (formData) => {
 const addBid = (data) => {
   return {
     type: "ADD_BID",
+    payload: data,
+  };
+};
+
+const getMyBids = (data) => {
+  return {
+    type: "GET_OWNER_BID",
     payload: data,
   };
 };

@@ -6,7 +6,10 @@ import axios from "../../config/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../contextAPI/UserContext";
-
+import { startGetVehicle } from "../../redux/action/vehicleAction";
+import { startGetMyBid } from "../../redux/action/bidAction";
+import { useDispatch } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +18,7 @@ const Login = () => {
   const errors = {};
   const navigate = useNavigate();
   const { userState, userDispatch } = useContext(UserContext);
-
+  const dispatch = useDispatch();
   const validation = () => {
     console.log(username);
     if (username.includes(".")) {
@@ -54,7 +57,11 @@ const Login = () => {
             Authorization: localStorage.getItem("token"),
           },
         });
-        console.log(userResponse.data.userData)
+
+        if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+          dispatch(startGetVehicle());
+          dispatch(startGetMyBid());
+        }
         userDispatch({
           type: "USER_LOGIN",
           payload: userResponse.data.userData,
@@ -78,11 +85,15 @@ const Login = () => {
   return (
     <form onSubmit={handleLogIn}>
       <ToastContainer />
-      <Stack gap={2} type="form" sx={{
-        display:'flex',
-        justifyContent:"center",
-        alignItems:'center'
-      }}>
+      <Stack
+        gap={2}
+        type="form"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h2" color="text">
           Log In
         </Typography>
