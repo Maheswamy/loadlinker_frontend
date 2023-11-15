@@ -49,6 +49,22 @@ const EnquiryDetail = ({
               {new Date(dateOfUnload).toLocaleDateString()}
             </Typography>
           </Grid>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              Amount:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {amount}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Typography variant="body1" color="textSecondary">
+              PaymentType:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {paymentType}
+            </Typography>
+          </Grid>
           <Grid item xs={6}>
             <Typography variant="body1" color="textSecondary">
               Pickup Addess:
@@ -69,7 +85,6 @@ const EnquiryDetail = ({
               {dropUpLocation?.pin}
             </Typography>
           </Grid>
-          {/* Add more grid items as needed */}
         </Grid>
       )}
     </Box>

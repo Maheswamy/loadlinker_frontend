@@ -27,7 +27,7 @@ const Enquirycontainer = () => {
     <Box maxHeight={"91vh"}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7} p={2} component={"Paper"} elevation={5} round>
-          <Map coordinates={coordinates} />
+          <Map coordinates={coordinates} drag={false}/>
         </Grid>
 
         <Grid item xs={12} md={5}>

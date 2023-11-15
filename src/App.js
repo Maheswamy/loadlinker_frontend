@@ -22,6 +22,7 @@ import { startGetMyBid } from "./redux/action/bidAction";
 import BidContainer from "./components/bid/BidContainer";
 import MyEnquirylist from "./components/enquiry/Shipper/MyEnquirylist";
 import { startGetMyEnquiries } from "./redux/action/enquiryAction";
+import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -81,6 +82,10 @@ function App() {
               <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
               <Route path="/mybids" element={<BidContainer />} />
               <Route path="/myenquiries" element={<MyEnquirylist />} />
+              <Route
+                path="/myenquiries/:id"
+                element={<SelectBidContainer />}
+              ></Route>
             </Routes>
           </Container>
         </div>

@@ -5,17 +5,17 @@ import "../../../App.css";
 import { isEmpty } from "lodash";
 import { CircularProgress, Paper } from "@mui/material";
 
-const Map = ({ coordinates }) => {
+const Map = ({ coordinates,drag }) => {
   console.log(coordinates);
   return (
-    <Paper p={1} elevation={1} round>
+    <Paper p={1} elevation={1} round style={{ maxHeight: '80vh', overflow: 'hidden' }}>
       {isEmpty(coordinates) ? (
         <CircularProgress />
       ) : (
         <MapContainer
           doubleClickZoom={false}
           id="mapId"
-          zoom={5}
+          zoom={6}
           center={[20.5937, 78.9629]}
         >
           <TileLayer
@@ -30,6 +30,7 @@ const Map = ({ coordinates }) => {
             <DynamicRoutingMachine
               pick={coordinates[0]}
               drop={coordinates[1]}
+              drag={drag}
             />
           )}
         </MapContainer>

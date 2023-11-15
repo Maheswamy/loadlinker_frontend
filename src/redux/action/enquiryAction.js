@@ -51,6 +51,7 @@ export const startGetMyEnquiries = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      console.log(allEnquiriesResponse.data)
       dispatch(getAllEnquiries(allEnquiriesResponse.data));
     } catch (e) {
       console.log(e);

@@ -3,13 +3,11 @@ import React, { useEffect, useRef } from "react";
 import L from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
-import { jwtDecode } from "jwt-decode";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { newCalculationCoordinates } from "../../../redux/action/enquiryAction";
 
 // Function to create a routing machine layer based on provided pick, drop, role, and callback for waypoints drag
-const createRoutineMachineLayer = ({ pick, drop, role, onWaypointsDrag }) => {
+const createRoutineMachineLayer = ({ pick, drop, drag, onWaypointsDrag }) => {
   // Creating a new instance of the Leaflet Routing control
   const instance = L.Routing.control({
     // Setting initial waypoints based on pick and drop locations
@@ -23,9 +21,9 @@ const createRoutineMachineLayer = ({ pick, drop, role, onWaypointsDrag }) => {
     // Allowing/disallowing adding waypoints based on the user's role
     addWaypoints: false,
     // Enabling/disabling route dragging while the mouse is down
-    routeWhileDragging: role === "shipper" ? true : false,
+    routeWhileDragging: drag,
     // Enabling/disabling draggable waypoints based on the user's role
-    draggableWaypoints: role === "shipper" ? true : false,
+    draggableWaypoints: drag,
     // Automatically fitting the map to the selected routes
     fitSelectedRoutes: true,
     // Displaying alternative routes
@@ -48,9 +46,7 @@ const createRoutineMachineLayer = ({ pick, drop, role, onWaypointsDrag }) => {
 const RoutingMachine = createControlComponent(createRoutineMachineLayer);
 
 // Functional component for a dynamic routing machine
-const DynamicRoutingMachine = ({ pick, drop }) => {
-  // Decoding the role from the JWT token stored in local storage
-  const role = jwtDecode(localStorage.getItem("token")).role;
+const DynamicRoutingMachine = ({ pick, drop,drag }) => {
   // Creating a ref to access and modify the routing machine instance
   const ref = useRef();
 
@@ -83,7 +79,7 @@ const DynamicRoutingMachine = ({ pick, drop }) => {
       ref={ref}
       pick={pick}
       drop={drop}
-      role={role}
+      drag={drag}
       onWaypointsDrag={handleWaypointsDrag}
     />
   );

@@ -43,7 +43,7 @@ export const startGetEnquiryBids = (enquiryId, navigate) => {
         },
       });
       console.log(getBidsResponse.data);
-      navigate("/enquiryBids");
+      navigate(`/myenquiries/${enquiryId}`);
       dispatch(getEnquiryBids(getBidsResponse.data));
     } catch (e) {
       console.log(e);
@@ -67,7 +67,7 @@ const getMyBids = (data) => {
 
 const getEnquiryBids = (data) => {
   return {
-    type: "GET_BIDS_OF_ENQUITY",
+    type: "GET_BIDS_OF_ENQUIRY",
     payload: data,
   };
 };

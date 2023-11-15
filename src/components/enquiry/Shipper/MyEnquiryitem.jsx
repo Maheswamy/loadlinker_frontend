@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { startGetEnquiryBids } from "../../../redux/action/bidAction";
 
 const MyEnquiryitem = ({
-    _id,
+  amount,
+  _id,
   createdAt,
   bids,
   loadType,
@@ -15,11 +16,10 @@ const MyEnquiryitem = ({
 }) => {
   const dispatch = useDispatch();
 
-  const navigate=useNavigate()
-  const handleShowmore=(id)=>{
-    dispatch(startGetEnquiryBids(id,navigate))
-    
-}
+  const navigate = useNavigate();
+  const handleShowmore = (id) => {
+    dispatch(startGetEnquiryBids(id, navigate));
+  };
 
   return (
     <Container>
@@ -79,7 +79,12 @@ const MyEnquiryitem = ({
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Button variant="contained" color="primary" type="button" onClick={()=>handleShowmore(_id)}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="button"
+              onClick={() => handleShowmore(_id)}
+            >
               Show more
             </Button>
             <Button variant="contained" color="primary">
