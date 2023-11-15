@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from '../../config/axios'
 
 export const startGetEnquiryCalculation = (formData) => {
   return async (dispatch) => {
     try {
       const calculationRespose = await axios.post(
-        "http://localhost:3080/api/enquiries/calculate",
+        "/api/enquiries/calculate",
         formData,
         {
           headers: {
@@ -25,7 +25,7 @@ export const startAddEnquiry = (formData) => {
   return async (dispatch) => {
     try {
       const addEnquiryResponse = await axios.post(
-        "http://localhost:3080/api/enquiries/create",
+        "/api/enquiries/create",
         formData,
         {
           headers: {
@@ -39,6 +39,21 @@ export const startAddEnquiry = (formData) => {
     } catch (e) {
       console.log(e);
       alert(e.message);
+    }
+  };
+};
+
+export const startGetMyEnquiries = () => {
+  return async (dispatch) => {
+    try {
+      const allEnquiriesResponse = await axios.get("/api/enquiries", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      dispatch(getAllEnquiries(allEnquiriesResponse.data));
+    } catch (e) {
+      console.log(e);
     }
   };
 };
@@ -65,6 +80,13 @@ export const deleteCalculate = () => {
 export const newCalculationCoordinates = (data) => {
   return {
     type: "NEW_CALCULATION_COORDINATES",
+    payload: data,
+  };
+};
+
+const getAllEnquiries = (data) => {
+  return {
+    type: "GET_MY_ENQUIRIES",
     payload: data,
   };
 };

@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import AddEnquiryForm from "./AddEnquiryForm";
-import Map from "./Map";
+import Map from "../common/Map";
 import { useSelector } from "react-redux";
 
 const AddEnquiryConatiner = () => {

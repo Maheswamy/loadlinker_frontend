@@ -8,10 +8,10 @@ import {
   InputLabel,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { UserContext } from "./../../contextAPI/UserContext";
+import { UserContext } from "../../../contextAPI/UserContext";
 import { isEmpty } from "lodash";
 import { useDispatch,useSelector } from "react-redux";
-import { startAddBid } from "../../redux/action/bidAction";
+import { startAddBid } from "../../../redux/action/bidAction";
 
 const BidForm = ({ id }) => {
   const [bidAmount, setBidAmount] = useState("");

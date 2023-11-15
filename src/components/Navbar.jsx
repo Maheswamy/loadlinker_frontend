@@ -53,7 +53,7 @@ const Navbar = () => {
               My Shipments
             </Typography>
           </Link>
-          <Link to="/enquiries" style={{ textDecoration: "none" }}>
+          <Link to="/myenquiries" style={{ textDecoration: "none" }}>
             <Typography variant='button' color="primary">
               My Enquiries
             </Typography>
@@ -106,7 +106,7 @@ const Navbar = () => {
           <Stack gap={1} direction="row" alignItems="center">
             <Box display="flex" alignItems="center">
               <img
-                src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/_042d902d-1b10-4c45-aa2f-965175cc4544.jpg"
+                src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/loadlinker_logo.png"
                 alt="Logo"
                 style={{ maxWidth: "auto", maxHeight: "50px" }}
               />

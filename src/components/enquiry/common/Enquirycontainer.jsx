@@ -3,12 +3,11 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EnquiryDetail from "./EnquiryDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { startGetSingleEnquiry } from "../../redux/action/marketAction";
-import BidForm from "./BidForm";
-import BidList from "./BidList";
+import { startGetSingleEnquiry } from "../../../redux/action/marketAction";
+import BidForm from "../owner/BidForm";
 import { jwtDecode } from "jwt-decode";
 import Map from "./Map";
-import { isEmpty } from "lodash";
+
 
 const Enquirycontainer = () => {
   const { id } = useParams();

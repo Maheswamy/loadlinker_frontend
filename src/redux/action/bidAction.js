@@ -34,6 +34,23 @@ export const startGetMyBid = () => {
   };
 };
 
+export const startGetEnquiryBids = (enquiryId, navigate) => {
+  return async (dispatch) => {
+    try {
+      const getBidsResponse = await axios.get(`/api/bids/${enquiryId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(getBidsResponse.data);
+      navigate("/enquiryBids");
+      dispatch(getEnquiryBids(getBidsResponse.data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 const addBid = (data) => {
   return {
     type: "ADD_BID",
@@ -45,5 +62,18 @@ const getMyBids = (data) => {
   return {
     type: "GET_OWNER_BID",
     payload: data,
+  };
+};
+
+const getEnquiryBids = (data) => {
+  return {
+    type: "GET_BIDS_OF_ENQUITY",
+    payload: data,
+  };
+};
+
+const emptyEnquiryBids = () => {
+  return {
+    type: "REMOVE_BIDS_OF_ENQUIRY",
   };
 };

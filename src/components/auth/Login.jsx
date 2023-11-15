@@ -10,6 +10,7 @@ import { startGetVehicle } from "../../redux/action/vehicleAction";
 import { startGetMyBid } from "../../redux/action/bidAction";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
+import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +62,9 @@ const Login = () => {
         if (jwtDecode(localStorage.getItem("token")).role === "owner") {
           dispatch(startGetVehicle());
           dispatch(startGetMyBid());
+        }
+        if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
+          dispatch(startGetMyEnquiries());
         }
         userDispatch({
           type: "USER_LOGIN",

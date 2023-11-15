@@ -16,13 +16,19 @@ const enquiryReducer = (state = intialState, action) => {
     case "NEW_CALCULATION_COORDINATES": {
       return { ...state, newCoordinates: { ...action.payload } };
     }
-    case "ADD_ENQUIY": {
-      console.log(action.payload);
-      return { ...state, enquries: [...state.enquries, action.payload] };
-    }
     case "REMOVE_CALCULATION": {
       return { ...state, enquiryCalculation: {} };
     }
+    case "GET_MY_ENQUIRIES": {
+      console.log(action.payload);
+      return { ...state, enquries: [...action.payload] };
+    }
+
+    case "ADD_ENQUIRY": {
+      console.log(action.payload);
+      return { ...state, enquries: [...state.enquries, action.payload] };
+    }
+
     default: {
       return { ...state };
     }

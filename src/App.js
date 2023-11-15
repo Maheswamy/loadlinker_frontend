@@ -14,12 +14,14 @@ import MarketContainer from "./components/market/MarketContainer";
 import axios from "./config/axios";
 import Profile from "./components/auth/Profile";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
-import Enquirycontainer from "./components/enquiry/Enquirycontainer";
+import Enquirycontainer from "./components/enquiry/common/Enquirycontainer";
 import { jwtDecode } from "jwt-decode";
-import AddEnquiryConatiner from "./components/enquiry/AddEnquiryContainer";
+import AddEnquiryConatiner from "./components/enquiry/Shipper/AddEnquiryContainer";
 import { startGetVehicle } from "./redux/action/vehicleAction";
 import { startGetMyBid } from "./redux/action/bidAction";
 import BidContainer from "./components/bid/BidContainer";
+import MyEnquirylist from "./components/enquiry/Shipper/MyEnquirylist";
+import { startGetMyEnquiries } from "./redux/action/enquiryAction";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -46,6 +48,9 @@ function App() {
           if (jwtDecode(localStorage.getItem("token")).role === "owner") {
             dispatch(startGetVehicle());
             dispatch(startGetMyBid());
+          }
+          if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
+            dispatch(startGetMyEnquiries());
           }
         } catch (e) {
           console.log(e);
@@ -75,7 +80,7 @@ function App() {
               <Route path="/market/:id" element={<Enquirycontainer />} />
               <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
               <Route path="/mybids" element={<BidContainer />} />
-
+              <Route path="/myenquiries" element={<MyEnquirylist />} />
             </Routes>
           </Container>
         </div>

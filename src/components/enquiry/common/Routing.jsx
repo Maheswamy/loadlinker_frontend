@@ -6,7 +6,7 @@ import "leaflet-routing-machine";
 import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { newCalculationCoordinates } from "../../redux/action/enquiryAction";
+import { newCalculationCoordinates } from "../../../redux/action/enquiryAction";
 
 // Function to create a routing machine layer based on provided pick, drop, role, and callback for waypoints drag
 const createRoutineMachineLayer = ({ pick, drop, role, onWaypointsDrag }) => {
