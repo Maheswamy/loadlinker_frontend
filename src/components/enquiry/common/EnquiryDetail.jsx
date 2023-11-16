@@ -11,13 +11,16 @@ const EnquiryDetail = ({
   dropUpLocation,
   amount,
   paymentType,
+  bidAmount,
+  vehicleNumber,
+  status,
 }) => {
   console.log(loadType);
   return (
     <Box>
       {isEmpty(EnquiryDetail) && (
         <Grid container spacing={5}>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body1" color="textSecondary">
               Load Weight:
             </Typography>
@@ -25,7 +28,7 @@ const EnquiryDetail = ({
               {loadWeight} Kg
             </Typography>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body1" color="textSecondary">
               Load Type:
             </Typography>
@@ -33,31 +36,7 @@ const EnquiryDetail = ({
               {loadType}
             </Typography>
           </Grid>
-          <Grid item xs={6} md={3}>
-            <Typography variant="body1" color="textSecondary">
-              Pickup Date:
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              {new Date(dateOfPickUp).toLocaleDateString()}
-            </Typography>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Typography variant="body1" color="textSecondary">
-              Drop Date:
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              {new Date(dateOfUnload).toLocaleDateString()}
-            </Typography>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Typography variant="body1" color="textSecondary">
-              Amount:
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              {amount}
-            </Typography>
-          </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body1" color="textSecondary">
               PaymentType:
             </Typography>
@@ -65,9 +44,65 @@ const EnquiryDetail = ({
               {paymentType}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body1" color="textSecondary">
-              Pickup Addess:
+              Pickup Date:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {new Date(dateOfPickUp).toLocaleDateString()}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Typography variant="body1" color="textSecondary">
+              Drop Date:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {new Date(dateOfUnload).toLocaleDateString()}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="body1" color="textSecondary">
+              Amount:
+            </Typography>
+            <Typography variant="body1" color="textPrimary">
+              {amount}
+            </Typography>
+          </Grid>
+          {bidAmount && (
+            <Grid item xs={12} md={4}>
+              <Typography variant="body1" color="textSecondary">
+                Bid Own Amount:
+              </Typography>
+              <Typography variant="body1" color="textPrimary">
+                {bidAmount}
+              </Typography>
+            </Grid>
+          )}
+          {status && (
+            <Grid item xs={12} md={4}>
+              <Typography variant="body1" color="textSecondary">
+                status:
+              </Typography>
+              <Typography variant="body1" color="textPrimary">
+                {status}
+              </Typography>
+            </Grid>
+          )}
+          {vehicleNumber && (
+            <Grid item xs={12} md={4}>
+              <Typography variant="body1" color="textSecondary">
+                vehicel Number:
+              </Typography>
+              <Typography variant="body1" color="textPrimary">
+                {vehicleNumber}
+              </Typography>
+            </Grid>
+          )}
+
+          <Grid item xs={12} md={6}>
+            <Typography variant="body1" color="textSecondary">
+              Pickup Address:
             </Typography>
             <Typography variant="body1" color="textPrimary">
               {pickUpLocation?.address},{pickUpLocation?.area},
@@ -75,9 +110,9 @@ const EnquiryDetail = ({
               {pickUpLocation?.pin}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="body1" color="textSecondary">
-              Drop Addess:
+              Drop Address:
             </Typography>
             <Typography variant="body1" color="textPrimary">
               {dropUpLocation?.address},{dropUpLocation?.area},

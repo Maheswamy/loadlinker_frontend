@@ -11,6 +11,7 @@ import { startGetMyBid } from "../../redux/action/bidAction";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
+import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -65,6 +66,7 @@ const Login = () => {
         }
         if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
           dispatch(startGetMyEnquiries());
+          dispatch(startGetAllMyShipments());
         }
         userDispatch({
           type: "USER_LOGIN",

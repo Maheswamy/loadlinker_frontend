@@ -1,4 +1,4 @@
-import axios from '../../config/axios'
+import axios from "../../config/axios";
 
 export const startGetEnquiryCalculation = (formData) => {
   return async (dispatch) => {
@@ -51,7 +51,7 @@ export const startGetMyEnquiries = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(allEnquiriesResponse.data)
+      console.log(allEnquiriesResponse.data);
       dispatch(getAllEnquiries(allEnquiriesResponse.data));
     } catch (e) {
       console.log(e);
@@ -88,6 +88,13 @@ export const newCalculationCoordinates = (data) => {
 const getAllEnquiries = (data) => {
   return {
     type: "GET_MY_ENQUIRIES",
+    payload: data,
+  };
+};
+
+export const removeEnquiry = (data) => {
+  return {
+    type: "REMOVE_ENQUIRY",
     payload: data,
   };
 };

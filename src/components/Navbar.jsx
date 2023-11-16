@@ -18,23 +18,23 @@ const Navbar = () => {
       return (
         <Stack direction={"row"} gap={2}>
           <Link to="/mybids" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               My Bids
             </Typography>
           </Link>
           <Link to="/addvehicle" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               Add Vehicle
             </Typography>
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               Profile
             </Typography>
           </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <Typography
-              variant='button'
+              variant="button"
               color="primary"
               onClick={() => {
                 handleLogOut();
@@ -49,28 +49,28 @@ const Navbar = () => {
       return (
         <Stack direction={"row"} gap={1}>
           <Link to="/shipments" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               My Shipments
             </Typography>
           </Link>
           <Link to="/myenquiries" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               My Enquiries
             </Typography>
           </Link>
           <Link to="/addenquiry" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               Add Enquire
             </Typography>
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant='button' color="primary">
+            <Typography variant="button" color="primary">
               Profile
             </Typography>
           </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <Typography
-              variant='button'
+              variant="button"
               color="primary"
               onClick={() => {
                 handleLogOut();
@@ -91,6 +91,14 @@ const Navbar = () => {
       component={"nav"}
       maxWidth="xl"
       elevation={10}
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1000, // You can adjust the z-index based on your layout
+        backgroundColor: "#fff",
+        padding: "10px 0",
+        // borderBottom: "1px solid #ccc", // Optional: Add a border at the bottom for separation
+      }}
     >
       <Grid item xs={12} sm={6} md={4}>
         <Stack
@@ -130,7 +138,7 @@ const Navbar = () => {
         >
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
-              variant='button'
+              variant="button"
               color="primary"
               sx={{ textDecoration: "none" }}
             >
@@ -141,12 +149,12 @@ const Navbar = () => {
           {isEmpty(userState.user) ? (
             <Stack direction="row" gap={2}>
               <Link to="/register" style={{ textDecoration: "none" }}>
-                <Typography variant='button' color="primary">
+                <Typography variant="button" color="primary">
                   Register
                 </Typography>
               </Link>
               <Link to="/login" style={{ textDecoration: "none" }}>
-                <Typography variant='button' color="primary">
+                <Typography variant="button" color="primary">
                   Login
                 </Typography>
               </Link>

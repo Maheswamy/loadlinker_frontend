@@ -23,6 +23,10 @@ import BidContainer from "./components/bid/BidContainer";
 import MyEnquirylist from "./components/enquiry/Shipper/MyEnquirylist";
 import { startGetMyEnquiries } from "./redux/action/enquiryAction";
 import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
+import ProfileContainer from "./components/profile/ProfileContainer";
+import ShipmentShowPage from "./components/shipment/ShipmentShowPage";
+import { startGetAllMyShipments } from "./redux/action/shipmentAction";
+import ShipmentList from "./components/shipment/ShipmentList";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -52,6 +56,7 @@ function App() {
           }
           if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
             dispatch(startGetMyEnquiries());
+            dispatch(startGetAllMyShipments());
           }
         } catch (e) {
           console.log(e);
@@ -76,12 +81,15 @@ function App() {
               <Route path="/register" element={<RegisterContainer />} />
               <Route path="/login" element={<LoginConatiner />} />
               <Route path="/" element={<MarketContainer />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/addvehicle" element={<AddVehicleContainer />} />
               <Route path="/market/:id" element={<Enquirycontainer />} />
               <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
               <Route path="/mybids" element={<BidContainer />} />
               <Route path="/myenquiries" element={<MyEnquirylist />} />
+              <Route path="/profile" element={<ProfileContainer />} />
+              <Route path="/shipment/:id" element={<ShipmentShowPage />} />
+              <Route path="/shipments" element={<ShipmentList />} />
+
               <Route
                 path="/myenquiries/:id"
                 element={<SelectBidContainer />}

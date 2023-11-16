@@ -41,3 +41,10 @@ const getSingleEnquiry = (data) => {
     payload: data,
   };
 };
+
+export const removeEnquiryFromMarket = (data) => {
+  return {
+    type: "REMOVE_MARKET_ENQUIRY",
+    payload: data,
+  };
+};

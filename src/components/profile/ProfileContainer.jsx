@@ -1,9 +1,14 @@
 import React from "react";
+import ProfileInfo from "./ProfileInfo";
 
 const ProfileContainer = () => {
-  return <div>
+  console.log('skjdhskj')
+  return (
     
-  </div>;
+    <div>
+      <ProfileInfo />
+    </div>
+  );
 };
 
 export default ProfileContainer;

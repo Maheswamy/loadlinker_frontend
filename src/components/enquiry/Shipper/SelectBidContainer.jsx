@@ -12,7 +12,7 @@ const SelectBidContainer = () => {
     state.enquiry.enquries.find((ele) => ele._id === id)
   );
 
-  const coordinatesObj = enquiry.coordinates;
+  const coordinatesObj = enquiry?.coordinates;
 
   const coordinates = [
     coordinatesObj?.pickUpCoordinate,

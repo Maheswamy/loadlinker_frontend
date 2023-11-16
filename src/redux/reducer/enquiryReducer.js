@@ -28,6 +28,10 @@ const enquiryReducer = (state = intialState, action) => {
       console.log(action.payload);
       return { ...state, enquries: [...state.enquries, action.payload] };
     }
+    case "REMOVE_ENQUIRY":{
+      console.log(action.payload);
+    return {...state,enquries:[...state.enquries.filter((ele)=>ele._id!==action.payload)]}
+    }
 
     default: {
       return { ...state };
