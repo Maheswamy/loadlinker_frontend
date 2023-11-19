@@ -13,7 +13,6 @@ const Navbar = () => {
   };
   const navbarCondition = () => {
     const role = jwtDecode(localStorage.getItem("token")).role;
-    console.log(role);
     if (role === "owner") {
       return (
         <Stack direction={"row"} gap={2}>
@@ -25,6 +24,11 @@ const Navbar = () => {
           <Link to="/addvehicle" style={{ textDecoration: "none" }}>
             <Typography variant="button" color="primary">
               Add Vehicle
+            </Typography>
+          </Link>
+          <Link to="/myvehicle" style={{ textDecoration: "none" }}>
+            <Typography variant="button" color="primary">
+              My Vehicle
             </Typography>
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
@@ -103,7 +107,7 @@ const Navbar = () => {
       <Grid item xs={12} sm={6} md={4}>
         <Stack
           elevation={1}
-          square
+          
           gap={2}
           height={"9vh"}
           direction="row"

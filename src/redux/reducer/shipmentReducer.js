@@ -1,4 +1,4 @@
-const intialState = { myShipments: [], serverError: {} };
+const intialState = { myShipments: [], serverError: {}, payment: {} };
 
 const shipmentReducer = (state = intialState, action) => {
   switch (action.type) {
@@ -7,6 +7,9 @@ const shipmentReducer = (state = intialState, action) => {
     }
     case "APPROVE_BID": {
       return { ...state, myShipments: [...state.myShipments, action.payload] };
+    }
+    case "PAYMENT_DETAIL": {
+      return { ...state, payment: { ...action.payload } };
     }
     default: {
       return { ...state };

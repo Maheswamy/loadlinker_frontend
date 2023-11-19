@@ -25,7 +25,6 @@ export const startGetMyBid = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(myBidResponse.data);
       disaptch(getMyBids(myBidResponse.data));
     } catch (e) {
       console.log(e);

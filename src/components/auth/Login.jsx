@@ -1,4 +1,4 @@
-import { Paper, Stack, TextField, Button, Typography } from "@mui/material";
+import { Stack, TextField, Button, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
@@ -22,9 +22,7 @@ const Login = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const dispatch = useDispatch();
   const validation = () => {
-    console.log(username);
     if (username.includes(".")) {
-      console.log("kj");
       if (username.trim().length === 0) {
         errors.username = "email or mobile number is required";
       } else if (!isEmail(username)) {
@@ -48,7 +46,6 @@ const Login = () => {
     setServerError({});
     e.preventDefault();
     const validationResult = validation();
-    console.log(validationResult);
     if (validationResult === 0) {
       const body = { username, password };
       try {
@@ -74,7 +71,6 @@ const Login = () => {
         });
         navigate("/");
       } catch (e) {
-        console.log(e.response.data);
         if (e.response.data.error.includes("verify")) {
           return toast.error("Please verify your account before SignIn", {
             position: toast.POSITION.TOP_RIGHT,

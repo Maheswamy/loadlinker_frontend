@@ -22,7 +22,6 @@ const RegisterContainer = () => {
         md={4}
         component={Paper}
         elevation={6}
-        square
         sx={{
           bgcolor: "#ffece6",
           display: "flex",

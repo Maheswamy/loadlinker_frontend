@@ -46,6 +46,42 @@ export const startGetAllMyShipments = () => {
   };
 };
 
+export const startPayment = (formdata) => {
+  return async (dispatch) => {
+    try {
+      const paymentResponse = await axios.post("/api/payment", formdata, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      localStorage.setItem("transactionId", paymentResponse.data.transactionId);
+      dispatch(paymentToShipment(paymentResponse.data));
+      window.location = paymentResponse.data.url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const startUpdatePayment = () => {
+  return async (dispatch) => {
+    try {
+      const paymentResponse = await axios.post(
+        "/api/payment",
+        { transactionId: localStorage.getItem("transactionId") },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(paymentResponse.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 const approveBid = (data) => {
   return {
     type: "APPROVE_BID",
@@ -55,4 +91,11 @@ const approveBid = (data) => {
 
 const getAllMyShipments = (data) => {
   return { type: "GET_SHIPMENTS", payload: data };
+};
+
+const paymentToShipment = (data) => {
+  return {
+    type: "PAYMENT_DETAIL",
+    payload: data,
+  };
 };

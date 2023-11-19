@@ -1,5 +1,5 @@
 import { Paper, Typography, Button, Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { startApproveBid } from "../../../redux/action/shipmentAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ const BidItem = ({ bidAmount, vehicleId, userId, _id, enquiryId }) => {
     const bidId = _id;
     dispatch(startApproveBid(bidId, enquiryId,navigate));
   };
+  
   return (
     <Paper style={{ padding: "20px" }}>
       <Grid container spacing={2}>

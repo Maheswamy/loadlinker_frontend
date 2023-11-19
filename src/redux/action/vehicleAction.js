@@ -54,7 +54,6 @@ export const startGetVehicle = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(getVehicles.data);
       dispatch(getVehicle(getVehicles.data))
     } catch (e) {
       console.log(e);

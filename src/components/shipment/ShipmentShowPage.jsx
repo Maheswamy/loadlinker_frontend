@@ -1,18 +1,39 @@
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import { Grid } from "@mui/material";
 import EnquiryDetail from "../enquiry/common/EnquiryDetail";
 import Map from "./../enquiry/common/Map";
-import { Grid } from "@mui/material";
-import { useSelector } from "react-redux";
 import ShipmentAction from "./ShipmentAction";
+import { startUpdatePayment } from "../../redux/action/shipmentAction";
 
 const ShipmentShowPage = () => {
   const { id } = useParams();
-  const { bidId, enquiryId, status } = useSelector((state) =>
-    state.shipment.myShipments.find((ele) => ele._id === id)
-  );
+  const state = useSelector((state) => state);
+  const dispatch=useDispatch()
+  const myShipments = state.shipment.myShipments || [];
+  const shipment = myShipments.find((ele) => ele?._id === id) || {};
+  const { bidId = {}, enquiryId = {}, status } = shipment;
+
+  const coordinatesObj = enquiryId.coordinates || {};
+  const coordinates = [
+    coordinatesObj?.pickUpCoordinate,
+    coordinatesObj?.dropCoordinate,
+  ];
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString).get('payment');
+    console.log(urlParams);
+
+    if(urlParams==='success'){
+      dispatch(startUpdatePayment())
+    }
+  }, []);
+
   const details = {
     bidAmount: bidId.bidAmount,
-    vehicleNumber: bidId.vehicleId.vehicleNumber,
+    vehicleNumber: bidId.vehicleId?.vehicleNumber,
     amount: enquiryId.amount,
     dropUpLocation: enquiryId.dropUpLocation,
     pickUpLocation: enquiryId.pickUpLocation,
@@ -21,23 +42,24 @@ const ShipmentShowPage = () => {
     paymentType: enquiryId.paymentType,
     status,
   };
-  const coordinatesObj = enquiryId.coordinates;
-  const coordinates = [
-    coordinatesObj?.pickUpCoordinate,
-    coordinatesObj?.dropCoordinate,
-  ];
+
   return (
     <Grid container spacing={2}>
-      <Grid container item xs={12} spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Map drag={false} coordinates={coordinates} />
+      {myShipments.length > 0 && (
+        <Grid container item xs={12} spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Map drag={false} coordinates={coordinates} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <EnquiryDetail {...details} />
+            <ShipmentAction
+              status={status}
+              shipmentId={id}
+              amount={bidId.bidAmount}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <EnquiryDetail {...details} />
-          <ShipmentAction status={status}/>
-        </Grid>
-
-      </Grid>
+      )}
     </Grid>
   );
 };

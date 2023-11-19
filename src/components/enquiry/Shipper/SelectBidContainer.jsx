@@ -1,17 +1,22 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import EnquiryDetail from "./../common/EnquiryDetail";
 import Map from "./../common/Map";
 import BidList from "./BidList";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { startGetEnquiryBids } from "../../../redux/action/bidAction";
 
 const SelectBidContainer = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const enquiry = useSelector((state) =>
     state.enquiry.enquries.find((ele) => ele._id === id)
   );
-
+  useEffect(() => {
+    dispatch(startGetEnquiryBids(id, navigate));
+  }, []);
   const coordinatesObj = enquiry?.coordinates;
 
   const coordinates = [

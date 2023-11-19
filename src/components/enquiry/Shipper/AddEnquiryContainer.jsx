@@ -14,8 +14,7 @@ const AddEnquiryConatiner = () => {
         <Map coordinates={[pickUpCoordinate, dropCoordinate]} drag={true}/>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <AddEnquiryForm />
-        
+        {/* <AddEnquiryForm /> */}
       </Grid>
     </Grid>
   );

@@ -17,7 +17,7 @@ import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 import Enquirycontainer from "./components/enquiry/common/Enquirycontainer";
 import { jwtDecode } from "jwt-decode";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/AddEnquiryContainer";
-import { startGetVehicle } from "./redux/action/vehicleAction";
+import { startGetVehicle, startPermitList } from "./redux/action/vehicleAction";
 import { startGetMyBid } from "./redux/action/bidAction";
 import BidContainer from "./components/bid/BidContainer";
 import MyEnquirylist from "./components/enquiry/Shipper/MyEnquirylist";
@@ -27,6 +27,8 @@ import ProfileContainer from "./components/profile/ProfileContainer";
 import ShipmentShowPage from "./components/shipment/ShipmentShowPage";
 import { startGetAllMyShipments } from "./redux/action/shipmentAction";
 import ShipmentList from "./components/shipment/ShipmentList";
+import MyVehicle from "./components/vehicle/MyVehicle";
+import VehicleShowPage from "./components/vehicle/VehicleShowPage";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -50,6 +52,8 @@ function App() {
             type: "USER_LOGIN",
             payload: userResponse.data.userData,
           });
+          dispatch(startPermitList());
+
           if (jwtDecode(localStorage.getItem("token")).role === "owner") {
             dispatch(startGetVehicle());
             dispatch(startGetMyBid());
@@ -89,7 +93,8 @@ function App() {
               <Route path="/profile" element={<ProfileContainer />} />
               <Route path="/shipment/:id" element={<ShipmentShowPage />} />
               <Route path="/shipments" element={<ShipmentList />} />
-
+              <Route path="/myvehicle" element={<MyVehicle />} />
+              <Route path="/myvehicle/:id" element={<VehicleShowPage />} />
               <Route
                 path="/myenquiries/:id"
                 element={<SelectBidContainer />}
