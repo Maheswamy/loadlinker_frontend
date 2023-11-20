@@ -176,7 +176,7 @@ const AddVehicleForm = () => {
             <Typography>None</Typography>
           </MenuItem>
           {vehicle.vehicleType.map((ele) => (
-            <MenuItem value={ele._id}>
+            <MenuItem value={ele._id} key={ele._id}>
               <Typography>{ele.name}</Typography>
             </MenuItem>
           ))}

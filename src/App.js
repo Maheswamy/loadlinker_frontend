@@ -32,6 +32,7 @@ import EnquiryContainer from "./components/enquiry/common/EnquiryContainer";
 import AddEnquiryContainer from "./components/enquiry/Shipper/AddEnquiryContainer";
 import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
 import { UserContext } from "./contextAPI/UserContext";
+import BidTableShowPage from "./components/bid/BidTableShowPage";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -41,46 +42,49 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(startGetMarketList());
     if (localStorage.getItem("token")) {
-      try {
-        const userResponse = await axios.get("/api/users/profile", {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        });
+      (async () => {
+        try {
+          const userResponse = await axios.get("/api/users/profile", {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          });
 
-        userDispatch({
-          type: "USER_LOGIN",
-          payload: userResponse.data.userData,
-        });
+          userDispatch({
+            type: "USER_LOGIN",
+            payload: userResponse.data.userData,
+          });
 
-        const userRole = jwtDecode(localStorage.getItem("token")).role;
+          const userRole = jwtDecode(localStorage.getItem("token")).role;
 
-        switch (userRole) {
-          case "owner":
-            dispatch(startGetVehicle());
-            dispatch(startGetMyBid());
-            dispatch(startGetAllMyShipments());
-            dispatch(startPermitList());
-            dispatch(startVehicleType());
+          switch (userRole) {
+            case "owner":
+              dispatch(startGetVehicle());
+              dispatch(startGetMyBid());
+              dispatch(startGetAllMyShipments());
+              dispatch(startPermitList());
+              dispatch(startVehicleType());
 
-            break;
+              break;
 
-          case "shipper":
-            dispatch(startGetMyEnquiries());
-            dispatch(startGetAllMyShipments());
-            dispatch(startVehicleType());
+            case "shipper":
+              dispatch(startGetMyEnquiries());
+              dispatch(startGetAllMyShipments());
+              dispatch(startVehicleType());
 
-            break;
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
+        } catch (e) {
+          console.log(e);
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
-      }
+      })();
     }
   }, []);
 
@@ -94,23 +98,24 @@ function App() {
             minHeight: "100vh",
           }}
         >
+          <Navbar />
           <Container maxWidth="lg">
-            <Navbar />
             <Routes>
               <Route path="/" element={<MarketContainer />} />
+              <Route path="/market/:id" element={<EnquiryContainer />} />
               <Route path="/register" element={<RegisterContainer />} />
               <Route path="/login" element={<LoginContainer />} />
               <Route path="/addvehicle" element={<AddVehicleContainer />} />
-              <Route path="/market/:id" element={<EnquiryContainer />} />
-              <Route path="/addenquiry" element={<AddEnquiryContainer />} />
-              <Route path="/mybids" element={<BidContainer />} />
-              <Route path="/myenquiries" element={<MyEnquiryList />} />
-              <Route path="/profile" element={<ProfileContainer />} />
-              <Route path="/shipment/:id" element={<ShipmentShowPage />} />
-              <Route path="/shipments" element={<ShipmentList />} />
               <Route path="/myvehicle" element={<MyVehicle />} />
               <Route path="/myvehicle/:id" element={<VehicleShowPage />} />
+              <Route path="/addenquiry" element={<AddEnquiryContainer />} />
+              <Route path="/myenquiries" element={<MyEnquiryList />} />
               <Route path="/myenquiries/:id" element={<SelectBidContainer />} />
+              <Route path="/mybids" element={<BidContainer />} />
+              <Route path="/mybids/:id" element={<BidTableShowPage />} />
+              <Route path="/shipments" element={<ShipmentList />} />
+              <Route path="/shipment/:id" element={<ShipmentShowPage />} />
+              <Route path="/profile" element={<ProfileContainer />} />
             </Routes>
           </Container>
         </div>

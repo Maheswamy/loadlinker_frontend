@@ -90,7 +90,7 @@ const ShipmentItem = ({ bidId, enquiryId, status,_id }) => {
           </Button>
         </Grid> */}
         <Grid item>
-          <Button variant="text" color="primary" type="button" onClick={handleShowMore}>
+          <Button variant="outlined" color="primary" type="button" onClick={handleShowMore}>
             Show more
           </Button>
         </Grid>

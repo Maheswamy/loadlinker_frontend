@@ -50,6 +50,26 @@ export const startGetEnquiryBids = (enquiryId, navigate) => {
   };
 };
 
+export const startGetSingleBidDetails = (bidId) => {
+  return async (dispatch) => {
+    try {
+      const singleBidResponse = await axios.get(
+        `/api/mybids/${bidId}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(singleBidResponse.data,'sdasd');
+      dispatch(getSingleBidDetails(singleBidResponse.data));
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
+    }
+  };
+};
+
 const addBid = (data) => {
   return {
     type: "ADD_BID",
@@ -71,7 +91,7 @@ const getEnquiryBids = (data) => {
   };
 };
 
-const emptyEnquiryBids = () => {
+export const emptyEnquiryBids = () => {
   return {
     type: "REMOVE_BIDS_OF_ENQUIRY",
   };
@@ -80,5 +100,19 @@ const emptyEnquiryBids = () => {
 export const clearBidOnLogOut = () => {
   return {
     type: "LOG_CLEAR",
+  };
+};
+
+const getSingleBidDetails = (data) => {
+  return {
+    type: "GET_SINGLE_BID_DETAIL",
+    payload: data,
+  };
+};
+
+export const clearSingleBidDetails = () => {
+  return {
+    type: "CLEAR_SINGLE_BID",
+    payload:{}
   };
 };

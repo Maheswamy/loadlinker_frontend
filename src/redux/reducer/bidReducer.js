@@ -1,4 +1,4 @@
-const intialState = { mybids: [], enquiryBids: [] };
+const intialState = { mybids: [], enquiryBids: [] ,singleBid:{} };
 
 export const bidReducer = (state = intialState, action) => {
   switch (action.type) {
@@ -15,6 +15,14 @@ export const bidReducer = (state = intialState, action) => {
     }
     case "REMOVE_BIDS_OF_ENQUIRY": {
       return { ...state, enquiryBids: [] };
+    }
+    case "GET_SINGLE_BID_DETAIL":{
+      console.log(action.payload)
+    return {...state,singleBid:{...action.payload}}
+    }
+    case "CLEAR_SINGLE_BID":{
+      console.log('clg')
+    return {...state,singleBid:{...action.payload}}
     }
     case "LOG_CLEAR":{
     return {...state, mybids: [], enquiryBids: [] }

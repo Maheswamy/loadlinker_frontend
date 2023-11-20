@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import {  Typography, Grid } from "@mui/material";
 import { isEmpty } from "lodash";
 
 const EnquiryDetail = ({
@@ -15,9 +15,8 @@ const EnquiryDetail = ({
   vehicleNumber,
   status,
 }) => {
-  console.log(dateOfUnload,dateOfPickUp);
   return (
-    <Box>
+    <>
       {isEmpty(EnquiryDetail) && (
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
@@ -72,7 +71,7 @@ const EnquiryDetail = ({
           {bidAmount && (
             <Grid item xs={12} md={4}>
               <Typography variant="body1" color="textSecondary">
-                Bid Own Amount:
+                {status === "active" ? "Your Bid amount" : "Bid Own Amount:"}
               </Typography>
               <Typography variant="body1" color="textPrimary">
                 {bidAmount}
@@ -122,7 +121,7 @@ const EnquiryDetail = ({
           </Grid>
         </Grid>
       )}
-    </Box>
+    </>
   );
 };
 
