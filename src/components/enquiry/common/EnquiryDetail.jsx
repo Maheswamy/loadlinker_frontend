@@ -15,7 +15,7 @@ const EnquiryDetail = ({
   vehicleNumber,
   status,
 }) => {
-  console.log(loadType);
+  console.log(dateOfUnload,dateOfPickUp);
   return (
     <Box>
       {isEmpty(EnquiryDetail) && (

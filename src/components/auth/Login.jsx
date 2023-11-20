@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
@@ -12,7 +12,7 @@ import {
   startVehicleType,
 } from "../../redux/action/vehicleAction";
 import { startGetMyBid } from "../../redux/action/bidAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
 import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
@@ -47,6 +47,8 @@ const Login = () => {
     return null;
   };
 
+
+
   const validation = () => {
     const errors = {
       username: validateField(username, "username"),
@@ -78,10 +80,12 @@ const Login = () => {
           dispatch(startGetVehicle());
           dispatch(startGetMyBid());
           dispatch(startPermitList());
+          dispatch(startGetAllMyShipments());
         }
         if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
           dispatch(startGetMyEnquiries());
           dispatch(startGetAllMyShipments());
+          dispatch(startVehicleType());
         }
 
         userDispatch({

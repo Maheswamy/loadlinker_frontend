@@ -54,8 +54,9 @@ export const startPayment = (formdata) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      localStorage.setItem("transactionId", paymentResponse.data.transactionId);
-      dispatch(paymentToShipment(paymentResponse.data));
+      console.log(paymentResponse.data);
+      localStorage.setItem("transactionId", paymentResponse.data.id);
+
       window.location = paymentResponse.data.url;
     } catch (e) {
       console.log(e);
@@ -63,21 +64,33 @@ export const startPayment = (formdata) => {
   };
 };
 
-export const startUpdatePayment = () => {
+export const startUpdatePayment = (formData) => {
   return async (dispatch) => {
     try {
-      const paymentResponse = await axios.post(
-        "/api/payment",
-        { transactionId: localStorage.getItem("transactionId") },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const paymentResponse = await axios.put("/api/payment", formData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      dispatch(paymentToShipment(paymentResponse.data));
       console.log(paymentResponse.data);
     } catch (e) {
       console.log(e);
+    }
+  };
+};
+
+export const startUpdateShipment = (formData,shipmentId) => {
+  return async (dispatch) => {
+    try {
+      const shipmentUpdateResponse=await axios.put(`/api/shipments/${shipmentId}`, formData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(shipmentUpdateResponse.data)
+    } catch (e) {
+      alert(e.message);
     }
   };
 };
@@ -103,5 +116,12 @@ const paymentToShipment = (data) => {
 export const clearShipmentOnLogOut = () => {
   return {
     type: "LOG_CLEAR",
+  };
+};
+
+const updateShipment = (data) => {
+  return {
+    type: "UPDATE_SHIPMENT_STATUS",
+    payload: data,
   };
 };

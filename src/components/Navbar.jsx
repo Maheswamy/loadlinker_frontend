@@ -4,28 +4,33 @@ import { Typography, Stack, Box, Paper, Grid } from "@mui/material";
 import { UserContext } from "./../contextAPI/UserContext";
 import { isEmpty } from "lodash";
 import { jwtDecode } from "jwt-decode";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { clearBidOnLogOut } from "../redux/action/bidAction";
 import { clearEnquiryOnLogOut } from "../redux/action/enquiryAction";
 import { clearShipmentOnLogOut } from "../redux/action/shipmentAction";
-import { clearVehicleOnLogOut } from './../redux/action/vehicleAction';
+import { clearVehicleOnLogOut } from "./../redux/action/vehicleAction";
 
 const Navbar = () => {
   const { userState, userDispatch } = useContext(UserContext);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const handleLogOut = () => {
     localStorage.removeItem("token");
     userDispatch({ type: "USER_LOGOUT", payload: {} });
-    dispatch(clearBidOnLogOut())
-    dispatch(clearEnquiryOnLogOut())
-    dispatch(clearShipmentOnLogOut())
-    dispatch(clearVehicleOnLogOut())
+    dispatch(clearBidOnLogOut());
+    dispatch(clearEnquiryOnLogOut());
+    dispatch(clearShipmentOnLogOut());
+    dispatch(clearVehicleOnLogOut());
   };
   const navbarCondition = () => {
     const role = jwtDecode(localStorage.getItem("token")).role;
     if (role === "owner") {
       return (
         <Stack direction={"row"} gap={2}>
+          <Link to="/shipments" style={{ textDecoration: "none" }}>
+            <Typography variant="button" color="primary">
+              My Shipments
+            </Typography>
+          </Link>
           <Link to="/mybids" style={{ textDecoration: "none" }}>
             <Typography variant="button" color="primary">
               My Bids
@@ -117,7 +122,6 @@ const Navbar = () => {
       <Grid item xs={12} sm={6} md={4}>
         <Stack
           elevation={1}
-          
           gap={2}
           height={"9vh"}
           direction="row"

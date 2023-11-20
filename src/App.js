@@ -62,13 +62,17 @@ function App() {
           case "owner":
             dispatch(startGetVehicle());
             dispatch(startGetMyBid());
-            dispatch(startVehicleType());
+            dispatch(startGetAllMyShipments());
             dispatch(startPermitList());
+            dispatch(startVehicleType());
+
             break;
 
           case "shipper":
             dispatch(startGetMyEnquiries());
             dispatch(startGetAllMyShipments());
+            dispatch(startVehicleType());
+
             break;
 
           default:
@@ -93,9 +97,9 @@ function App() {
           <Container maxWidth="lg">
             <Navbar />
             <Routes>
+              <Route path="/" element={<MarketContainer />} />
               <Route path="/register" element={<RegisterContainer />} />
               <Route path="/login" element={<LoginContainer />} />
-              <Route path="/" element={<MarketContainer />} />
               <Route path="/addvehicle" element={<AddVehicleContainer />} />
               <Route path="/market/:id" element={<EnquiryContainer />} />
               <Route path="/addenquiry" element={<AddEnquiryContainer />} />

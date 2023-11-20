@@ -9,7 +9,25 @@ const shipmentReducer = (state = intialState, action) => {
       return { ...state, myShipments: [...state.myShipments, action.payload] };
     }
     case "PAYMENT_DETAIL": {
-      return { ...state, payment: { ...action.payload } };
+      console.log(action.payload);
+      return {
+        ...state,
+        myShipments: [
+          ...state.myShipments.map((ele) =>
+            ele._id === action.payload._id ? action.payload : ele
+          ),
+        ],
+      };
+    }
+    case "UPDATE_SHIPMENT": {
+      return {
+        ...state,
+        myShipments: [
+          ...state.myShipments.map((ele) =>
+            ele._id === action.payload._id ? action.payload : ele
+          ),
+        ],
+      };
     }
     case "LOG_CLEAR": {
       return { ...state, myShipments: [], serverError: {}, payment: {} };

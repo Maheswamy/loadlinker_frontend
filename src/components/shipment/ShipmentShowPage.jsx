@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 import EnquiryDetail from "../enquiry/common/EnquiryDetail";
 import Map from "./../enquiry/common/Map";
-import ShipmentAction from "./ShipmentAction";
+import ShipmentActionPage from "./ShipmentActionPage";
 import { startUpdatePayment } from "../../redux/action/shipmentAction";
 
 const ShipmentShowPage = () => {
   const { id } = useParams();
-  const state = useSelector((state) => state);
-  const dispatch=useDispatch()
-  const myShipments = state.shipment.myShipments || [];
+  const dispatch = useDispatch();
+  const { myShipments } = useSelector((state) => state.shipment);
   const shipment = myShipments.find((ele) => ele?._id === id) || {};
   const { bidId = {}, enquiryId = {}, status } = shipment;
 
@@ -22,14 +21,17 @@ const ShipmentShowPage = () => {
   ];
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString).get('payment');
-    console.log(urlParams);
-
-    if(urlParams==='success'){
-      dispatch(startUpdatePayment())
+    const queryString = new URLSearchParams(window.location.search).get(
+      "payment"
+    );
+    if (queryString === "success") {
+      const formData = {
+        shipmentId: id,
+        transactionId: localStorage.getItem("transactionId"),
+      };
+      dispatch(startUpdatePayment(formData));
     }
-  }, []);
+  }, [dispatch, id]);
 
   const details = {
     bidAmount: bidId.bidAmount,
@@ -37,6 +39,8 @@ const ShipmentShowPage = () => {
     amount: enquiryId.amount,
     dropUpLocation: enquiryId.dropUpLocation,
     pickUpLocation: enquiryId.pickUpLocation,
+    dateOfPickUp: enquiryId.dateOfPickUp,
+    dateOfUnload: enquiryId.dateOfUnload,
     loadType: enquiryId.loadType,
     loadWeight: enquiryId.loadWeight,
     paymentType: enquiryId.paymentType,
@@ -52,7 +56,7 @@ const ShipmentShowPage = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <EnquiryDetail {...details} />
-            <ShipmentAction
+            <ShipmentActionPage
               status={status}
               shipmentId={id}
               amount={bidId.bidAmount}
