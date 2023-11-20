@@ -16,6 +16,8 @@ export const marketReducer = (state = intialState, action) => {
         ],
       };
     }
+
+    
     default: {
       return { ...state };
     }

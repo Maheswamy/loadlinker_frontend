@@ -28,9 +28,25 @@ const enquiryReducer = (state = intialState, action) => {
       console.log(action.payload);
       return { ...state, enquries: [...state.enquries, action.payload] };
     }
-    case "REMOVE_ENQUIRY":{
+    case "REMOVE_ENQUIRY": {
       console.log(action.payload);
-    return {...state,enquries:[...state.enquries.filter((ele)=>ele._id!==action.payload)]}
+      return {
+        ...state,
+        enquries: [
+          ...state.enquries.filter((ele) => ele._id !== action.payload),
+        ],
+      };
+    }
+    case "LOG_CLEAR": {
+      return {
+        ...state,
+        enquiryCalculation: {},
+        enquries: [],
+        newCoordinates: {
+          source: { lat: null, lng: null },
+          distination: { lat: null, lng: null },
+        },
+      };
     }
 
     default: {

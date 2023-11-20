@@ -29,7 +29,7 @@ export const startPermitList = () => {
   };
 };
 
-export const startAddVehicle = (body) => {
+export const startAddVehicle = (body,navigate) => {
   return async (dispatch) => {
     try {
       const addVehicleResponse = await axios.post("/api/vehicles", body, {
@@ -38,6 +38,7 @@ export const startAddVehicle = (body) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      navigate(`/myvehicle/${addVehicleResponse.data._id}`)
       dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
       console.log(e);
@@ -81,5 +82,12 @@ const getVehicle = (data) => {
   return {
     type: "GET_VEHICLE",
     payload: data,
+  };
+};
+
+
+export const clearVehicleOnLogOut = () => {
+  return {
+    type: "LOG_CLEAR",
   };
 };

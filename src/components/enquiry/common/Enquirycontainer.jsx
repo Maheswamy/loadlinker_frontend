@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import Map from "./Map";
 
 
-const Enquirycontainer = () => {
+const EnquiryContainer = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -31,7 +31,8 @@ const Enquirycontainer = () => {
         </Grid>
 
         <Grid item xs={12} md={5}>
-          <EnquiryDetail {...enquiry} />
+
+          {<EnquiryDetail {...enquiry} />}
           {jwtDecode(localStorage.getItem("token"))?.role === "owner" && (
             <BidForm id={id} />
           )}
@@ -41,4 +42,4 @@ const Enquirycontainer = () => {
   );
 };
 
-export default Enquirycontainer;
+export default EnquiryContainer;

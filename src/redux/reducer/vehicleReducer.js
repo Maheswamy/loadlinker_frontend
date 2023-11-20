@@ -14,6 +14,9 @@ const vehicleReducer = (state = intialState, action) => {
     case "ADD_VEHICLE": {
       return { ...state, myVehicle: [...state.myVehicle, action.payload] };
     }
+    case "LOG_CLEAR": {
+      return { ...state, vehicleType: [], permit: [], myVehicle: [] };
+    }
     default: {
       return { ...state };
     }

@@ -14,9 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { FilePond, registerPlugin } from "react-filepond";
 import { isMongoId } from "validator";
-
 import "filepond/dist/filepond.min.css";
-
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
@@ -27,6 +25,7 @@ import {
 } from "../../redux/action/vehicleAction";
 import ReactSelect from "./ReactSelect";
 import { isEmpty } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -45,7 +44,7 @@ const AddVehicleForm = () => {
   const [formError, setFormError] = useState("");
   const [serverError, setServerError] = useState("");
   const errors = {};
-
+    const navigate=useNavigate()
   const dispatch = useDispatch();
   const vehicle = useSelector((state) => state.vehicle);
 
@@ -131,7 +130,7 @@ const AddVehicleForm = () => {
       vehicleImage.forEach((file) => {
         body.append(`vehicleImage`, file);
       });
-      dispatch(startAddVehicle(body));
+      dispatch(startAddVehicle(body,navigate));
     }
   };
   return (
@@ -198,7 +197,7 @@ const AddVehicleForm = () => {
             onupdatefiles={handleRcFileUpload}
             allowMultiple={true}
             maxFiles={2}
-            name="rc" /* sets the file input name, it's filepond by default */
+            name="rc"
             labelIdle='Drag & Drop your front and back side RC images here or <span class="filepond--label-action">Browse</span>'
           />
         </Box>
@@ -208,7 +207,7 @@ const AddVehicleForm = () => {
             onupdatefiles={handleVehicleFileUpload}
             allowMultiple={true}
             maxFiles={5}
-            name="vehicleImage" /* sets the file input name, it's filepond by default */
+            name="vehicleImage"
             labelIdle='Drag & Drop your vehicle Images, maximum 5 here or <span class="filepond--label-action">Browse</span>'
           />
         </Box>

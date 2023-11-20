@@ -16,6 +16,9 @@ export const bidReducer = (state = intialState, action) => {
     case "REMOVE_BIDS_OF_ENQUIRY": {
       return { ...state, enquiryBids: [] };
     }
+    case "LOG_CLEAR":{
+    return {...state, mybids: [], enquiryBids: [] }
+    }
 
     default: {
       return { ...state };

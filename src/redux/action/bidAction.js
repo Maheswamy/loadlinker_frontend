@@ -1,6 +1,6 @@
 import axios from "../../config/axios";
 
-export const startAddBid = (formData) => {
+export const startAddBid = (formData, navigate) => {
   return async (dispatch) => {
     try {
       const addBidResponse = await axios.post("/api/bids", formData, {
@@ -8,8 +8,8 @@ export const startAddBid = (formData) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      navigate("/mybids");
       dispatch(addBid(addBidResponse.data));
-      console.log(addBidResponse);
     } catch (e) {
       console.log(e);
       alert(e.message);
@@ -74,5 +74,11 @@ const getEnquiryBids = (data) => {
 const emptyEnquiryBids = () => {
   return {
     type: "REMOVE_BIDS_OF_ENQUIRY",
+  };
+};
+
+export const clearBidOnLogOut = () => {
+  return {
+    type: "LOG_CLEAR",
   };
 };

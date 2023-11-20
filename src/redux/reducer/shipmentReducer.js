@@ -11,6 +11,9 @@ const shipmentReducer = (state = intialState, action) => {
     case "PAYMENT_DETAIL": {
       return { ...state, payment: { ...action.payload } };
     }
+    case "LOG_CLEAR": {
+      return { ...state, myShipments: [], serverError: {}, payment: {} };
+    }
     default: {
       return { ...state };
     }

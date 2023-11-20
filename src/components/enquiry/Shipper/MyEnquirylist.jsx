@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MyEnquiryitem from "./MyEnquiryitem";
 
-const MyEnquirylist = () => {
+const MyEnquiryList = () => {
   
   const enquiries = useSelector((state) => state.enquiry.enquries);
   return (
@@ -17,4 +17,4 @@ const MyEnquirylist = () => {
   );
 };
 
-export default MyEnquirylist;
+export default MyEnquiryList;

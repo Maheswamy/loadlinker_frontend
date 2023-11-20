@@ -5,9 +5,16 @@ import { useSelector } from "react-redux";
 import StateTag from "./StateTag";
 import ShowImage from "./ShowImage";
 
+const VehicleDetail = ({ label, value }) => (
+  <Box>
+    <Typography variant="subtitle1">{label}:</Typography>
+    <Typography variant="body1">{value}</Typography>
+  </Box>
+);
+
 const VehicleShowPage = () => {
   const { id } = useParams();
-  
+
   const {
     vehicleNumber,
     isVerified,
@@ -17,50 +24,47 @@ const VehicleShowPage = () => {
     rcNumber,
     rcImages,
     vehicleImages,
+    vehicleType,
   } = useSelector((state) =>
     state.vehicle.myVehicle.find((ele) => ele._id === id)
   );
 
   const permitNameList = useSelector((state) => state.vehicle.permit);
+  const vehicleTypeList = useSelector((state) => state.vehicle.vehicleType);
+
   const statesName = permit.map((ele) =>
-    permitNameList.find((per) => per._id === ele)
+    permitNameList.find((permit) => permit._id === ele)
   );
+  const typeOfvehicle = vehicleTypeList.find((ele) => ele._id === vehicleType);
+
   return (
-    <Grid>
-      <Box>
-        <Stack direction={"row"} spacing={2} justifyContent={"space-evenly"}>
-          <Box>
-            <Typography variant="subtitle1">Vehicle Number:</Typography>
-            <Typography variant="body1">{vehicleNumber}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Vehicle verification:</Typography>
-            <Typography variant="body1">{isVerified}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Vehicle Status:</Typography>
-            <Typography variant="body1">
-              {loaded ? "In Shipment" : "Empty"}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">
-              Permitted Load Capacity:
-            </Typography>
-            <Typography variant="body1">{permittedLoadCapacity}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">RC Number:</Typography>
-            <Typography variant="body1">{rcNumber}</Typography>
-          </Box>
-        </Stack>
-        <Stack direction="row" spacing={1} flexWrap={"wrap"} rowGap={1}>
-          {statesName.map((ele) => (
-            <StateTag {...ele} key={ele._id} />
-          ))}
-        </Stack>
-      </Box>
-      <ShowImage images={[...rcImages, ...vehicleImages]} />
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
+        <Box>
+          <Stack direction="row" spacing={2} justifyContent="space-evenly">
+            <VehicleDetail label="Vehicle Number" value={vehicleNumber} />
+            <VehicleDetail label="Vehicle Verification" value={isVerified} />
+            <VehicleDetail
+              label="Vehicle Status"
+              value={loaded ? "In Shipment" : "Empty"}
+            />
+            <VehicleDetail
+              label="Permitted Load Capacity"
+              value={permittedLoadCapacity}
+            />
+            <VehicleDetail label="RC Number" value={rcNumber} />
+            <VehicleDetail label="Category" value={typeOfvehicle?.name} />
+          </Stack>
+          <Stack direction="row" spacing={1} flexWrap="wrap" rowGap={1}>
+            {statesName.map((ele) => (
+              <StateTag {...ele} key={ele._id} />
+            ))}
+          </Stack>
+        </Box>
+      </Grid>
+      <Grid item xs={6}>
+        <ShowImage images={[...rcImages, ...vehicleImages]} />
+      </Grid>
     </Grid>
   );
 };

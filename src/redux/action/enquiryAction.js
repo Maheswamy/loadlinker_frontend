@@ -98,3 +98,9 @@ export const removeEnquiry = (data) => {
     payload: data,
   };
 };
+
+export const clearEnquiryOnLogOut = () => {
+  return {
+    type: "LOG_CLEAR",
+  };
+};

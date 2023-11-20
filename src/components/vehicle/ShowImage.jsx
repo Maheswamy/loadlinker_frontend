@@ -4,7 +4,7 @@ import {Box,ImageList,ImageListItem} from '@mui/material';
 
 const ShowImage = ({images}) => {
   return (
-    <Box sx={{ width: "auto", height: 450, overflowX: "scroll" }}>
+    <Box sx={{ width: "auto", height: 250, overflowX: "scroll" }}>
       <ImageList variant="masonry" cols={images.length} gap={2}>
         {images.map((item) => (
           <ImageListItem key={item._id} >

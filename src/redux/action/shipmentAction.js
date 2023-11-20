@@ -99,3 +99,9 @@ const paymentToShipment = (data) => {
     payload: data,
   };
 };
+
+export const clearShipmentOnLogOut = () => {
+  return {
+    type: "LOG_CLEAR",
+  };
+};

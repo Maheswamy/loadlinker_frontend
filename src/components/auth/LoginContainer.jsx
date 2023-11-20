@@ -2,7 +2,7 @@ import React from "react";
 import Login from "./Login";
 import { Grid, Box, Paper } from "@mui/material";
 
-const LoginConatiner = () => {
+const LoginContainer = () => {
   return (
     <Grid
       container
@@ -42,4 +42,4 @@ const LoginConatiner = () => {
   );
 };
 
-export default LoginConatiner;
+export default LoginContainer;

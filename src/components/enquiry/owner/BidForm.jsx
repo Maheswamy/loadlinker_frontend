@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import {
   Grid,
   TextField,
@@ -6,106 +7,148 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
 import { UserContext } from "../../../contextAPI/UserContext";
 import { isEmpty } from "lodash";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startAddBid } from "../../../redux/action/bidAction";
+import { useNavigate } from "react-router-dom";
 
 const BidForm = ({ id }) => {
-  const [bidAmount, setBidAmount] = useState("");
-  const [vehicleId, setVehicleId] = useState("");
-  const [formError, setFormError] = useState({});
-  const errors = {};
-  const dispatch = useDispatch();
-  const {myVehicle}=useSelector((state)=>state.vehicle)
+  const [formData, setFormData] = useState({
+    bidAmount: "",
+    vehicleId: "",
+  });
 
+  const [formError, setFormError] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const myVehicle = useSelector((state) =>
+    state.vehicle.myVehicle.filter((ele) => ele.isVerified === "approved")
+  );
+
+  const alreadyBidData = useSelector((state) =>
+    state.bid.mybids.find((ele) => ele.enquiryId._id == id)
+  );
 
   const runValidation = () => {
-    if (bidAmount <= 0) {
-      errors.bidAmount = "Bid amount  should be more than zero";
+    const errors = {};
+
+    if (formData.bidAmount <= 0) {
+      errors.bidAmount = "Bid amount should be more than zero";
     }
-    if (vehicleId == "") {
-      errors.vehicleId = "please select the vehicle befor biding";
+
+    if (formData.vehicleId === "") {
+      errors.vehicleId = "Please select the vehicle before bidding";
     }
 
     setFormError(errors);
     console.log(errors);
     return errors;
   };
+
   const handleBidPost = (e) => {
     e.preventDefault();
     if (isEmpty(runValidation())) {
-      const formData = {
+      const { bidAmount, vehicleId } = formData;
+      const postData = {
         enquiryId: id,
         bidAmount: Number(bidAmount),
         vehicleId,
       };
-      console.log(formData);
-      dispatch(startAddBid(formData));
+      console.log(postData);
+      dispatch(startAddBid(postData, navigate));
     }
   };
+
   return (
     <Grid
       container
-      xs={12}
       component="form"
       onSubmit={handleBidPost}
-      alignItems={"center"}
-      justifyContent={"center"}
+      alignItems="center"
+      justifyContent="center"
       rowGap={1}
       my={2}
     >
-      <Grid container item xs={12} spacing={2}>
-        <Grid item xs={6}>
-          <TextField
-            id="amount"
-            label="Bid Amount"
-            value={bidAmount}
-            onChange={(e) => setBidAmount(e.target.value)}
-            variant="outlined"
-            type="number"
-            fullWidth
-            error={formError.bidAmount && true}
-            helperText={formError.bidAmount}
-          />
+      {alreadyBidData ? (
+        <Grid>
+          <Typography color="primary" variant="h6">
+            Your already bided to this enquiry, Biding amount is ₹{" "}
+            {alreadyBidData.bidAmount}{" "}
+          </Typography>
         </Grid>
-        <Grid item xs={6}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="vehicle" error={formError.vehicleId && true}>
-              Select your Vehicle
-            </InputLabel>
-            <Select
-              id="vehicle"
-              value={vehicleId}
-              onChange={(e) => setVehicleId(e.target.value)}
-              label="Select your Vehicle"
-              error={formError.vehicleId && true}
-              fullWidth
-            >
-              <MenuItem value="">Select your vehicle</MenuItem>
-              {myVehicle?.map((ele) => (
-                <MenuItem key={ele._id} value={ele._id}>
-                  {ele.vehicleNumber}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+      ) : (
+        <>
+          {myVehicle.length > 0 ? (
+            <>
+              <Grid container item xs={12} spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    id="amount"
+                    label="Bid Amount"
+                    value={formData.bidAmount}
+                    onChange={(e) =>
+                      setFormData({ ...formData, bidAmount: e.target.value })
+                    }
+                    variant="outlined"
+                    type="number"
+                    fullWidth
+                    error={!!formError.bidAmount}
+                    helperText={formError.bidAmount}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      htmlFor="vehicle"
+                      error={!!formError.vehicleId}
+                    >
+                      Select your Vehicle
+                    </InputLabel>
+                    <Select
+                      id="vehicle"
+                      value={formData.vehicleId}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          vehicleId: e.target.value,
+                        })
+                      }
+                      label="Select your Vehicle"
+                      error={!!formError.vehicleId}
+                      fullWidth
+                    >
+                      <MenuItem value="">Select your vehicle</MenuItem>
+                      {myVehicle?.map(({ _id, vehicleNumber }) => (
+                        <MenuItem key={_id} value={_id}>
+                          {vehicleNumber}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
 
-      <Grid xs={12}>
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          size="large"
-          fullWidth
-        >
-          Submit Bid
-        </Button>
-      </Grid>
+              <Grid xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  size="large"
+                  fullWidth
+                >
+                  Submit Bid
+                </Button>
+              </Grid>
+            </>
+          ) : (
+            <Typography color="primary">No vehicle found to bid </Typography>
+          )}
+        </>
+      )}
     </Grid>
   );
 };
