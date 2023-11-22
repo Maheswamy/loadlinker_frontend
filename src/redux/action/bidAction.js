@@ -53,19 +53,35 @@ export const startGetEnquiryBids = (enquiryId, navigate) => {
 export const startGetSingleBidDetails = (bidId) => {
   return async (dispatch) => {
     try {
-      const singleBidResponse = await axios.get(
-        `/api/mybids/${bidId}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-      console.log(singleBidResponse.data,'sdasd');
+      const singleBidResponse = await axios.get(`/api/mybids/${bidId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(singleBidResponse.data, "sdasd");
       dispatch(getSingleBidDetails(singleBidResponse.data));
     } catch (e) {
       console.log(e);
       alert(e.message);
+    }
+  };
+};
+
+export const startRemoveMyBid = (bidId, navigateBack) => {
+  return async (dispatch) => {
+    try {
+      const deleteBidResponse = await axios.delete(`/api/mybids/${bidId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      console.log(deleteBidResponse.data);
+      navigateBack();
+      dispatch(removeMyBid(deleteBidResponse.data));
+    } catch (e) {
+      alert(e.message);
+      console.log(e);
     }
   };
 };
@@ -113,6 +129,13 @@ const getSingleBidDetails = (data) => {
 export const clearSingleBidDetails = () => {
   return {
     type: "CLEAR_SINGLE_BID",
-    payload:{}
+    payload: {},
+  };
+};
+
+const removeMyBid = (data) => {
+  return {
+    type: "REMOVE_MY_BID",
+    payload: data,
   };
 };

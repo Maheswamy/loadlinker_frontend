@@ -1,19 +1,16 @@
 const intialState = {
   enquiryCalculation: {},
   enquries: [],
-  newCoordinates: {
-    source: { lat: null, lng: null },
-    distination: { lat: null, lng: null },
-  },
+  newCoordinates: {},
 };
 
 const enquiryReducer = (state = intialState, action) => {
   switch (action.type) {
     case "ADD_CALCULATION": {
-      console.log(action.payload);
       return { ...state, enquiryCalculation: action.payload };
     }
     case "NEW_CALCULATION_COORDINATES": {
+      console.log(action.payload);
       return { ...state, newCoordinates: { ...action.payload } };
     }
     case "REMOVE_CALCULATION": {
@@ -37,6 +34,7 @@ const enquiryReducer = (state = intialState, action) => {
         ],
       };
     }
+
     case "LOG_CLEAR": {
       return {
         ...state,

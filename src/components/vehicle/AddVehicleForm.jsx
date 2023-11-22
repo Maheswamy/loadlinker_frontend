@@ -8,8 +8,12 @@ import {
   Select,
   MenuItem,
   Paper,
+  FormControl,
+  InputLabel,
   FormHelperText,
   Typography,
+  CircularProgress,
+  Grid,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { FilePond, registerPlugin } from "react-filepond";
@@ -40,14 +44,19 @@ const AddVehicleForm = () => {
   const [selectedVehcileTypeDetails, setSelectedVehcileTypeDetails] = useState(
     {}
   );
+  const [spiner, setSpiner] = useState(false);
   const [selectedPermit, setSelectedPermit] = useState([]);
   const [formError, setFormError] = useState("");
   const [serverError, setServerError] = useState("");
   const errors = {};
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const vehicle = useSelector((state) => state.vehicle);
 
+  const navigateTo = (path) => {
+    setSpiner(false);
+    navigate(path);
+  };
   useEffect(() => {
     dispatch(startVehicleType());
     dispatch(startPermitList());
@@ -130,92 +139,103 @@ const AddVehicleForm = () => {
       vehicleImage.forEach((file) => {
         body.append(`vehicleImage`, file);
       });
-      dispatch(startAddVehicle(body,navigate));
+      setSpiner(true);
+      dispatch(startAddVehicle(body, navigateTo));
     }
   };
   return (
-    <Box width="7">
-      <Typography variant="h5">Add Vehicle</Typography>
-      <Stack component="form" onSubmit={handleAddVehicle} gap={2}>
-        <TextField
-          id="vehicleNumber"
-          label="Vehicle Number"
-          value={vehicleNumber}
-          onChange={(e) => setVehicleNumber(e.target.value)}
-          error={formError.vehicleNumber && true}
-          helperText={formError.vehicleNumber}
-        />
-        <TextField
-          id="rcNumber"
-          label="RC Number"
-          value={rcNumber}
-          onChange={(e) => setRcNumber(e.target.value)}
-          error={formError.rcNumber && true}
-          helperText={formError.rcNumber}
-        />
-        <TextField
-          id="permittedLoadCapacity"
-          label="maximum weight Capacity vehicle in kgs"
-          value={permittedLoadCapacity}
-          type="number"
-          onChange={(e) => setPermittedLoadCapacity(e.target.value)}
-          error={formError.permittedLoadCapacity && true}
-          helperText={formError.permittedLoadCapacity}
-        />
+    <Grid>
+      {spiner ? (
+        <CircularProgress />
+      ) : (
+        <Box width="7">
+          <Typography variant="h5">Add Vehicle</Typography>
+          <Stack component="form" onSubmit={handleAddVehicle} gap={2}>
+            <TextField
+              id="vehicleNumber"
+              label="Vehicle Number"
+              value={vehicleNumber}
+              onChange={(e) => setVehicleNumber(e.target.value)}
+              error={formError.vehicleNumber && true}
+              helperText={formError.vehicleNumber}
+            />
+            <TextField
+              id="rcNumber"
+              label="RC Number"
+              value={rcNumber}
+              onChange={(e) => setRcNumber(e.target.value)}
+              error={formError.rcNumber && true}
+              helperText={formError.rcNumber}
+            />
+            <TextField
+              id="permittedLoadCapacity"
+              label="maximum weight Capacity vehicle in kgs"
+              value={permittedLoadCapacity}
+              type="number"
+              onChange={(e) => setPermittedLoadCapacity(e.target.value)}
+              error={formError.permittedLoadCapacity && true}
+              helperText={formError.permittedLoadCapacity}
+            />
 
-        {/* <InputLabel id="vehcile-Type-label">Vehicle Type</InputLabel> */}
-        <Select
-          id="vehicle-Type-select"
-          value={vehicleType}
-          label="Vehicle type"
-          onChange={(e) => setVehicleType(e.target.value)}
-          error={formError.vehicleType && true}
-          helperText={formError.vehicleType}
-        >
-          <MenuItem value="">
-            <Typography>None</Typography>
-          </MenuItem>
-          {vehicle.vehicleType.map((ele) => (
-            <MenuItem value={ele._id} key={ele._id}>
-              <Typography>{ele.name}</Typography>
-            </MenuItem>
-          ))}
-        </Select>
-        {/* {!isEmpty(selectedVehcileTypeDetails) && (
-        <FormHelperText>
-          {selectedVehcileTypeDetails.minimumWeight}kg to{" "}
-          {selectedVehcileTypeDetails.maximumWeight}
-        </FormHelperText>
-      )} */}
-        <ReactSelect
-          permit={vehicle.permit}
-          getSelectedPermit={getSelectedPermit}
-        />
-        <Box>
-          <FilePond
-            files={rc}
-            onupdatefiles={handleRcFileUpload}
-            allowMultiple={true}
-            maxFiles={2}
-            name="rc"
-            labelIdle='Drag & Drop your front and back side RC images here or <span class="filepond--label-action">Browse</span>'
-          />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Vehicle type
+              </InputLabel>
+              <Select
+                id="vehicle-Type-select"
+                labelId="vehicle-Type-label"
+                label="vehicle type"
+                value={vehicleType}
+                onChange={(e) => setVehicleType(e.target.value)}
+                error={formError.vehicleType && true}
+                helperText={formError.vehicleType}
+              >
+                <MenuItem value="">None</MenuItem>
+                {vehicle.vehicleType.map((ele) => (
+                  <MenuItem value={ele._id} key={ele._id}>
+                    {ele.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {!isEmpty(selectedVehcileTypeDetails) && (
+              // <FormHelperText>
+              //   {selectedVehcileTypeDetails.minimumWeight}kg to{" "}
+              //   {selectedVehcileTypeDetails.maximumWeight}
+              // </FormHelperText>
+              console.log(selectedVehcileTypeDetails)
+            )}
+            <ReactSelect
+              permit={vehicle.permit}
+              getSelectedPermit={getSelectedPermit}
+            />
+            <Box>
+              <FilePond
+                files={rc}
+                onupdatefiles={handleRcFileUpload}
+                allowMultiple={true}
+                maxFiles={2}
+                name="rc"
+                labelIdle='Drag & Drop your front and back side RC images here or <span class="filepond--label-action">Browse</span>'
+              />
+            </Box>
+            <Box>
+              <FilePond
+                files={vehicleImage}
+                onupdatefiles={handleVehicleFileUpload}
+                allowMultiple={true}
+                maxFiles={5}
+                name="vehicleImage"
+                labelIdle='Drag & Drop your vehicle Images, maximum 5 here or <span class="filepond--label-action">Browse</span>'
+              />
+            </Box>
+            <Button variant="contained" color="primary" type="submit">
+              Add Vehicle
+            </Button>
+          </Stack>
         </Box>
-        <Box>
-          <FilePond
-            files={vehicleImage}
-            onupdatefiles={handleVehicleFileUpload}
-            allowMultiple={true}
-            maxFiles={5}
-            name="vehicleImage"
-            labelIdle='Drag & Drop your vehicle Images, maximum 5 here or <span class="filepond--label-action">Browse</span>'
-          />
-        </Box>
-        <Button variant="contained" color="primary" type="submit">
-          Add Vehicle
-        </Button>
-      </Stack>
-    </Box>
+      )}
+    </Grid>
   );
 };
 

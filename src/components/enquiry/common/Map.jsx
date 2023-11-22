@@ -12,6 +12,8 @@ const Map = ({ coordinates, drag }) => {
     },
   };
 
+  
+
   return (
     <Paper p={1} elevation={1} round style={styles.paper}>
       {coordinates && (

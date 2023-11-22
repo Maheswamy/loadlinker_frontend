@@ -37,7 +37,7 @@ const ReactSelect = ({ permit, getSelectedPermit }) => {
           setSelectedOptions(selected.map((option) => option.value));
         }
       }}
-      placeholder="Select options"
+      placeholder="Select Permits of your Vehicle"
       isSearchable
     />
   );

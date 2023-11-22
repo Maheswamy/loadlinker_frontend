@@ -10,14 +10,23 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function BidTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location.state?.message);
+    if (location.state?.message) {
+      toast.success(location.state?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }, []);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -38,6 +47,7 @@ export default function BidTable() {
   };
   return (
     <>
+      <ToastContainer />
       {bids.length == 0 ? (
         <Typography variant="h5" color="primary">
           No bids found

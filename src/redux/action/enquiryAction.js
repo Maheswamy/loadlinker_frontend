@@ -1,6 +1,7 @@
 import axios from "../../config/axios";
 
 export const startGetEnquiryCalculation = (formData) => {
+ 
   return async (dispatch) => {
     try {
       const calculationRespose = await axios.post(
@@ -12,7 +13,6 @@ export const startGetEnquiryCalculation = (formData) => {
           },
         }
       );
-
       dispatch(getCalculate(calculationRespose.data));
     } catch (e) {
       console.log(e);
@@ -104,3 +104,25 @@ export const clearEnquiryOnLogOut = () => {
     type: "LOG_CLEAR",
   };
 };
+
+
+
+// const [source, distination] = waypoints;
+// console.log(source, distination);
+
+// enquiryCalculation.dropOffLocation.lat = Object.values(
+//   distination.latLng
+// ).reverse()[0];
+// enquiryCalculation.dropOffLocation.lng = Object.values(
+//   distination.latLng
+// ).reverse()[1];
+
+// enquiryCalculation.pickUpLocation.lat = Object.values(
+//   source.latLng
+// ).reverse()[0];
+// enquiryCalculation.pickUpLocation.lng = Object.values(
+//   source.latLng
+// ).reverse()[1];
+
+// console.log(enquiryCalculation, "routing");
+// dispatch(startGetEnquiryCalculation(enquiryCalculation));

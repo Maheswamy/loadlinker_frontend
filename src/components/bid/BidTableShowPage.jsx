@@ -1,10 +1,11 @@
-import { Box, Grid, CircularProgress } from "@mui/material";
+import { Box, Grid, CircularProgress, Button } from "@mui/material";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Map from "./../enquiry/common/Map";
 import EnquiryDetail from "./../enquiry/common/EnquiryDetail";
 import { isEmpty } from "lodash";
+import { startRemoveMyBid } from "./../../redux/action/bidAction";
 import {
   startGetSingleBidDetails,
   clearSingleBidDetails,
@@ -13,7 +14,15 @@ import {
 const BidTableShowPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  console.log(id);
+  const navigate = useNavigate();
+
+  const navigateBack = () => {
+    
+    navigate("/mybids",{state:{message:'your bid is deleted'}});
+  };
+  const handleRemoveBid = () => {
+    dispatch(startRemoveMyBid(id, navigateBack));
+  };
 
   useEffect(() => {
     dispatch(startGetSingleBidDetails(id));
@@ -40,6 +49,7 @@ const BidTableShowPage = () => {
 
   return (
     <>
+     
       <Grid container spacing={2}>
         <Grid item xs={12} md={7} p={2} component={"Paper"} elevation={5} round>
           <Map coordinates={coordinates} drag={false} />
@@ -49,23 +59,34 @@ const BidTableShowPage = () => {
           item
           xs={12}
           md={5}
+          gap={3}
           display={"flex"}
+          direction={"column"}
           justifyContent={"center"}
           alignItems={"center"}
         >
           {isEmpty(enquiryId) ? (
             <CircularProgress />
           ) : (
-            <EnquiryDetail
-              {...enquiryId}
-              bidAmount={bidAmount}
-              status={status}
-              vehicleNumber={vehicleNumber?.vehicleNumber}
-            />
+            <>
+              <EnquiryDetail
+                {...enquiryId}
+                bidAmount={bidAmount}
+                status={status}
+                vehicleNumber={vehicleNumber?.vehicleNumber}
+              />
+              {status==='active'&&<Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleRemoveBid}
+              >
+                Cancel Bid
+              </Button>}
+            </>
           )}
         </Grid>
       </Grid>
-      <h1>show page</h1>
     </>
   );
 };

@@ -3,9 +3,9 @@ import AddVehicleForm from "./AddVehicleForm";
 
 const AddVehicleContainer = () => {
   return (
-    <div>
+    <>
       <AddVehicleForm />
-    </div>
+    </>
   );
 };
 

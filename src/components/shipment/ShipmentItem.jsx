@@ -73,7 +73,7 @@ const ShipmentItem = ({ bidId, enquiryId, status,_id }) => {
             Destination:
           </Typography>
           <Typography variant="subtitle1" color="textPrimary">
-            {enquiryId.dropUpLocation.area},{enquiryId.dropUpLocation.district}
+            {enquiryId.dropOffLocation.area},{enquiryId.dropOffLocation.district}
           </Typography>
         </Grid>
         <Grid item>

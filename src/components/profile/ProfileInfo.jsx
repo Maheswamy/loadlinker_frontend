@@ -39,7 +39,7 @@ const ProfileInfo = () => {
         {user.isVerified?'Verified':"Not Verified"}
       </Typography>
       {user.vehicles.length > 0 && <ul>
-        {user.vehicles.map((ele)=><li>{ele}</li>)}
+        {user.vehicles.map((ele)=><li key={ele}>{ele}</li>)}
         </ul>}
     </div>
   );

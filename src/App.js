@@ -29,10 +29,11 @@ import { startGetMyEnquiries } from "./redux/action/enquiryAction";
 import { startGetAllMyShipments } from "./redux/action/shipmentAction";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 import EnquiryContainer from "./components/enquiry/common/EnquiryContainer";
-import AddEnquiryContainer from "./components/enquiry/Shipper/AddEnquiryContainer";
+// import AddEnquiryContainer from "./components/enquiry/Shipper/AddEnquiryContainer";
 import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
 import { UserContext } from "./contextAPI/UserContext";
 import BidTableShowPage from "./components/bid/BidTableShowPage";
+import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -108,7 +109,7 @@ function App() {
               <Route path="/addvehicle" element={<AddVehicleContainer />} />
               <Route path="/myvehicle" element={<MyVehicle />} />
               <Route path="/myvehicle/:id" element={<VehicleShowPage />} />
-              <Route path="/addenquiry" element={<AddEnquiryContainer />} />
+              <Route path="/addenquiry" element={<AddEnquiryConatiner />} />
               <Route path="/myenquiries" element={<MyEnquiryList />} />
               <Route path="/myenquiries/:id" element={<SelectBidContainer />} />
               <Route path="/mybids" element={<BidContainer />} />

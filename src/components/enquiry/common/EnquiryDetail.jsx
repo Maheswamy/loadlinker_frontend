@@ -8,7 +8,7 @@ const EnquiryDetail = ({
   dateOfPickUp,
   pickUpLocation,
   dateOfUnload,
-  dropUpLocation,
+  dropOffLocation,
   amount,
   paymentType,
   bidAmount,
@@ -71,7 +71,7 @@ const EnquiryDetail = ({
           {bidAmount && (
             <Grid item xs={12} md={4}>
               <Typography variant="body1" color="textSecondary">
-                {status === "active" ? "Your Bid amount" : "Bid Own Amount:"}
+                Your Bid amount:
               </Typography>
               <Typography variant="body1" color="textPrimary">
                 {bidAmount}
@@ -114,9 +114,9 @@ const EnquiryDetail = ({
               Drop Address:
             </Typography>
             <Typography variant="body1" color="textPrimary">
-              {dropUpLocation?.address},{dropUpLocation?.area},
-              {dropUpLocation?.district} district,{dropUpLocation?.state}-
-              {dropUpLocation?.pin}
+              {dropOffLocation?.address},{dropOffLocation?.area},
+              {dropOffLocation?.district} district,{dropOffLocation?.state}-
+              {dropOffLocation?.pin}
             </Typography>
           </Grid>
         </Grid>

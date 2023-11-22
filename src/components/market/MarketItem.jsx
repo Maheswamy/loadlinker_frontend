@@ -20,7 +20,7 @@ const MarketItem = ({
   loadType,
   loadWeight,
   pickUpLocation,
-  dropUpLocation,
+  dropOffLocation,
   paymentType,
   amount,
 }) => {
@@ -69,7 +69,7 @@ const MarketItem = ({
                 Drop location:
               </Typography>
               <Typography gutterBottom variant="p" component="span">
-                {dropUpLocation.district}
+                {dropOffLocation?.district}
               </Typography>
             </Box>
           </Stack>
