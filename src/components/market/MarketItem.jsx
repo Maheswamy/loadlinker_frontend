@@ -63,7 +63,7 @@ const MarketItem = ({
                 Pickup location:
               </Typography>
               <Typography gutterBottom variant="p" component="span">
-                {pickUpLocation.district}
+                {pickUpLocation?.district}
               </Typography>
             </Box>
             <Box>
