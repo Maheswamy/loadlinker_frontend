@@ -5,12 +5,18 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Grid, Button, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const EnquiryApproval = ({ distance, amount, vehicleTypeId }) => {
+const EnquiryApproval = ({
+  distance,
+  amount,
+  vehicleTypeId,
+  handleEnquirySubmit,
+}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const vehicleInfo = useSelector((state) =>
     state.vehicle.vehicleType.find((ele) => ele._id === vehicleTypeId)
   );
+
   return (
     <Grid container item xs={12}>
       <Grid
@@ -32,6 +38,9 @@ const EnquiryApproval = ({ distance, amount, vehicleTypeId }) => {
           </Typography>
           <Typography variant="h6" color="initial">
             maximum load capacity of vehicle is :{vehicleInfo.maximumWeight} kg
+          </Typography>
+          <Typography variant="h6" color="info">
+            Payment is be done after shipment is loaded to Vehicle
           </Typography>
         </Grid>
         <Grid item sx={6}>
@@ -71,7 +80,7 @@ const EnquiryApproval = ({ distance, amount, vehicleTypeId }) => {
           color="primary"
           fullWidth
           style={{ marginTop: 16 }}
-          // onClick={handleSubmitEnquiry}
+          onClick={() => handleEnquirySubmit(startDate, endDate)}
         >
           Submit Enquiry
         </Button>

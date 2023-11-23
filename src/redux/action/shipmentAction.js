@@ -73,7 +73,6 @@ export const startUpdatePayment = (formData) => {
         },
       });
       dispatch(paymentToShipment(paymentResponse.data));
-      console.log(paymentResponse.data);
     } catch (e) {
       console.log(e);
     }
@@ -89,6 +88,7 @@ export const startUpdateShipment = (formData,shipmentId) => {
         },
       });
       console.log(shipmentUpdateResponse.data)
+      dispatch(updateShipment(shipmentUpdateResponse.data))
     } catch (e) {
       alert(e.message);
     }

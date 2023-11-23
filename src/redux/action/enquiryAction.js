@@ -21,7 +21,7 @@ export const startGetEnquiryCalculation = (formData) => {
   };
 };
 
-export const startAddEnquiry = (formData) => {
+export const startAddEnquiry = (formData,handleNavigate) => {
   return async (dispatch) => {
     try {
       const addEnquiryResponse = await axios.post(
@@ -34,7 +34,8 @@ export const startAddEnquiry = (formData) => {
         }
       );
 
-      console.log(addEnquiryResponse);
+      console.log(addEnquiryResponse,'response of add enquiry');
+      handleNavigate()
       dispatch(addEnquiry(addEnquiryResponse.data));
     } catch (e) {
       console.log(e);

@@ -25,6 +25,8 @@ const MarketItem = ({
   amount,
 }) => {
   const { userState } = useContext(UserContext);
+
+ 
   return (
     <Card sx={{ minWidth: 300 }} elevation={2}>
       <CardContent>
@@ -42,7 +44,7 @@ const MarketItem = ({
               Load Weigth:
             </Typography>
             <Typography gutterBottom variant="p" component="span">
-              {Number(loadWeight) / 1000} Tonnes
+              {(Number(loadWeight) / 1000).toFixed(1)} Tonnes
             </Typography>
           </Box>
         </Stack>
@@ -87,7 +89,7 @@ const MarketItem = ({
             Amount:
           </Typography>
           <Typography gutterBottom variant="p" component="span">
-            ₹ {Math.round(amount)}
+            {amount}
           </Typography>
         </Box>
       </CardContent>

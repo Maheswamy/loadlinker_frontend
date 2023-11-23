@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { startPayment } from "../../redux/action/shipmentAction";
+import { ToastContainer,toast } from "react-toastify";
 
-const ShipperUpdate = ({ status, shipmentId, amount }) => {
-    console.log(status)
+const ShipperUpdate = ({ status, shipmentId, amount, payment=null }) => {
+  console.log(status, payment);
   const dispatch = useDispatch();
 
   const handlePayment = () => {
@@ -13,13 +14,19 @@ const ShipperUpdate = ({ status, shipmentId, amount }) => {
 
   return (
     <div>
+      <ToastContainer/>
       {status === "waiting" && (
         <Button variant="contained" color="primary">
           Cancel
         </Button>
       )}
-      {status === "loaded" && (
-        <Button variant="contained" color="primary" type="button" onClick={handlePayment}>
+      {!payment && (
+        <Button
+          variant="contained"
+          color="primary"
+          type="button"
+          onClick={handlePayment}
+        >
           Make Payment
         </Button>
       )}

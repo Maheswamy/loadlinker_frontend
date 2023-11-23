@@ -3,6 +3,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import DynamicRoutingMachine from "./Routing";
 import "../../../App.css";
 import { Paper } from "@mui/material";
+import { useSelector } from 'react-redux';
 
 const Map = ({ coordinates, drag }) => {
   const styles = {
@@ -12,7 +13,6 @@ const Map = ({ coordinates, drag }) => {
     },
   };
 
-  
 
   return (
     <Paper p={1} elevation={1} round style={styles.paper}>

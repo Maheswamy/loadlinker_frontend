@@ -1,11 +1,16 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ShipmentItem from "./ShipmentItem";
 import { Grid, Stack, Typography } from "@mui/material";
+import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
 
 const ShipmentList = () => {
+  const disptach = useDispatch();
+  useEffect(() => {
+    disptach(startGetAllMyShipments());
+  }, []);
   const myShipments = useSelector((state) => state.shipment.myShipments);
-  console.log(myShipments);
+
   return (
     <Grid
       container
@@ -22,7 +27,7 @@ const ShipmentList = () => {
       ) : (
         <>
           {myShipments?.map((ele) => (
-            <Stack item key={ele._id} sx={{ maxWidth: "lg" }} >
+            <Stack item key={ele._id} sx={{ maxWidth: "lg" }}>
               <ShipmentItem {...ele} />
             </Stack>
           ))}

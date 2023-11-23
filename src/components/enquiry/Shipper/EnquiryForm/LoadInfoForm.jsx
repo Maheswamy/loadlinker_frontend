@@ -10,35 +10,28 @@ const LoadInfoForm = ({ loadInfo }) => {
     loadInfo({ loadWeight, loadType });
   }, [loadWeight, loadType]);
   return (
-    <Grid
-      conatiner
-      xs={12}
-      //   sx={{ display: "flex", justifyContent: "space-between", gap: "16px" }}
-    >
-      <Grid item>
-        <TextField
-          size="small"
-          id="shipmentWeight"
-          label="Enter Weight in kg's"
-          value={loadWeight}
-          fullWidth
-          onChange={(e) => setLoadWeight(e.target.value)}
-          margin="normal"
-          type="number"
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          size="small"
-          fullWidth
-          id="ShipmentMaterial"
-          label="Shipment Material"
-          value={loadType}
-          onChange={(e) => setLoadType(e.target.value)}
-          margin="normal"
-        />
-      </Grid>
-    </Grid>
+    <>
+      <TextField
+        size="small"
+        id="shipmentWeight"
+        label="Enter Weight in kg's"
+        value={loadWeight}
+        fullWidth
+        onChange={(e) => setLoadWeight(e.target.value)}
+        margin="normal"
+        type="number"
+      />
+
+      <TextField
+        size="small"
+        fullWidth
+        id="ShipmentMaterial"
+        label="Shipment Material"
+        value={loadType}
+        onChange={(e) => setLoadType(e.target.value)}
+        margin="normal"
+      />
+    </>
   );
 };
 

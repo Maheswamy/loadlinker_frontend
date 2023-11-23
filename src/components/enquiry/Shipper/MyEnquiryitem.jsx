@@ -12,7 +12,7 @@ const MyEnquiryitem = ({
   loadType,
   loadWeight,
   pickUpLocation,
-  dropUpLocation,
+  dropOffLocation,
 }) => {
   const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ const MyEnquiryitem = ({
               Number of Bids
             </Typography>
             <Typography variant="subtitle1" color="text">
-              {bids.length}
+              {bids?.length}
             </Typography>
           </Grid>
 
@@ -68,7 +68,7 @@ const MyEnquiryitem = ({
               Pick-up Location
             </Typography>
             <Typography variant="subtitle1" color="text">
-              {pickUpLocation.district}
+              {pickUpLocation?.district}
             </Typography>
           </Grid>
 
@@ -77,7 +77,7 @@ const MyEnquiryitem = ({
               Drop-off Location
             </Typography>
             <Typography variant="subtitle1" color="text">
-              {dropUpLocation.district}
+              {dropOffLocation?.district}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>

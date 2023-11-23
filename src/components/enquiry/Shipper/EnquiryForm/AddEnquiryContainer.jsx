@@ -7,13 +7,15 @@ import { deleteCalculate } from "../../../../redux/action/enquiryAction";
 
 const AddEnquiryConatiner = () => {
   const dispatch = useDispatch();
-  const { pickUpLocation, dropOffLocation, distanceAndDuration } = useSelector(
+  const { pickUpLocation, dropOffLocation } = useSelector(
     (state) => state.enquiry.enquiryCalculation
   );
+ 
+  
+
   const pickUpCoordinate = [pickUpLocation?.lat, pickUpLocation?.lng];
   const dropOffCoordinate = [dropOffLocation?.lat, dropOffLocation?.lng];
-    console.log(pickUpCoordinate,dropOffCoordinate)
- 
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>

@@ -19,12 +19,15 @@ const shipmentReducer = (state = intialState, action) => {
         ],
       };
     }
-    case "UPDATE_SHIPMENT": {
+    case "UPDATE_SHIPMENT_STATUS": {
+      console.log(state.myShipments.map((ele) =>
+      ele._id === action.payload._id ? {...action.payload} : {...ele}
+    ))
       return {
         ...state,
         myShipments: [
           ...state.myShipments.map((ele) =>
-            ele._id === action.payload._id ? action.payload : ele
+            ele._id === action.payload._id ? {...action.payload} : {...ele}
           ),
         ],
       };

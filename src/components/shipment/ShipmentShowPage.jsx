@@ -12,7 +12,7 @@ const ShipmentShowPage = () => {
   const dispatch = useDispatch();
   const { myShipments } = useSelector((state) => state.shipment);
   const shipment = myShipments.find((ele) => ele?._id === id) || {};
-  const { bidId = {}, enquiryId = {}, status } = shipment;
+  const { bidId = {}, enquiryId = {}, status ,payment} = shipment;
 
   const coordinatesObj = enquiryId.coordinates || {};
   const coordinates = [
@@ -37,16 +37,20 @@ const ShipmentShowPage = () => {
     bidAmount: bidId.bidAmount,
     vehicleNumber: bidId.vehicleId?.vehicleNumber,
     amount: enquiryId.amount,
-    dropUpLocation: enquiryId.dropUpLocation,
+    dropOffLocation: enquiryId.dropOffLocation,
     pickUpLocation: enquiryId.pickUpLocation,
     dateOfPickUp: enquiryId.dateOfPickUp,
     dateOfUnload: enquiryId.dateOfUnload,
     loadType: enquiryId.loadType,
     loadWeight: enquiryId.loadWeight,
     paymentType: enquiryId.paymentType,
+    payment:payment,
     status,
   };
 
+
+  const state=useSelector((state)=>state.shipment)
+  console.log(state,'jsagdahgsdas')
   return (
     <Grid container spacing={2}>
       {myShipments.length > 0 && (
@@ -60,6 +64,7 @@ const ShipmentShowPage = () => {
               status={status}
               shipmentId={id}
               amount={bidId.bidAmount}
+              payment={payment}
             />
           </Grid>
         </Grid>

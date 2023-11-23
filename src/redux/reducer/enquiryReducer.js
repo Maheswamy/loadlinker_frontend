@@ -23,7 +23,12 @@ const enquiryReducer = (state = intialState, action) => {
 
     case "ADD_ENQUIRY": {
       console.log(action.payload);
-      return { ...state, enquries: [...state.enquries, action.payload] };
+      return {
+        ...state,
+        enquries: [...state.enquries, action.payload],
+        newCoordinates: {},
+        enquiryCalculation: {},
+      };
     }
     case "REMOVE_ENQUIRY": {
       console.log(action.payload);

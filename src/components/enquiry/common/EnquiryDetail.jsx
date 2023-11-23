@@ -105,7 +105,7 @@ const EnquiryDetail = ({
             </Typography>
             <Typography variant="body1" color="textPrimary">
               {pickUpLocation?.address},{pickUpLocation?.area},
-              {pickUpLocation?.district} district,{pickUpLocation?.state}-
+              {pickUpLocation?.district} ,{pickUpLocation?.state}-
               {pickUpLocation?.pin}
             </Typography>
           </Grid>
@@ -115,7 +115,7 @@ const EnquiryDetail = ({
             </Typography>
             <Typography variant="body1" color="textPrimary">
               {dropOffLocation?.address},{dropOffLocation?.area},
-              {dropOffLocation?.district} district,{dropOffLocation?.state}-
+              {dropOffLocation?.district} ,{dropOffLocation?.state}-
               {dropOffLocation?.pin}
             </Typography>
           </Grid>
