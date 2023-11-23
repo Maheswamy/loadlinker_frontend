@@ -13,7 +13,6 @@ import LoginContainer from "./components/auth/LoginContainer";
 import MarketContainer from "./components/market/MarketContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
 import BidContainer from "./components/bid/BidContainer";
-import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import ShipmentShowPage from "./components/shipment/ShipmentShowPage";
 import ShipmentList from "./components/shipment/ShipmentList";
 import MyVehicle from "./components/vehicle/MyVehicle";
@@ -29,11 +28,12 @@ import { startGetMyEnquiries } from "./redux/action/enquiryAction";
 import { startGetAllMyShipments } from "./redux/action/shipmentAction";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
 import EnquiryContainer from "./components/enquiry/common/EnquiryContainer";
-// import AddEnquiryContainer from "./components/enquiry/Shipper/AddEnquiryContainer";
 import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
 import { UserContext } from "./contextAPI/UserContext";
 import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
+import MyEnquiryList from './components/enquiry/Shipper/MyEnquiryList';
+
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
