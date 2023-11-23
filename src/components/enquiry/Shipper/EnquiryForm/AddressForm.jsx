@@ -1,5 +1,6 @@
 import { Grid, TextField, Typography, Autocomplete } from "@mui/material";
 import axios from "axios";
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 
 const AddressForm = ({ name, address }) => {
@@ -91,6 +92,7 @@ const AddressForm = ({ name, address }) => {
         onInputChange={(event, newInputValue) => {
           setFormData({ ...formData, area: newInputValue });
         }}
+        disabled={isEmpty(areaList)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -112,6 +114,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="district"
+        error={formError?.pin && true}
+        helperText={formError?.district}
       />
       <TextField
         size="small"
@@ -122,6 +126,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="state"
+        error={formError?.state && true}
+        helperText={formError?.state}
       />
       <TextField
         size="small"
@@ -132,6 +138,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="country"
+        error={formError?.country && true}
+        helperText={formError?.country}
       />{" "}
     </Grid>
   );

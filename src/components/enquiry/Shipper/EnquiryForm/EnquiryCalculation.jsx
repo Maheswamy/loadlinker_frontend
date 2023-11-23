@@ -1,13 +1,14 @@
 import React from "react";
 import { Grid, Typography, Button } from "@mui/material";
 import { isEmpty } from "lodash";
+import { useSelector } from "react-redux";
 
-const EnquiryCalculation = ({handleCalculation}) => {
-    
+const EnquiryCalculation = ({ handleCalculation }) => {
+  const enquiryCalculation = useSelector(
+    (state) => state.enquiry.enquiryCalculation
+  );
   return (
-    <div>
-      
-
+    <>
       <Grid item xs={12}>
         <Button
           type="button"
@@ -17,10 +18,12 @@ const EnquiryCalculation = ({handleCalculation}) => {
           style={{ marginTop: 16 }}
           onClick={handleCalculation}
         >
-          Calculate Enquiry Amount
+          {isEmpty(enquiryCalculation)
+            ? "Calculate Enquiry Amount"
+            : "Recalculate the Enquiry "}
         </Button>
       </Grid>
-    </div>
+    </>
   );
 };
 

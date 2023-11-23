@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, TextField } from "@mui/material";
+import { Grid, Stack, TextField } from "@mui/material";
 
 const LoadInfoForm = ({ loadInfo }) => {
   const [loadWeight, setLoadWeight] = useState("");
@@ -11,26 +11,30 @@ const LoadInfoForm = ({ loadInfo }) => {
   }, [loadWeight, loadType]);
   return (
     <>
-      <TextField
-        size="small"
-        id="shipmentWeight"
-        label="Enter Weight in kg's"
-        value={loadWeight}
-        fullWidth
-        onChange={(e) => setLoadWeight(e.target.value)}
-        margin="normal"
-        type="number"
-      />
+      <Grid item xs={12}>
+        <TextField
+          size="small"
+          fullWidth
+          id="Shipment Weight"
+          label="Shipment Weight"
+          value={loadWeight}
+          onChange={(e) => setLoadWeight(e.target.value)}
+          margin="normal"
+        />
+        <Grid xs={12}>
+        <TextField
+          size="small"
+          fullWidth
+          id="Shipment Material"
+          label="Shipment Material"
+          value={loadType}
+          onChange={(e) => setLoadType(e.target.value)}
+          margin="normal"
+        />
+      </Grid>
+      </Grid>
 
-      <TextField
-        size="small"
-        fullWidth
-        id="ShipmentMaterial"
-        label="Shipment Material"
-        value={loadType}
-        onChange={(e) => setLoadType(e.target.value)}
-        margin="normal"
-      />
+      
     </>
   );
 };

@@ -64,12 +64,11 @@ const AddEnquiryForm = () => {
   useEffect(() => {
     if (!isEmpty(newCoordinates)) {
       const newFormData = { ...enquiryCalculation };
-
       newFormData.pickUpLocation.lat = newCoordinates.source.lat;
       newFormData.pickUpLocation.lng = newCoordinates.source.lng;
       newFormData.dropOffLocation.lat = newCoordinates.distination.lat;
       newFormData.dropOffLocation.lng = newCoordinates.distination.lng;
-      console.log(newFormData,)
+      console.log(newFormData);
       dispatch(startGetEnquiryCalculation(newFormData));
     }
   }, [newCoordinates]);
@@ -82,9 +81,7 @@ const AddEnquiryForm = () => {
           <LoadInfoForm loadInfo={loadInfo} />
           <AddressForm name={"Pick-Up"} address={pickUp} />
           <AddressForm name={"Drop-Off"} address={dropOff} />
-          {isEmpty(enquiryCalculation) && (
-            <EnquiryCalculation handleCalculation={handleCalculation} />
-          )}
+          <EnquiryCalculation handleCalculation={handleCalculation} />
           {!isEmpty(enquiryCalculation) && (
             <EnquiryApproval
               {...enquiryCalculation}

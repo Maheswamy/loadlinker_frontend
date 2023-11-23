@@ -10,8 +10,10 @@ const AddEnquiryConatiner = () => {
   const { pickUpLocation, dropOffLocation } = useSelector(
     (state) => state.enquiry.enquiryCalculation
   );
- 
-  
+
+  useEffect(() => {
+    return () => dispatch(deleteCalculate());
+  }, []);
 
   const pickUpCoordinate = [pickUpLocation?.lat, pickUpLocation?.lng];
   const dropOffCoordinate = [dropOffLocation?.lat, dropOffLocation?.lng];

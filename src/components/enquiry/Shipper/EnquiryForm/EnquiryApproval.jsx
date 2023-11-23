@@ -27,20 +27,25 @@ const EnquiryApproval = ({
         alignItems={"center"}
       >
         <Grid item justifyContent={"space-evenly"}>
-          <Typography variant="h6" color="initial">
+          <Typography variant="body1" color="initial">
             Distance:{Math?.round(distance.distance)} kms
           </Typography>
-          <Typography variant="h6" color="initial">
+          <Typography variant="body1" color="initial">
             Amount:{amount}
           </Typography>
-          <Typography variant="h6" color="initial">
+          <Typography variant="body1" color="initial">
             Type of vehicle for your load :{vehicleInfo.name}
           </Typography>
-          <Typography variant="h6" color="initial">
+          <Typography variant="body1" color="initial">
             maximum load capacity of vehicle is :{vehicleInfo.maximumWeight} kg
           </Typography>
-          <Typography variant="h6" color="info">
+          <Typography variant="body1" color="info">
             Payment is be done after shipment is loaded to Vehicle
+          </Typography>
+          <Typography variant="subtitle1" color="info">
+            Pin functionality allows for precise location selection through
+            drag-and-drop, ensuring accuracy in both delivery and pick-up
+            points.
           </Typography>
         </Grid>
         <Grid item sx={6}>
