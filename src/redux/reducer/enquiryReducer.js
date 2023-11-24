@@ -2,6 +2,7 @@ const intialState = {
   enquiryCalculation: {},
   enquries: [],
   newCoordinates: {},
+  serverErrors: {},
 };
 
 const enquiryReducer = (state = intialState, action) => {
@@ -14,7 +15,12 @@ const enquiryReducer = (state = intialState, action) => {
       return { ...state, newCoordinates: { ...action.payload } };
     }
     case "REMOVE_CALCULATION": {
-      return { ...state, enquiryCalculation: {} };
+      return {
+        ...state,
+        enquiryCalculation: {},
+        newCoordinates: {},
+        serverErrors: {},
+      };
     }
     case "GET_MY_ENQUIRIES": {
       console.log(action.payload);
@@ -28,6 +34,7 @@ const enquiryReducer = (state = intialState, action) => {
         enquries: [...state.enquries, action.payload],
         newCoordinates: {},
         enquiryCalculation: {},
+        serverErrors: {},
       };
     }
     case "REMOVE_ENQUIRY": {
@@ -38,6 +45,10 @@ const enquiryReducer = (state = intialState, action) => {
           ...state.enquries.filter((ele) => ele._id !== action.payload),
         ],
       };
+    }
+
+    case "SERVER_ERRORS": {
+      return { ...state, serverErrors: { ...action.payload } };
     }
 
     case "LOG_CLEAR": {

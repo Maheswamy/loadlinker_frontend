@@ -3,7 +3,7 @@ import axios from "axios";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 
-const AddressForm = ({ name, address }) => {
+const AddressForm = ({ name, address, formErrors, serverErrors }) => {
   const [formData, setFormData] = useState({
     address: "",
     area: "",
@@ -12,10 +12,9 @@ const AddressForm = ({ name, address }) => {
     pin: "",
     state: "",
   });
-  const [formError, setFormError] = useState({});
+  const [pinError, setPinError] = useState({});
   const [areaList, setAreaList] = useState({});
   const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -32,8 +31,7 @@ const AddressForm = ({ name, address }) => {
       const pinResponse = await axios.get(
         `https://api.postalpincode.in/pincode/${formData.pin}`
       );
-      setFormError((prev) => ({}));
-      console.log(pinResponse.data[0].PostOffice[0]);
+      setPinError((prev) => ({}));
       const mainDetails = pinResponse.data[0].PostOffice[0];
       setFormData((prev) => {
         return {
@@ -48,7 +46,7 @@ const AddressForm = ({ name, address }) => {
         getOptionLabel: (option) => option.Name,
       });
     } catch (e) {
-      setFormError((prev) => ({ ...prev, pin: "pin code not found" }));
+      setPinError((prev) => ({ ...prev, pin: "pin code not found" }));
     }
   };
   return (
@@ -66,8 +64,8 @@ const AddressForm = ({ name, address }) => {
         onBlur={getPinInformation}
         margin="normal"
         name="pin"
-        error={formError?.pin && true}
-        helperText={formError?.pin}
+        error={(formErrors?.pin || pinError?.pin || serverErrors?.pin) && true}
+        helperText={formErrors?.pin || pinError?.pin || serverErrors?.pin}
       />
       <TextField
         size="small"
@@ -78,6 +76,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="address"
+        error={formErrors?.address || (serverErrors?.address && true)}
+        helperText={formErrors?.address || serverErrors?.address}
       />
       <Autocomplete
         {...areaList}
@@ -102,6 +102,8 @@ const AddressForm = ({ name, address }) => {
             fullWidth
             margin="normal"
             name="area"
+            error={(formErrors?.area || serverErrors?.state) && true}
+            helperText={formErrors?.area || serverErrors?.state}
           />
         )}
       />
@@ -114,8 +116,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="district"
-        error={formError?.pin && true}
-        helperText={formError?.district}
+        error={(formErrors?.district || serverErrors?.district) && true}
+        helperText={formErrors?.district || serverErrors?.district}
       />
       <TextField
         size="small"
@@ -126,8 +128,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="state"
-        error={formError?.state && true}
-        helperText={formError?.state}
+        error={(formErrors?.state || serverErrors?.state) && true}
+        helperText={formErrors?.state || serverErrors?.state}
       />
       <TextField
         size="small"
@@ -138,8 +140,8 @@ const AddressForm = ({ name, address }) => {
         onChange={handleChange}
         margin="normal"
         name="country"
-        error={formError?.country && true}
-        helperText={formError?.country}
+        error={(formErrors?.country || serverErrors?.country) && true}
+        helperText={formErrors?.country || serverErrors?.state}
       />{" "}
     </Grid>
   );

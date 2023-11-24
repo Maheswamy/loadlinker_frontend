@@ -1,7 +1,6 @@
 import axios from "../../config/axios";
 
 export const startGetEnquiryCalculation = (formData) => {
- 
   return async (dispatch) => {
     try {
       const calculationRespose = await axios.post(
@@ -15,13 +14,18 @@ export const startGetEnquiryCalculation = (formData) => {
       );
       dispatch(getCalculate(calculationRespose.data));
     } catch (e) {
-      console.log(e);
-      alert(e.message);
+      if (e.status === 400) {
+        console.log(e.response.data.errors);
+        dispatch(serverErrors(e.response.data.errors));
+      }
+      if (e.status === 500) {
+        alert(e.message);
+      }
     }
   };
 };
 
-export const startAddEnquiry = (formData,handleNavigate) => {
+export const startAddEnquiry = (formData, handleNavigate) => {
   return async (dispatch) => {
     try {
       const addEnquiryResponse = await axios.post(
@@ -34,12 +38,17 @@ export const startAddEnquiry = (formData,handleNavigate) => {
         }
       );
 
-      console.log(addEnquiryResponse,'response of add enquiry');
-      handleNavigate()
+      console.log(addEnquiryResponse, "response of add enquiry");
+      handleNavigate();
       dispatch(addEnquiry(addEnquiryResponse.data));
     } catch (e) {
-      console.log(e);
-      alert(e.message);
+      if (e.status === 400) {
+        console.log(e.response.data.errors);
+        dispatch(serverErrors(e.response.data.errors));
+      }
+      if (e.status === 500) {
+        alert(e.message);
+      }
     }
   };
 };
@@ -106,24 +115,9 @@ export const clearEnquiryOnLogOut = () => {
   };
 };
 
-
-
-// const [source, distination] = waypoints;
-// console.log(source, distination);
-
-// enquiryCalculation.dropOffLocation.lat = Object.values(
-//   distination.latLng
-// ).reverse()[0];
-// enquiryCalculation.dropOffLocation.lng = Object.values(
-//   distination.latLng
-// ).reverse()[1];
-
-// enquiryCalculation.pickUpLocation.lat = Object.values(
-//   source.latLng
-// ).reverse()[0];
-// enquiryCalculation.pickUpLocation.lng = Object.values(
-//   source.latLng
-// ).reverse()[1];
-
-// console.log(enquiryCalculation, "routing");
-// dispatch(startGetEnquiryCalculation(enquiryCalculation));
+const serverErrors = (data) => {
+  return {
+    type: "SERVER_ERRORS",
+    payload: data,
+  };
+};

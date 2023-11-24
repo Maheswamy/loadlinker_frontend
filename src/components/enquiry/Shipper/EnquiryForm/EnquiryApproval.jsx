@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, FormHelperText } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const EnquiryApproval = ({
@@ -10,6 +10,8 @@ const EnquiryApproval = ({
   amount,
   vehicleTypeId,
   handleEnquirySubmit,
+  dateErrors,
+  serverErrors,
 }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -60,6 +62,13 @@ const EnquiryApproval = ({
                 fullWidth
               />
             </DemoContainer>
+            <FormHelperText
+              error={
+                (dateErrors?.dateOfPickUp || serverErrors?.dateOfPickUp) && true
+              }
+            >
+              {dateErrors?.dateOfPickUp || serverErrors?.dateOfPickUp}
+            </FormHelperText>
           </LocalizationProvider>
         </Grid>
 
@@ -75,6 +84,13 @@ const EnquiryApproval = ({
                 fullWidth
               />
             </DemoContainer>
+            <FormHelperText
+              error={
+                (dateErrors?.dateOfUnload || serverErrors?.dateOfUnload) && true
+              }
+            >
+              {dateErrors?.dateOfUnload || serverErrors?.dateOfUnload}
+            </FormHelperText>
           </LocalizationProvider>
         </Grid>
       </Grid>
