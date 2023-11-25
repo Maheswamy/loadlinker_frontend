@@ -21,12 +21,16 @@ const AddEnquiryForm = () => {
     pickUpLocation: {},
   };
   const navigate = useNavigate();
-  const handleNavigate = () => {
+  const handleNavigate = (error) => {
+    if (error) {
+      return setIsLoading(false);
+    }
     navigate("/myenquiries", { state: "successfully enquiry added" });
   };
   const { enquiryCalculation, newCoordinates, serverErrors } = useSelector(
     (state) => state.enquiry
   );
+  console.log(serverErrors, enquiryCalculation);
   const dispatch = useDispatch();
   const initialState = {
     loadType: "",
@@ -152,11 +156,11 @@ const AddEnquiryForm = () => {
 
   const handleEnquirySubmit = (dateOfPickUp, dateOfUnload) => {
     const newFormData = { ...enquiryCalculation };
-    if (new Date(dateOfPickUp) < new Date(dateOfUnload)) {
-      newFormData.dateOfPickUp = dateOfPickUp;
-      newFormData.dateOfUnload = dateOfUnload;
+    if (new Date(dateOfPickUp) <= new Date(dateOfUnload)) {
+      enquiryCalculation.dateOfPickUp = dateOfPickUp;
+      enquiryCalculation.dateOfUnload = dateOfUnload;
       setIsLoading(true);
-      dispatch(startAddEnquiry(newFormData, handleNavigate));
+      dispatch(startAddEnquiry(enquiryCalculation, handleNavigate));
     } else {
       setDateErrors({
         dateOfPickUp: "unload date should be greater than pickup date",
@@ -191,18 +195,25 @@ const AddEnquiryForm = () => {
         <CircularProgress />
       ) : (
         <Grid component={"form"} container spacing={2}>
-          <LoadInfoForm loadInfo={loadInfo} formErrors={formErrors} serverErrors={serverErrors}/>
+          <LoadInfoForm
+            loadInfo={loadInfo}
+            formErrors={formErrors}
+            serverErrors={serverErrors}
+            state={enquiryCalculation}
+          />
           <AddressForm
             name={"Pick-Up"}
             address={pickUp}
             formErrors={formErrors.pickUpLocation}
             serverErrors={serverErrors.pickUpLocation}
+            state={enquiryCalculation.pickUpLocation}
           />
           <AddressForm
             name={"Drop-Off"}
             address={dropOff}
             formErrors={formErrors.dropOffLocation}
             serverErrors={serverErrors.dropOffLocation}
+            state={enquiryCalculation.dropOffLocation}
           />
           <EnquiryCalculation handleCalculation={handleCalculation} />
           {!isEmpty(enquiryCalculation) && (
@@ -211,6 +222,7 @@ const AddEnquiryForm = () => {
               handleEnquirySubmit={handleEnquirySubmit}
               dateErrors={dateErrors}
               serverErrors={serverErrors}
+              state={enquiryCalculation}
             />
           )}
         </Grid>

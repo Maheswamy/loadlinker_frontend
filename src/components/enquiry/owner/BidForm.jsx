@@ -30,7 +30,7 @@ const BidForm = ({ id }) => {
   );
 
   const alreadyBidData = useSelector((state) =>
-    state.bid.mybids.find((ele) => ele.enquiryId._id == id)
+    state.bid.mybids.find((ele) => ele.enquiryId?._id == id)
   );
 
   const runValidation = () => {

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { startGetEnquiryBids } from "../../../redux/action/bidAction";
+import { startRemoveShipperEnquiry } from "../../../redux/action/enquiryAction";
 
 const MyEnquiryitem = ({
   amount,
@@ -21,7 +22,10 @@ const MyEnquiryitem = ({
     dispatch(startGetEnquiryBids(id, navigate));
   };
 
- 
+  const handleDeleteEnquiry = () => {
+    
+    dispatch(startRemoveShipperEnquiry(_id))
+  };
 
   return (
     <Container>
@@ -89,7 +93,11 @@ const MyEnquiryitem = ({
             >
               Show more
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDeleteEnquiry}
+            >
               Delete
             </Button>
           </Grid>

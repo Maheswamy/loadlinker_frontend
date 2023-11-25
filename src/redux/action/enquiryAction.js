@@ -1,4 +1,5 @@
 import axios from "../../config/axios";
+import { removeEnquiryFromMarket } from "./marketAction";
 
 export const startGetEnquiryCalculation = (formData) => {
   return async (dispatch) => {
@@ -42,11 +43,14 @@ export const startAddEnquiry = (formData, handleNavigate) => {
       handleNavigate();
       dispatch(addEnquiry(addEnquiryResponse.data));
     } catch (e) {
-      if (e.status === 400) {
+      console.log(e);
+      if (e.request.status === 400) {
         console.log(e.response.data.errors);
         dispatch(serverErrors(e.response.data.errors));
+        handleNavigate(true);
       }
-      if (e.status === 500) {
+      if (e.request.status === 500) {
+        handleNavigate(true);
         alert(e.message);
       }
     }
@@ -65,6 +69,27 @@ export const startGetMyEnquiries = () => {
       dispatch(getAllEnquiries(allEnquiriesResponse.data));
     } catch (e) {
       console.log(e);
+    }
+  };
+};
+
+export const startRemoveShipperEnquiry = (enquiryId) => {
+  return async (dispatch) => {
+    try {
+      const deleteShipperEnquiry = await axios.delete(
+        `/api/enquiries/${enquiryId}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(deleteShipperEnquiry.data);
+      dispatch(removeEnquiry(deleteShipperEnquiry.data._id));
+      dispatch(removeEnquiryFromMarket(deleteShipperEnquiry.data._id));
+    } catch (e) {
+      console.log(e);
+      // alert(e.response.data.errors);
     }
   };
 };

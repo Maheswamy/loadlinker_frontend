@@ -3,14 +3,14 @@ import axios from "axios";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 
-const AddressForm = ({ name, address, formErrors, serverErrors }) => {
+const AddressForm = ({ name, address, formErrors, serverErrors, state }) => {
   const [formData, setFormData] = useState({
-    address: "",
-    area: "",
-    district: "",
-    country: "",
-    pin: "",
-    state: "",
+    address: state?.address ? state?.address : "",
+    area: state?.area ? state?.area : "",
+    district: state?.district ? state?.district : "",
+    country: state?.country ? state?.country : "",
+    pin: state?.pin ? state?.pin : "",
+    state: state?.state ? state?.state : "",
   });
   const [pinError, setPinError] = useState({});
   const [areaList, setAreaList] = useState({});

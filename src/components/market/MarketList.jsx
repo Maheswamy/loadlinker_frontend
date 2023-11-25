@@ -10,6 +10,7 @@ const MarketList = () => {
     dispatch(startGetMarketList());
   }, []);
   const marketList = useSelector((state) => state.market.marketList);
+  console.log(marketList)
   return (
     <Grid container spacing={2}>
       {marketList.map((ele) => (

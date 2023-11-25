@@ -6,6 +6,7 @@ export const startGetMarketList = () => {
       const marketResponse = await axios.get("/api/marketplace");
       dispatch(getMarketList(marketResponse.data));
     } catch (e) {
+      
       alert(e.message);
     }
   };
@@ -21,6 +22,7 @@ export const startGetSingleEnquiry = (id) => {
       });
       dispatch(getSingleEnquiry(singleEnquiryResponse.data));
     } catch (e) {
+      console.log(e)
       alert(e.message);
     }
   };

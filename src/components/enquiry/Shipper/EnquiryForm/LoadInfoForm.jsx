@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import { Grid, TextField } from "@mui/material";
 
-const LoadInfoForm = ({ loadInfo, formErrors, serverErrors }) => {
-  const [loadWeight, setLoadWeight] = useState("");
-  const [loadType, setLoadType] = useState("");
+const LoadInfoForm = ({ loadInfo, formErrors, serverErrors, state }) => {
+  const [loadWeight, setLoadWeight] = useState(
+    state?.loadWeight ? state?.loadWeight : ""
+  );
+  const [loadType, setLoadType] = useState(
+    state?.loadType ? state?.loadType : ""
+  );
 
   useEffect(() => {
     loadInfo({ loadWeight, loadType });

@@ -12,9 +12,14 @@ const EnquiryApproval = ({
   handleEnquirySubmit,
   dateErrors,
   serverErrors,
+  state,
 }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(
+    state.dateOfPickUp ? state.dateOfPickUp : null
+  );
+  const [endDate, setEndDate] = useState(
+    state.dateOfUnload ? state.dateOfUnload : null
+  );
   const vehicleInfo = useSelector((state) =>
     state.vehicle.vehicleType.find((ele) => ele._id === vehicleTypeId)
   );
@@ -82,6 +87,7 @@ const EnquiryApproval = ({
                 sx={{ backgroundColor: "white" }}
                 disablePast
                 fullWidth
+
               />
             </DemoContainer>
             <FormHelperText
