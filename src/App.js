@@ -17,7 +17,7 @@ import ShipmentShowPage from "./components/shipment/ShipmentShowPage";
 import ShipmentList from "./components/shipment/ShipmentList";
 import MyVehicle from "./components/vehicle/MyVehicle";
 import VehicleShowPage from "./components/vehicle/VehicleShowPage";
-import { startGetMarketList } from "./redux/action/marketAction";
+import { startGetCount, startGetMarketList } from "./redux/action/marketAction";
 import {
   startPermitList,
   startGetVehicle,
@@ -32,8 +32,7 @@ import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer"
 import { UserContext } from "./contextAPI/UserContext";
 import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
-import MyEnquiryList from './components/enquiry/Shipper/MyEnquiryList';
-
+import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -45,6 +44,8 @@ function App() {
 
   useEffect(() => {
     dispatch(startGetMarketList());
+    dispatch(startGetCount());
+
     if (localStorage.getItem("token")) {
       (async () => {
         try {

@@ -23,7 +23,7 @@ const MarketMapList = () => {
         {marketList?.length > 0 ? (
           <>
             {marketList?.map((ele) => (
-              <Marker position={ele.coordinates.pickUpCoordinate}>
+              <Marker position={ele.coordinates.pickUpCoordinate} key={ele._id}>
                 <Popup >
                   Pick-Up:{ele.pickUpLocation.district} drop-off:
                   {ele.dropOffLocation.district}

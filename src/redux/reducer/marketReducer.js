@@ -1,4 +1,4 @@
-const intialState = { marketList: [], singleEnquiry: {} };
+const intialState = { marketList: [], singleEnquiry: {}, count: 0 };
 
 export const marketReducer = (state = intialState, action) => {
   switch (action.type) {
@@ -14,7 +14,12 @@ export const marketReducer = (state = intialState, action) => {
         marketList: [
           ...state.marketList.filter((ele) => ele._id !== action.payload),
         ],
+        count: state.count--,
       };
+    }
+
+    case "COUNT": {
+      return { ...state, count: action.payload };
     }
     default: {
       return { ...state };

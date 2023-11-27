@@ -23,8 +23,10 @@ const MyEnquiryitem = ({
   };
 
   const handleDeleteEnquiry = () => {
-    
-    dispatch(startRemoveShipperEnquiry(_id))
+    const approveDelete = window.confirm("are you sure do you want to delete?");
+    if (approveDelete) {
+      dispatch(startRemoveShipperEnquiry(_id));
+    }
   };
 
   return (

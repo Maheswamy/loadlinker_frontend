@@ -46,7 +46,6 @@ const enquiryReducer = (state = intialState, action) => {
         ],
       };
     }
-    
 
     case "SERVER_ERRORS": {
       return { ...state, serverErrors: { ...action.payload } };

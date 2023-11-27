@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
 import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
+import { startGetCount } from "../../redux/action/marketAction";
 
 const styles = {
   form: {
@@ -81,11 +82,14 @@ const Login = () => {
           dispatch(startGetMyBid());
           dispatch(startPermitList());
           dispatch(startGetAllMyShipments());
+          dispatch(startGetCount())
         }
         if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
           dispatch(startGetMyEnquiries());
           dispatch(startGetAllMyShipments());
           dispatch(startVehicleType());
+          dispatch(startGetCount())
+
         }
 
         userDispatch({
