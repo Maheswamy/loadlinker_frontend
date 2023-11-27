@@ -33,6 +33,7 @@ import { UserContext } from "./contextAPI/UserContext";
 import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
 import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
+import { startGetReviews } from "./redux/action/reviewAction";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -69,6 +70,7 @@ function App() {
               dispatch(startGetAllMyShipments());
               dispatch(startPermitList());
               dispatch(startVehicleType());
+              dispatch(startGetReviews());
 
               break;
 
@@ -76,7 +78,7 @@ function App() {
               dispatch(startGetMyEnquiries());
               dispatch(startGetAllMyShipments());
               dispatch(startVehicleType());
-
+              dispatch(startGetReviews());
               break;
 
             default:

@@ -17,6 +17,7 @@ import { jwtDecode } from "jwt-decode";
 import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
 import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
 import { startGetCount } from "../../redux/action/marketAction";
+import { startGetReviews } from "./../../redux/action/reviewAction";
 
 const styles = {
   form: {
@@ -47,8 +48,6 @@ const Login = () => {
     }
     return null;
   };
-
-
 
   const validation = () => {
     const errors = {
@@ -82,14 +81,15 @@ const Login = () => {
           dispatch(startGetMyBid());
           dispatch(startPermitList());
           dispatch(startGetAllMyShipments());
-          dispatch(startGetCount())
+          dispatch(startGetCount());
+          dispatch(startGetReviews());
         }
         if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
           dispatch(startGetMyEnquiries());
           dispatch(startGetAllMyShipments());
           dispatch(startVehicleType());
-          dispatch(startGetCount())
-
+          dispatch(startGetCount());
+          dispatch(startGetReviews());
         }
 
         userDispatch({

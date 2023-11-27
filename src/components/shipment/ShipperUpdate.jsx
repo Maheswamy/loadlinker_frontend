@@ -1,26 +1,53 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Grid, Rating, TextField } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Rating,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import { startPayment } from "../../redux/action/shipmentAction";
 import { ToastContainer, toast } from "react-toastify";
+import { startAddReview } from "./../../redux/action/reviewAction";
 
 const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
   const dispatch = useDispatch();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [serverErrors, setServerErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({});
+  const errors = {};
 
   const handlePayment = () => {
     dispatch(startPayment({ shipmentId, amount }));
   };
 
-  // const validation=()=>{
-  //   if(rating)
-  // }
+  const validation = () => {
+    if (rating <= 0) {
+      errors.rating = "Rating is required";
+    }
+    if (feedback.trim().length === 0) {
+      errors.feedback = "feedback is required";
+    }
+    setFormErrors(errors);
+    return Object.values(errors).length === 0;
+  };
   const handleAddReview = (e) => {
     e.preventDefault();
-    
-    // validation
+    const validationResult = validation();
+    if (validationResult) {
+      setIsLoading(true);
+      setFormErrors({});
+      setServerErrors({});
+      const formData = {
+        rating,
+        feedback,
+        shipmentId,
+      };
+      dispatch(startAddReview(formData));
+    }
   };
 
   return (
@@ -47,6 +74,9 @@ const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
             name="simple-controlled"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
+            onError={(formErrors?.rating || serverErrors?.rating) && true}
+            helperText={formErrors?.rating || serverErrors?.rating}
+            precision={0.5}
           />
           <TextField
             id="feedback"
@@ -56,10 +86,16 @@ const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             variant="standard"
+            onError={(formErrors?.feedback || serverErrors?.feedback) && true}
+            helperText={formErrors?.feedback || serverErrors?.feedback}
           />
-          <Button variant="contained" color="primary" type="Submit">
-            Review
-          </Button>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button variant="contained" color="primary" type="Submit">
+              Review
+            </Button>
+          )}
         </Grid>
       )}
     </div>
