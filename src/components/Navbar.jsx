@@ -4,103 +4,18 @@ import { Typography, Stack, Box, Paper, Grid } from "@mui/material";
 import { UserContext } from "./../contextAPI/UserContext";
 import { isEmpty } from "lodash";
 import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { clearBidOnLogOut, emptyEnquiryBids } from "../redux/action/bidAction";
-import { clearEnquiryOnLogOut } from "../redux/action/enquiryAction";
-import { clearShipmentOnLogOut } from "../redux/action/shipmentAction";
-import { clearVehicleOnLogOut } from "./../redux/action/vehicleAction";
+import ShipperNavbar from "./Navbar/ShipperNavbar";
+import VehicleOwnerNav from "./Navbar/VehicleOwnerNav";
 
 const Navbar = () => {
   const { userState, userDispatch } = useContext(UserContext);
-  const dispatch = useDispatch();
-  const handleLogOut = () => {
-    localStorage.removeItem("token");
-    userDispatch({ type: "USER_LOGOUT", payload: {} });
-    dispatch(clearBidOnLogOut());
-    dispatch(clearEnquiryOnLogOut());
-    dispatch(clearShipmentOnLogOut());
-    dispatch(clearVehicleOnLogOut());
-    dispatch(emptyEnquiryBids());
-  };
+
   const navbarCondition = () => {
     const role = jwtDecode(localStorage.getItem("token")).role;
     if (role === "owner") {
-      return (
-        <Stack direction={"row"} gap={2}>
-          <Link to="/shipments" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              My Shipments
-            </Typography>
-          </Link>
-          <Link to="/mybids" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              My Bids
-            </Typography>
-          </Link>
-          <Link to="/addvehicle" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              Add Vehicle
-            </Typography>
-          </Link>
-          <Link to="/myvehicle" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              My Vehicle
-            </Typography>
-          </Link>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              Profile
-            </Typography>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Typography
-              variant="button"
-              color="primary"
-              onClick={() => {
-                handleLogOut();
-              }}
-            >
-              Logout
-            </Typography>
-          </Link>
-        </Stack>
-      );
+      return <VehicleOwnerNav />;
     } else if (role === "shipper") {
-      return (
-        <Stack direction={"row"} gap={1}>
-          <Link to="/shipments" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              My Shipments
-            </Typography>
-          </Link>
-          <Link to="/myenquiries" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              My Enquiries
-            </Typography>
-          </Link>
-          <Link to="/addenquiry" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              Add Enquire
-            </Typography>
-          </Link>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
-            <Typography variant="button" color="primary">
-              Profile
-            </Typography>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Typography
-              variant="button"
-              color="primary"
-              onClick={() => {
-                handleLogOut();
-              }}
-            >
-              Logout
-            </Typography>
-          </Link>
-        </Stack>
-      );
+      return <ShipperNavbar />;
     }
   };
   return (
@@ -119,8 +34,7 @@ const Navbar = () => {
         zIndex: 1000,
         backgroundColor: "#fff",
         padding: "0 40px",
-        boxShadow:3,
-        
+        boxShadow: 3,
       }}
     >
       <Grid item xs={12} sm={6} md={4}>
