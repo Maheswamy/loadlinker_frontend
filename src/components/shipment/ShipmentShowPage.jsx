@@ -3,52 +3,92 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 import EnquiryDetail from "../enquiry/common/EnquiryDetail";
-import Map from "./../enquiry/common/Map";
+import MapLiveLocation from "./MapLiveLocation";
 import ShipmentActionPage from "./ShipmentActionPage";
 import { startUpdatePayment } from "../../redux/action/shipmentAction";
 
 import io from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
 
 const ShipmentShowPage = () => {
-  const [socket, setSocket] = useState(null);
+  const [position, setPosition] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
   const { myShipments } = useSelector((state) => state.shipment);
   const shipment = myShipments.find((ele) => ele?._id === id) || {};
   const { bidId = {}, enquiryId = {}, status, payment } = shipment;
+  const socket = io("http://localhost:3080");
+  // const coordinatesObj = enquiryId.coordinates || {};
+  // const coordinates = [
+  //   coordinatesObj?.pickUpCoordinate,
+  //   coordinatesObj?.dropCoordinate,
+  // ];
 
-  const coordinatesObj = enquiryId.coordinates || {};
-  const coordinates = [
-    coordinatesObj?.pickUpCoordinate,
-    coordinatesObj?.dropCoordinate,
-  ];
-
+  // setInterval(() => {
+  //   if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         socket.emit("position", {
+  //           latitude: position.coords.latitude,
+  //           longitude: position.coords.longitude,
+  //         });
+  //         setPosition([position.coords.latitude, position.coords.longitude]);
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //         timeout: 5000,
+  //         maximumAge: 0,
+  //       }
+  //     );
+  //   }
+  // }, 3000);
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const newSocket = io.connect("http://localhost:3080");
-     
-      setSocket(newSocket);
-      return () => newSocket.disconnect();
+    if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+      if (socket?.connect) {
+        socket.emit("join_room", id);
+      }
+
+      navigator.geolocation.watchPosition(
+        (position) => {
+          socket.emit("position", {
+            shipmentId: id,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setPosition([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        }
+      );
+
+      //Accessing live location
+    } else {
+      socket.emit("join_room", {
+        shipmentId: id,
+      });
+      socket.on("driver_position", (data) => {
+        console.log(data, "shippper");
+        setPosition([data.latitude, data.longitude]);
+      });
     }
   }, []);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("connect", () => {
-        console.log("connected to server");
-      });
-
-      socket.on("disconnect", () => {
-        console.log("disconnected from server");
-      });
-
-      return () => {
-        socket.off("connect");
-        socket.off("disconnect");
-      };
+    if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+      console.log(position, "owner");
+    } else {
+      console.log(position, "shipper");
     }
-  }, [socket, id]);
+  }, [position]);
 
   useEffect(() => {
     const queryString = new URLSearchParams(window.location.search).get(
@@ -85,7 +125,8 @@ const ShipmentShowPage = () => {
       {myShipments.length > 0 && (
         <Grid container item xs={12} spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Map drag={false} coordinates={coordinates} routing={false}/>
+            {/* <Map drag={false} coordinates={coordinates} routing={false} /> */}
+            <MapLiveLocation position={position} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <EnquiryDetail {...details} />

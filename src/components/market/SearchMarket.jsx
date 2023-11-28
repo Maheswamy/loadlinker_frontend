@@ -63,7 +63,12 @@ const SearchMarket = ({ handleView }) => {
   };
 
   return (
-    <Stack component={"form"} onSubmit={handleSubmit} direction={"row"}>
+    <Stack
+      component="form"
+      direction="row"
+      spacing={2} // Adjust the spacing between components
+      alignItems="center" // Align items vertically in the center
+    >
       <TextField
         id="source"
         label="Pick-Up location"
@@ -91,7 +96,7 @@ const SearchMarket = ({ handleView }) => {
           <MenuItem value={""}>None</MenuItem>
           {vehicleType.map((ele) => (
             <MenuItem value={ele._id} key={ele._id}>
-              {ele.minimumWeight / 1000} Tonne(s)-{ele.maximumWeight / 1000}{" "}
+              {ele.minimumWeight / 1000} Tonne(s)-{ele.maximumWeight / 1000}
               Tonne(s)
             </MenuItem>
           ))}
@@ -109,6 +114,7 @@ const SearchMarket = ({ handleView }) => {
       >
         Clear Search
       </Button>
+
       <ToggleButtonGroup
         orientation="horizontal"
         value={toggle}
