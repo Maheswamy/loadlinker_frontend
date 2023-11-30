@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { startUpdateVehicle } from "../../redux/action/vehicleAction";
+import { startUpdateVehicle } from "../../../redux/action/vehicleAction";
 import ImageModal from "./ImageModal";
 
 const style = {

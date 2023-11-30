@@ -34,7 +34,7 @@ import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
 import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import { startGetReviews } from "./redux/action/reviewAction";
-import VehicleApprovalContainer from "./components/admin/VehicleApprovalContainer";
+import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
