@@ -4,7 +4,6 @@ import { Stack, Typography } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 const VehicleApproval = () => {
   const { myVehicle } = useSelector((state) => state.vehicle);
-  console.log(myVehicle, "vehicle list for approval");
   const showToastMessage = (msg) => {
     toast.success(`${msg}`, {
       position: toast.POSITION.TOP_CENTER,

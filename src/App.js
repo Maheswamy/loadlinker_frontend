@@ -35,6 +35,7 @@ import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnq
 import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import { startGetReviews } from "./redux/action/reviewAction";
 import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
+import DashboardContainer from "./components/admin/Dashboard/DashboardContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -130,6 +131,7 @@ function App() {
               <Route path="/shipments" element={<ShipmentList />} />
               <Route path="/shipment/:id" element={<ShipmentShowPage />} />
               <Route path="/profile" element={<ProfileContainer />} />
+              <Route path="/dashboard" element={<DashboardContainer />} />
               <Route
                 path="/vehicleapproval"
                 element={<VehicleApprovalContainer />}

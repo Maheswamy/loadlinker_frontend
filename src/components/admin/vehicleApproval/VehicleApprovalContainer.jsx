@@ -1,4 +1,4 @@
-import VehicleApproval from "./vehicleApproval/VehicleApproval";
+import VehicleApproval from "./VehicleApproval";
 
 const VehicleApprovalContainer = () => {
   return (
