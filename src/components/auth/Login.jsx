@@ -92,6 +92,13 @@ const Login = () => {
           dispatch(startGetReviews());
         }
 
+        if (jwtDecode(localStorage.getItem("token")).role === "admin") {
+          dispatch(startGetAllMyShipments());
+          dispatch(startGetCount());
+          dispatch(startGetMyEnquiries());
+          dispatch(startGetVehicle());
+        }
+
         userDispatch({
           type: "USER_LOGIN",
           payload: userResponse.data.userData,

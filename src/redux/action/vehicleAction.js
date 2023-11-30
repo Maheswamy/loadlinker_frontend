@@ -29,7 +29,7 @@ export const startPermitList = () => {
   };
 };
 
-export const startAddVehicle = (body,navigate) => {
+export const startAddVehicle = (body, navigate) => {
   return async (dispatch) => {
     try {
       const addVehicleResponse = await axios.post("/api/vehicles", body, {
@@ -38,7 +38,7 @@ export const startAddVehicle = (body,navigate) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      navigate(`/myvehicle/${addVehicleResponse.data._id}`)
+      navigate(`/myvehicle/${addVehicleResponse.data._id}`);
       dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
       console.log(e);
@@ -55,10 +55,39 @@ export const startGetVehicle = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      dispatch(getVehicle(getVehicles.data))
+      dispatch(getVehicle(getVehicles.data));
     } catch (e) {
       console.log(e);
       alert(e);
+    }
+  };
+};
+
+export const startUpdateVehicle = ({
+  vehicleId,
+  formData,
+  showToastMessage,
+}) => {
+  return async (dispatch) => {
+    try {
+      const updatedResponse = await axios.put(
+        `/api/vehicles/${vehicleId}`,
+        formData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(updatedResponse.data);
+      showToastMessage(
+        updatedResponse.data.isVerified === "approved"
+          ? "Vehicle is approved"
+          : "vehicle is rejected"
+      );
+      dispatch(updatedVehicle(updatedResponse.data));
+    } catch (e) {
+      console.log(e);
     }
   };
 };
@@ -85,9 +114,15 @@ const getVehicle = (data) => {
   };
 };
 
-
 export const clearVehicleOnLogOut = () => {
   return {
     type: "LOG_CLEAR",
+  };
+};
+
+const updatedVehicle = (data) => {
+  return {
+    type: "UPDATE_VEHICLE",
+    payload: data,
   };
 };

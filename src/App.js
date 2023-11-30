@@ -34,6 +34,7 @@ import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
 import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import { startGetReviews } from "./redux/action/reviewAction";
+import VehicleApprovalContainer from "./components/admin/VehicleApprovalContainer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -71,6 +72,7 @@ function App() {
               dispatch(startPermitList());
               dispatch(startVehicleType());
               dispatch(startGetReviews());
+              dispatch(startGetCount());
 
               break;
 
@@ -79,7 +81,15 @@ function App() {
               dispatch(startGetAllMyShipments());
               dispatch(startVehicleType());
               dispatch(startGetReviews());
+              dispatch(startGetCount());
+
               break;
+
+            case "admin":
+              dispatch(startGetAllMyShipments());
+              dispatch(startGetCount());
+              dispatch(startGetMyEnquiries());
+              dispatch(startGetVehicle());
 
             default:
               break;
@@ -120,6 +130,10 @@ function App() {
               <Route path="/shipments" element={<ShipmentList />} />
               <Route path="/shipment/:id" element={<ShipmentShowPage />} />
               <Route path="/profile" element={<ProfileContainer />} />
+              <Route
+                path="/vehicleapproval"
+                element={<VehicleApprovalContainer />}
+              />
             </Routes>
           </Container>
         </div>

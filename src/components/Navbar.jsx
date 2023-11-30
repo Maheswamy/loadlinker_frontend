@@ -6,6 +6,7 @@ import { isEmpty } from "lodash";
 import { jwtDecode } from "jwt-decode";
 import ShipperNavbar from "./Navbar/ShipperNavbar";
 import VehicleOwnerNav from "./Navbar/VehicleOwnerNav";
+import AdminNavbar from "./Navbar/AdminNavbar";
 
 const Navbar = () => {
   const { userState, userDispatch } = useContext(UserContext);
@@ -16,6 +17,8 @@ const Navbar = () => {
       return <VehicleOwnerNav />;
     } else if (role === "shipper") {
       return <ShipperNavbar />;
+    } else if (role === "admin") {
+      return <AdminNavbar />;
     }
   };
   return (

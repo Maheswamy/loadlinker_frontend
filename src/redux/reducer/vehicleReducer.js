@@ -14,6 +14,21 @@ const vehicleReducer = (state = intialState, action) => {
     case "ADD_VEHICLE": {
       return { ...state, myVehicle: [...state.myVehicle, action.payload] };
     }
+    case "UPDATE_VEHICLE": {
+      console.log(action.payload,'asda')
+      return {
+        ...state,
+        myVehicle: [
+          ...state.myVehicle.map((ele) => {
+            if (ele._id === action.payload._id) {
+              return { ...action.payload };
+            } else {
+              return { ...ele };
+            }
+          }),
+        ],
+      };
+    }
     case "LOG_CLEAR": {
       return { ...state, vehicleType: [], permit: [], myVehicle: [] };
     }
