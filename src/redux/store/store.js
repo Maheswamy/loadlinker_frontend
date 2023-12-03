@@ -6,6 +6,7 @@ import { bidReducer } from "../reducer/bidReducer";
 import enquiryReducer from "../reducer/enquiryReducer";
 import shipmentReducer from "../reducer/shipmentReducer";
 import reviewReducer from "../reducer/reviewReducer";
+import analysisReducer from "../reducer/analysisReducer";
 
 const configureStore = () => {
   const rootReducer = {
@@ -15,6 +16,7 @@ const configureStore = () => {
     enquiry: enquiryReducer,
     shipment: shipmentReducer,
     review: reviewReducer,
+    analysis:analysisReducer
   };
   const store = createStore(
     combineReducers(rootReducer),

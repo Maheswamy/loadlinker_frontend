@@ -34,7 +34,7 @@ const EnquiryContainer = () => {
 
           {<EnquiryDetail {...enquiry} />}
           {jwtDecode(localStorage.getItem("token"))?.role === "owner" && (
-            <BidForm id={id} />
+            <BidForm id={id} {...enquiry}/>
           )}
         </Grid>
       </Grid>

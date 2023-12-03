@@ -1,14 +1,17 @@
 import React from "react";
 import DetailBox from "./DetailBox";
-import MapContainer from "./MapContainer";
+import GraphContainer from "./GraphContainer";
 import QueryContainer from "./QueryContainer";
 import { Stack } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const DashboardContainer = () => {
+  const { analysis } = useSelector((state) => state);
+  console.log(analysis);
   return (
     <>
       <QueryContainer />
-      <Stack direction={'row'} justifyContent={'space-between'}>
+      <Stack direction={"row"} justifyContent={"space-between"}>
         <DetailBox
           heading={"Total shipment"}
           info={300}
@@ -50,7 +53,7 @@ const DashboardContainer = () => {
           }
         />
       </Stack>
-      <MapContainer />
+      <GraphContainer />
     </>
   );
 };

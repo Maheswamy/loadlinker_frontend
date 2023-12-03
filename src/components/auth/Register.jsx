@@ -8,8 +8,9 @@ import {
   Button,
   Box,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail, isStrongPassword } from "validator";
 import { MuiOtpInput } from "mui-one-time-password-input";
@@ -29,6 +30,7 @@ const Register = () => {
   const [serverError, setServerError] = useState({});
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [otp, setOtp] = useState("");
+  const [spinner, setSpinner] = useState(false);
   const errors = {};
   const navigate = useNavigate();
 
@@ -76,6 +78,7 @@ const Register = () => {
     e.preventDefault();
     const validationResult = validation();
     if (validationResult === 0) {
+      setSpinner(true);
       const body = {
         firstName,
         lastName,
@@ -84,7 +87,6 @@ const Register = () => {
         role,
         mobileNumber,
       };
-      console.log(body);
       setFormError({});
       setServerError({});
       try {
@@ -94,25 +96,26 @@ const Register = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         setRegisterSuccess(true);
+        setSpinner(false);
       } catch (e) {
-        console.log(e.response.data.errors);
         const serverErrorsArray = e.response.data.errors;
         const serverErrorObject = serverErrorsArray.reduce((pv, cv) => {
           pv[cv.path] = cv.msg;
           return pv;
         }, {});
         setServerError(serverErrorObject);
+        setSpinner(false);
       }
     }
   };
 
   const handleOtpVerification = async () => {
-    console.log(otp);
     const body = {
       email: localStorage.getItem("email"),
       otp,
     };
     try {
+      setSpinner(true);
       const otpResponse = await axios.post("/api/register/otp", body);
       toast.success("verification successful", {
         position: toast.POSITION.TOP_RIGHT,
@@ -120,16 +123,23 @@ const Register = () => {
       setRegisterSuccess(false);
       navigate("/login");
     } catch (e) {
+      setSpinner(false);
+
       setServerError(e.response.data.errors);
     }
   };
 
   return (
-    <Box >
+    <Box>
       <ToastContainer />
 
       <form onSubmit={handleRegister}>
-        <Stack gap={2} type="form" alignItems={'center'} justifyContent={'center'} >
+        <Stack
+          gap={2}
+          type="form"
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
           <Typography variant="h2" color="text">
             Register
           </Typography>
@@ -218,14 +228,22 @@ const Register = () => {
                 {fromError.role}
               </p>
             ))}
-          {!registerSuccess&&<Button
-            variant="contained"
-            color="primary"
-            size="small"
-            type="submit"
-          >
-            Register
-          </Button>}
+          {!registerSuccess && (
+            <Stack justifyContent={"center"} alignItems={"center"}>
+              {spinner ? (
+                <CircularProgress />
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  type="submit"
+                >
+                  Register
+                </Button>
+              )}
+            </Stack>
+          )}
           <Button
             variant="text"
             size="small"
@@ -249,9 +267,16 @@ const Register = () => {
             value={otp}
             onChange={(value) => setOtp(value)}
           />
-          <Button variant="contained" onClick={handleOtpVerification}>
-            Verify OTP
-          </Button>
+
+          <Stack alignItems={"center"} justifyContent={"center"}>
+            {spinner ? (
+              <CircularProgress />
+            ) : (
+              <Button variant="contained" onClick={handleOtpVerification}>
+                Verify OTP
+              </Button>
+            )}
+          </Stack>
         </Stack>
       )}
     </Box>

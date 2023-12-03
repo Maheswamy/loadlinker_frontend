@@ -51,22 +51,16 @@ const AddVehicleForm = () => {
   const errors = {};
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {vehicle} = useSelector((state) => state.vehicle);
+  const vehicle = useSelector((state) => state.vehicle);
 
   const navigateTo = (path) => {
     setSpiner(false);
     navigate(path);
   };
-  // useEffect(() => {
-  //   dispatch(startVehicleType());
-  //   dispatch(startPermitList());
-  // }, []);
-
-
-  // const selectTypeOfVehicle=()=>{
-  //   const selectedVehicledType=vehicle.vehicleType.find((ele)=>permittedLoadCapacity>=ele.minimumWeight&&permittedLoadCapacity<=ele.maximumWeight)
-  // vehicleType
-  // }
+  useEffect(() => {
+    dispatch(startVehicleType());
+    dispatch(startPermitList());
+  }, []);
 
   useEffect(() => {
     if (vehicleType) {
@@ -78,9 +72,11 @@ const AddVehicleForm = () => {
   }, []);
 
   const handleRcFileUpload = (rc) => {
+    console.log(rc);
     setRc(rc.map((ele) => ele.file));
   };
   const handleVehicleFileUpload = (vehicleImage) => {
+    console.log(vehicleImage);
     setVehicleImage(vehicleImage.map((ele) => ele.file));
   };
   const getSelectedPermit = (data) => {
@@ -128,6 +124,7 @@ const AddVehicleForm = () => {
     if (isEmpty(validationResult)) {
       setFormError({});
       const body = new FormData();
+      console.log("sdjh");
       body.append("vehicleNumber", vehicleNumber);
       body.append("rcNumber", rcNumber);
       body.append("permittedLoadCapacity", permittedLoadCapacity);
@@ -176,7 +173,6 @@ const AddVehicleForm = () => {
               value={permittedLoadCapacity}
               type="number"
               onChange={(e) => setPermittedLoadCapacity(e.target.value)}
-              // onBlur={selectTypeOfVehicle}
               error={formError.permittedLoadCapacity && true}
               helperText={formError.permittedLoadCapacity}
             />
@@ -202,7 +198,13 @@ const AddVehicleForm = () => {
                 ))}
               </Select>
             </FormControl>
-            
+            {!isEmpty(selectedVehcileTypeDetails) && (
+              // <FormHelperText>
+              //   {selectedVehcileTypeDetails.minimumWeight}kg to{" "}
+              //   {selectedVehcileTypeDetails.maximumWeight}
+              // </FormHelperText>
+              console.log(selectedVehcileTypeDetails)
+            )}
             <ReactSelect
               permit={vehicle.permit}
               getSelectedPermit={getSelectedPermit}

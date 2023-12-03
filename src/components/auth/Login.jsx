@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Stack, TextField, Button, Typography } from "@mui/material";
+import {
+  Stack,
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
 import axios from "../../config/axios";
@@ -18,6 +24,7 @@ import { startGetMyEnquiries } from "../../redux/action/enquiryAction";
 import { startGetAllMyShipments } from "../../redux/action/shipmentAction";
 import { startGetCount } from "../../redux/action/marketAction";
 import { startGetReviews } from "./../../redux/action/reviewAction";
+import { startGetInfo } from "../../redux/action/analysisAction";
 
 const styles = {
   form: {
@@ -32,6 +39,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState({});
   const [serverError, setServerError] = useState({});
+  const [spinner, setSpinner] = useState(false);
   const navigate = useNavigate();
   const { userDispatch } = useContext(UserContext);
   const dispatch = useDispatch();
@@ -64,11 +72,13 @@ const Login = () => {
     e.preventDefault();
 
     if (validation()) {
+      setSpinner(true);
       const body = { username, password };
 
       try {
         const loginResponse = await axios.post("/api/login", body);
         localStorage.setItem("token", loginResponse.data.token);
+
         const userResponse = await axios.get("/api/users/profile", {
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -97,6 +107,7 @@ const Login = () => {
           dispatch(startGetCount());
           dispatch(startGetMyEnquiries());
           dispatch(startGetVehicle());
+          dispatch(startGetInfo());
         }
 
         userDispatch({
@@ -105,6 +116,8 @@ const Login = () => {
         });
         navigate("/");
       } catch (e) {
+        setSpinner(false);
+
         if (e.response.data.error.includes("verify")) {
           return toast.error("Please verify your account before SignIn", {
             position: toast.POSITION.TOP_RIGHT,
@@ -148,9 +161,21 @@ const Login = () => {
           helperText={formError.password || serverError.password}
         />
 
-        <Button variant="contained" color="primary" size="small" type="submit">
-          Log In
-        </Button>
+        <Stack justifyContent={"center"} alignItems={"center"}>
+          {spinner ? (
+            <CircularProgress size={30} />
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              type="submit"
+              fullwidth
+            >
+              Log In
+            </Button>
+          )}
+        </Stack>
         <Button
           variant="text"
           size="small"

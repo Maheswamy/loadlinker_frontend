@@ -36,6 +36,7 @@ import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import { startGetReviews } from "./redux/action/reviewAction";
 import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
 import DashboardContainer from "./components/admin/Dashboard/DashboardContainer";
+import { startGetInfo } from "./redux/action/analysisAction";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -91,6 +92,7 @@ function App() {
               dispatch(startGetCount());
               dispatch(startGetMyEnquiries());
               dispatch(startGetVehicle());
+              dispatch(startGetInfo());
 
             default:
               break;

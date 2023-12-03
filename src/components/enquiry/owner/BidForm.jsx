@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Grid,
   TextField,
@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { startAddBid } from "../../../redux/action/bidAction";
 import { useNavigate } from "react-router-dom";
 
-const BidForm = ({ id }) => {
+const BidForm = ({ id, loadWeight }) => {
   const [formData, setFormData] = useState({
     bidAmount: "",
     vehicleId: "",
@@ -48,6 +48,8 @@ const BidForm = ({ id }) => {
     console.log(errors);
     return errors;
   };
+
+  
 
   const handleBidPost = (e) => {
     e.preventDefault();
@@ -96,16 +98,13 @@ const BidForm = ({ id }) => {
                     variant="outlined"
                     type="number"
                     fullWidth
-                    error={!!formError.bidAmount}
-                    helperText={formError.bidAmount}
+                    error={formError?.bidAmount && true}
+                    helperText={formError?.bidAmount}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <FormControl fullWidth>
-                    <InputLabel
-                      htmlFor="vehicle"
-                      error={!!formError.vehicleId}
-                    >
+                    <InputLabel htmlFor="vehicle" error={!!formError.vehicleId}>
                       Select your Vehicle
                     </InputLabel>
                     <Select
@@ -118,7 +117,8 @@ const BidForm = ({ id }) => {
                         })
                       }
                       label="Select your Vehicle"
-                      error={!!formError.vehicleId}
+                      error={formError?.vehicleId && true}
+                      helperText={formError?.vehicleId}
                       fullWidth
                     >
                       <MenuItem value="">Select your vehicle</MenuItem>

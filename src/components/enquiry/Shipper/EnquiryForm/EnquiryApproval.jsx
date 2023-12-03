@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Grid, Button, Typography, FormHelperText } from "@mui/material";
+import {
+  Grid,
+  Button,
+  Typography,
+  FormHelperText,
+  CircularProgress,
+  Stack,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 
 const EnquiryApproval = ({
@@ -13,6 +20,7 @@ const EnquiryApproval = ({
   dateErrors,
   serverErrors,
   state,
+  spinner,
 }) => {
   const [startDate, setStartDate] = useState(
     state.dateOfPickUp ? state.dateOfPickUp : null
@@ -65,6 +73,7 @@ const EnquiryApproval = ({
                 sx={{ backgroundColor: "white" }}
                 disablePast
                 fullWidth
+                timezone="system"
               />
             </DemoContainer>
             <FormHelperText
@@ -87,7 +96,6 @@ const EnquiryApproval = ({
                 sx={{ backgroundColor: "white" }}
                 disablePast
                 fullWidth
-
               />
             </DemoContainer>
             <FormHelperText
@@ -101,16 +109,22 @@ const EnquiryApproval = ({
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Button
-          type="button"
-          variant="contained"
-          color="primary"
-          fullWidth
-          style={{ marginTop: 16 }}
-          onClick={() => handleEnquirySubmit(startDate, endDate)}
-        >
-          Submit Enquiry
-        </Button>
+        {spinner ? (
+          <Stack xs={12} justifyContent="center" alignItems="center">
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <Button
+            type="button"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: 16 }}
+            onClick={() => handleEnquirySubmit(startDate, endDate)}
+          >
+            Submit Enquiry
+          </Button>
+        )}
       </Grid>
     </Grid>
   );

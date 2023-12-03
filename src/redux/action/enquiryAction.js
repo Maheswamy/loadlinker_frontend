@@ -1,7 +1,7 @@
 import axios from "../../config/axios";
 import { removeEnquiryFromMarket } from "./marketAction";
 
-export const startGetEnquiryCalculation = (formData) => {
+export const startGetEnquiryCalculation = (formData, SpinnerHandler) => {
   return async (dispatch) => {
     try {
       const calculationRespose = await axios.post(
@@ -13,8 +13,11 @@ export const startGetEnquiryCalculation = (formData) => {
           },
         }
       );
+      SpinnerHandler(false);
       dispatch(getCalculate(calculationRespose.data));
     } catch (e) {
+      SpinnerHandler(false);
+
       if (e.status === 400) {
         console.log(e.response.data.errors);
         dispatch(serverErrors(e.response.data.errors));
@@ -26,7 +29,7 @@ export const startGetEnquiryCalculation = (formData) => {
   };
 };
 
-export const startAddEnquiry = (formData, handleNavigate) => {
+export const startAddEnquiry = (formData, handleNavigate, SpinnerHandler,) => {
   return async (dispatch) => {
     try {
       const addEnquiryResponse = await axios.post(
@@ -38,11 +41,12 @@ export const startAddEnquiry = (formData, handleNavigate) => {
           },
         }
       );
-
       console.log(addEnquiryResponse, "response of add enquiry");
       handleNavigate();
       dispatch(addEnquiry(addEnquiryResponse.data));
     } catch (e) {
+      SpinnerHandler(false);
+
       console.log(e);
       if (e.request.status === 400) {
         console.log(e.response.data.errors);

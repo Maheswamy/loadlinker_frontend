@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoadInfoForm from "./LoadInfoForm";
 import AddressForm from "./AddressForm";
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import EnquiryCalculation from "./EnquiryCalculation";
 import EnquiryApproval from "./EnquiryApproval";
 import {
@@ -13,7 +13,7 @@ import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 const AddEnquiryForm = () => {
-  const [isLoding, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [dateErrors, setDateErrors] = useState({});
   const errors = {
@@ -21,16 +21,15 @@ const AddEnquiryForm = () => {
     pickUpLocation: {},
   };
   const navigate = useNavigate();
-  const handleNavigate = (error) => {
-    if (error) {
-      return setIsLoading(false);
-    }
+  const handleNavigate = () => {
+    // if (error) {
+    //   return setIsLoading(false);
+    // }
     navigate("/myenquiries", { state: "successfully enquiry added" });
   };
   const { enquiryCalculation, newCoordinates, serverErrors } = useSelector(
     (state) => state.enquiry
   );
-  console.log(serverErrors, enquiryCalculation);
   const dispatch = useDispatch();
   const initialState = {
     loadType: "",
@@ -124,7 +123,6 @@ const AddEnquiryForm = () => {
         result.push(true);
       }
     }
-    console.log(errors);
     return result.length === 0;
   };
 
@@ -146,22 +144,35 @@ const AddEnquiryForm = () => {
     setEnquiryForm({ ...enquiryForm, ...loadinformation });
   };
 
+  const SpinnerHandler = (value) => {
+    setIsLoading(value);
+  };
   const handleCalculation = () => {
-    console.log(enquiryForm, errors);
     if (runValidation()) {
+      setIsLoading(true);
       setFormErrors(initialState);
-      dispatch(startGetEnquiryCalculation(enquiryForm));
+      dispatch(startGetEnquiryCalculation(enquiryForm, SpinnerHandler));
     }
   };
 
   const handleEnquirySubmit = (dateOfPickUp, dateOfUnload) => {
-    const newFormData = { ...enquiryCalculation };
+    // const newFormData = { ...enquiryCalculation };
+
     if (new Date(dateOfPickUp) <= new Date(dateOfUnload)) {
-      enquiryCalculation.dateOfPickUp = dateOfPickUp;
-      enquiryCalculation.dateOfUnload = dateOfUnload;
+      enquiryCalculation.dateOfPickUp = new Date(
+        dateOfPickUp
+      ).toLocaleDateString();
+      enquiryCalculation.dateOfUnload = new Date(
+        dateOfUnload
+      ).toLocaleDateString();
       setIsLoading(true);
-      dispatch(startAddEnquiry(enquiryCalculation, handleNavigate));
+
+      //
+      dispatch(
+        startAddEnquiry(enquiryCalculation, handleNavigate, SpinnerHandler)
+      );
     } else {
+      setIsLoading(false);
       setDateErrors({
         dateOfPickUp: "unload date should be greater than pickup date",
         dateOfUnload: "unload date should be greater than pickup date",
@@ -185,48 +196,48 @@ const AddEnquiryForm = () => {
           lng: newCoordinates.distination.lng,
         },
       };
-      console.log(newFormData);
-      dispatch(startGetEnquiryCalculation(newFormData));
+      dispatch(startGetEnquiryCalculation(newFormData, SpinnerHandler));
     }
   }, [newCoordinates]);
   return (
     <>
-      {isLoding ? (
-        <CircularProgress />
-      ) : (
-        <Grid component={"form"} container spacing={2}>
-          <LoadInfoForm
-            loadInfo={loadInfo}
-            formErrors={formErrors}
+      <Grid component={"form"} container spacing={2}>
+        <LoadInfoForm
+          loadInfo={loadInfo}
+          formErrors={formErrors}
+          serverErrors={serverErrors}
+          state={enquiryCalculation}
+        />
+        <AddressForm
+          name={"Pick-Up"}
+          address={pickUp}
+          formErrors={formErrors.pickUpLocation}
+          serverErrors={serverErrors.pickUpLocation}
+          state={enquiryCalculation.pickUpLocation}
+        />
+        <AddressForm
+          name={"Drop-Off"}
+          address={dropOff}
+          formErrors={formErrors.dropOffLocation}
+          serverErrors={serverErrors.dropOffLocation}
+          state={enquiryCalculation.dropOffLocation}
+        />
+
+        <EnquiryCalculation
+          handleCalculation={handleCalculation}
+          spinner={isLoading}
+        />
+        {!isEmpty(enquiryCalculation) && (
+          <EnquiryApproval
+            {...enquiryCalculation}
+            handleEnquirySubmit={handleEnquirySubmit}
+            dateErrors={dateErrors}
             serverErrors={serverErrors}
             state={enquiryCalculation}
+            spinner={isLoading}
           />
-          <AddressForm
-            name={"Pick-Up"}
-            address={pickUp}
-            formErrors={formErrors.pickUpLocation}
-            serverErrors={serverErrors.pickUpLocation}
-            state={enquiryCalculation.pickUpLocation}
-          />
-          <AddressForm
-            name={"Drop-Off"}
-            address={dropOff}
-            formErrors={formErrors.dropOffLocation}
-            serverErrors={serverErrors.dropOffLocation}
-            state={enquiryCalculation.dropOffLocation}
-          />
-          <EnquiryCalculation handleCalculation={handleCalculation} />
-          {!isEmpty(enquiryCalculation) && (
-            <EnquiryApproval
-              {...enquiryCalculation}
-              handleEnquirySubmit={handleEnquirySubmit}
-              dateErrors={dateErrors}
-              serverErrors={serverErrors}
-              state={enquiryCalculation}
-            />
-          )}
-        </Grid>
-      )}
+        )}
+      </Grid>
     </>
   );
 };
