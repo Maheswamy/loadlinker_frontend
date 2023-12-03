@@ -119,7 +119,7 @@ export const clearShipmentOnLogOut = () => {
   };
 };
 
-const updateShipment = (data) => {
+export const updateShipment = (data) => {
   return {
     type: "UPDATE_SHIPMENT_STATUS",
     payload: data,

@@ -1,17 +1,27 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Grid,
   Rating,
   TextField,
   CircularProgress,
+  Paper,
+  Typography,
+  Stack,
 } from "@mui/material";
 import { startPayment } from "../../redux/action/shipmentAction";
 import { ToastContainer, toast } from "react-toastify";
 import { startAddReview } from "./../../redux/action/reviewAction";
+import { isEmpty } from "lodash";
 
-const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
+const ShipperUpdate = ({
+  status,
+  shipmentId,
+  amount,
+  payment = null,
+  review,
+}) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [rating, setRating] = useState(0);
@@ -19,6 +29,9 @@ const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
   const [serverErrors, setServerErrors] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const errors = {};
+
+  const state = useSelector((state) => state.shipment);
+  console.log(state, isEmpty(review));
 
   const handlePayment = () => {
     dispatch(startPayment({ shipmentId, amount }));
@@ -53,22 +66,28 @@ const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
   return (
     <div>
       <ToastContainer />
+      {status === "unloaded" && (
+        <Typography variant="h6" color="primary">
+          Shipment delivered
+        </Typography>
+      )}
       {status === "waiting" && (
         <Button variant="contained" color="primary">
           Cancel
         </Button>
       )}
-      {!payment && (
+      {status === "loaded" && !payment && (
         <Button
           variant="contained"
           color="primary"
           type="button"
           onClick={handlePayment}
+          fullWidth
         >
           Make Payment
         </Button>
       )}
-      {status === "unloaded" && (
+      {status === "unloaded" && isEmpty(review) && (
         <Grid component={"form"} onSubmit={handleAddReview}>
           <Rating
             name="simple-controlled"
@@ -92,11 +111,42 @@ const ShipperUpdate = ({ status, shipmentId, amount, payment = null }) => {
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <Button variant="contained" color="primary" type="Submit">
-              Review
-            </Button>
+            <>
+              {isEmpty(review) && (
+                <Button variant="contained" color="primary" type="Submit">
+                  Review
+                </Button>
+              )}
+            </>
           )}
         </Grid>
+      )}
+      {review && (
+        <Paper sx={{ marginTop: "20px", padding: "20px" }}>
+          <Stack spacing={3}>
+            <Stack direction={"row"} alignItems={"center"}>
+              <Typography variant="body1" color="initial">
+                Rating:
+              </Typography>
+              <Rating
+                name="simple-controlled"
+                value={review?.rating}
+                precision={0.5}
+                readOnly
+              />
+              <Typography variant="body1" color="initial">
+                ({review?.rating})
+              </Typography>
+            </Stack>
+            <Stack direction={"row"} alignItems={"center"}>
+              <Typography variant="body1" color="initial">
+                FeedBack :{" "}
+              </Typography>
+
+              <Typography variant="subtitle1">{review?.feedback}</Typography>
+            </Stack>
+          </Stack>
+        </Paper>
       )}
     </div>
   );

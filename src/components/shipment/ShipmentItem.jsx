@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Grid, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const ShipmentItem = ({ bidId, enquiryId, status,_id }) => {
+const ShipmentItem = ({ bidId, enquiryId, status,_id ,review}) => {
     const navigate=useNavigate()
     const handleShowMore=()=>{
     console.log(_id)

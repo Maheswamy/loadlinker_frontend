@@ -16,37 +16,11 @@ const ShipmentShowPage = () => {
   const dispatch = useDispatch();
   const { myShipments } = useSelector((state) => state.shipment);
   const shipment = myShipments.find((ele) => ele?._id === id) || {};
-  const { bidId = {}, enquiryId = {}, status, payment } = shipment;
+  const { bidId = {}, enquiryId = {}, status, payment ,review } = shipment;
   const socket = io("http://localhost:3080");
-  // const coordinatesObj = enquiryId.coordinates || {};
-  // const coordinates = [
-  //   coordinatesObj?.pickUpCoordinate,
-  //   coordinatesObj?.dropCoordinate,
-  // ];
-
-  // setInterval(() => {
-  //   if (jwtDecode(localStorage.getItem("token")).role === "owner") {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         socket.emit("position", {
-  //           latitude: position.coords.latitude,
-  //           longitude: position.coords.longitude,
-  //         });
-  //         setPosition([position.coords.latitude, position.coords.longitude]);
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //       },
-  //       {
-  //         enableHighAccuracy: true,
-  //         timeout: 5000,
-  //         maximumAge: 0,
-  //       }
-  //     );
-  //   }
-  // }, 3000);
+ 
   useEffect(() => {
-    if (jwtDecode(localStorage.getItem("token")).role === "owner") {
+    if (jwtDecode(localStorage.getItem("token")).role === "owner"&&status!=='unloaded') {
       if (socket?.connect) {
         socket.emit("join_room", id);
       }
@@ -116,10 +90,9 @@ const ShipmentShowPage = () => {
     paymentType: enquiryId.paymentType,
     payment: payment,
     status,
+    
   };
 
-  const state = useSelector((state) => state.shipment);
-  console.log(state, "jsagdahgsdas");
   return (
     <Grid container spacing={2}>
       {myShipments.length > 0 && (
@@ -135,6 +108,7 @@ const ShipmentShowPage = () => {
               shipmentId={id}
               amount={bidId.bidAmount}
               payment={payment}
+              review={review}
             />
           </Grid>
         </Grid>

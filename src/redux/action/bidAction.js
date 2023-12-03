@@ -1,6 +1,11 @@
 import axios from "../../config/axios";
 
-export const startAddBid = (formData, navigate) => {
+export const startAddBid = (
+  formData,
+  navigate,
+  handleSpinner,
+  handleServerError
+) => {
   return async (dispatch) => {
     try {
       const addBidResponse = await axios.post("/api/bids", formData, {
@@ -11,8 +16,12 @@ export const startAddBid = (formData, navigate) => {
       navigate("/mybids");
       dispatch(addBid(addBidResponse.data));
     } catch (e) {
+      handleSpinner(false);
+      if (e.status !== 500) {
+        handleServerError(e.response.data.errors);
+      }
       console.log(e);
-      alert(e.message);
+      alert(e.response.data.errors.msg);
     }
   };
 };

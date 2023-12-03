@@ -1,60 +1,26 @@
 import React from "react";
-import DetailBox from "./DetailBox";
 import GraphContainer from "./GraphContainer";
 import QueryContainer from "./QueryContainer";
-import { Stack } from "@mui/material";
+import DetailContainer from "./DetailContainer";
 import { useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+import { CircularProgress, Stack } from "@mui/material";
 
 const DashboardContainer = () => {
-  const { analysis } = useSelector((state) => state);
-  console.log(analysis);
+  const { info } = useSelector((state) => state.analysis);
+  console.log(info, "sfsd");
   return (
-    <>
-      <QueryContainer />
-      <Stack direction={"row"} justifyContent={"space-between"}>
-        <DetailBox
-          heading={"Total shipment"}
-          info={300}
-          alt={"shipment-icon"}
-          image={
-            "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-shipment-50.png"
-          }
-        />
-        <DetailBox
-          heading={"Total Enquiry"}
-          info={300}
-          alt={"Enquiry-icon"}
-          image={
-            "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-questions-50.png"
-          }
-        />
-        <DetailBox
-          heading={"Total Vehicle"}
-          info={300}
-          alt={"truckSide-icon"}
-          image={
-            "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-semi-truck-side-view-50.png"
-          }
-        />
-        <DetailBox
-          heading={"Total Number of Bids"}
-          info={300}
-          alt={"bid-icon"}
-          image={
-            "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-bid-50.png"
-          }
-        />
-        <DetailBox
-          heading={"Total Revenue"}
-          info={3000000}
-          alt={"revenue-icon"}
-          image={
-            "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-get-revenue-50.png"
-          }
-        />
-      </Stack>
-      <GraphContainer />
-    </>
+    <Stack alignItems={"center"} justifyContent={"center"}>
+      {isEmpty(info) ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <QueryContainer />
+          <DetailContainer />
+          <GraphContainer data={info.users}/>
+        </>
+      )}
+    </Stack>
   );
 };
 

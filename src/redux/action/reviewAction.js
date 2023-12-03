@@ -1,4 +1,5 @@
 import axios from "../../config/axios";
+import { updateShipment } from "./shipmentAction";
 
 export const startGetReviews = () => {
   return async (dispatch) => {
@@ -25,7 +26,7 @@ export const startAddReview = (formData) => {
         },
       });
       console.log(reviewResponse.data);
-      dispatch(addReview(reviewResponse.data));
+      dispatch(updateShipment(reviewResponse.data));
     } catch (e) {
       console.log(e);
     }

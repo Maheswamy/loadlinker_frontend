@@ -62,7 +62,7 @@ export default function BidTable() {
                   <TableCell>Enquiry Amount</TableCell>
                   <TableCell>Bid Amount</TableCell>
                   <TableCell>Load Type</TableCell>
-                  <TableCell>Load Weight</TableCell>
+                  <TableCell>Load Weight (kg's)</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -77,10 +77,21 @@ export default function BidTable() {
                 ).map((ele) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={ele._id}>
                     <TableCell>{ele?.vehicleId?.vehicleNumber}</TableCell>
-                    <TableCell>{ele?.enquiryId?.amount}</TableCell>
-                    <TableCell>{ele?.bidAmount}</TableCell>
+                    <TableCell>{ele?.enquiryId?.amount.slice(0, -3)}</TableCell>
+                    <TableCell>
+                      {new Intl.NumberFormat("en-IN", {
+                        style: "currency",
+                        currency: "INR",
+                      })
+                        .format(ele?.bidAmount)
+                        .slice(0, -3)}
+                    </TableCell>
                     <TableCell>{ele?.enquiryId?.loadType}</TableCell>
-                    <TableCell>{ele?.enquiryId?.loadWeight}</TableCell>
+                    <TableCell>
+                      {new Intl.NumberFormat("en-IN").format(
+                        +ele?.enquiryId?.loadWeight
+                      )}
+                    </TableCell>
                     <TableCell>{ele?.status}</TableCell>
                     <TableCell>
                       <Button

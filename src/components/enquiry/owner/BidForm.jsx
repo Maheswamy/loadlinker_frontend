@@ -8,6 +8,8 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 import { UserContext } from "../../../contextAPI/UserContext";
 import { isEmpty } from "lodash";
@@ -22,6 +24,9 @@ const BidForm = ({ id, loadWeight }) => {
   });
 
   const [formError, setFormError] = useState({});
+  const [serverErrors, setServerErrors] = useState({});
+  const [spinner, setSpinner] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,6 +38,10 @@ const BidForm = ({ id, loadWeight }) => {
     state.bid.mybids.find((ele) => ele.enquiryId?._id == id)
   );
 
+  const myloadedVehicles = useSelector((state) =>
+    state.shipment.myShipments.filter((ele) => ele.status === "loaded")
+  );
+
   const runValidation = () => {
     const errors = {};
 
@@ -42,6 +51,19 @@ const BidForm = ({ id, loadWeight }) => {
 
     if (formData.vehicleId === "") {
       errors.vehicleId = "Please select the vehicle before bidding";
+    } else if (
+      myVehicle.find((ele) => ele._id === formData.vehicleId)
+        ?.permittedLoadCapacity < loadWeight
+    ) {
+      errors.vehicleId =
+        "Permitted vehicle Capacity is less than the request load Weight";
+    } else if (
+      myloadedVehicles.find(
+        (ele) => ele.bidId.vehicleId._id === formData.vehicleId
+      )
+    ) {
+      errors.vehicleId =
+        "selected vehicle is assigned to other Shipment please select the other vehicle";
     }
 
     setFormError(errors);
@@ -49,11 +71,18 @@ const BidForm = ({ id, loadWeight }) => {
     return errors;
   };
 
-  
+  const handleSpinner = (value) => {
+    setSpinner(value);
+  };
+
+  const handleServerError = (value) => {
+    console.log(value);
+  };
 
   const handleBidPost = (e) => {
     e.preventDefault();
     if (isEmpty(runValidation())) {
+      handleSpinner(true);
       const { bidAmount, vehicleId } = formData;
       const postData = {
         enquiryId: id,
@@ -61,7 +90,9 @@ const BidForm = ({ id, loadWeight }) => {
         vehicleId,
       };
       console.log(postData);
-      dispatch(startAddBid(postData, navigate));
+      dispatch(
+        startAddBid(postData, navigate, handleSpinner, handleServerError)
+      );
     }
   };
 
@@ -118,7 +149,6 @@ const BidForm = ({ id, loadWeight }) => {
                       }
                       label="Select your Vehicle"
                       error={formError?.vehicleId && true}
-                      helperText={formError?.vehicleId}
                       fullWidth
                     >
                       <MenuItem value="">Select your vehicle</MenuItem>
@@ -129,19 +159,26 @@ const BidForm = ({ id, loadWeight }) => {
                       ))}
                     </Select>
                   </FormControl>
+                  {formError?.vehicleId && (
+                    <FormHelperText>{formError?.vehicleId}</FormHelperText>
+                  )}
                 </Grid>
               </Grid>
 
               <Grid xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  size="large"
-                  fullWidth
-                >
-                  Submit Bid
-                </Button>
+                {spinner ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    size="large"
+                    fullWidth
+                  >
+                    Submit Bid
+                  </Button>
+                )}
               </Grid>
             </>
           ) : (
