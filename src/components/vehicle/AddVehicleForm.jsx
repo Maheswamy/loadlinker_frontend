@@ -144,7 +144,7 @@ const AddVehicleForm = () => {
     }
   };
   return (
-    <Grid>
+    <Grid  >
       {spiner ? (
         <CircularProgress />
       ) : (
@@ -198,13 +198,12 @@ const AddVehicleForm = () => {
                 ))}
               </Select>
             </FormControl>
-            {!isEmpty(selectedVehcileTypeDetails) && (
+            {!isEmpty(selectedVehcileTypeDetails) &&
               // <FormHelperText>
               //   {selectedVehcileTypeDetails.minimumWeight}kg to{" "}
               //   {selectedVehcileTypeDetails.maximumWeight}
               // </FormHelperText>
-              console.log(selectedVehcileTypeDetails)
-            )}
+              console.log(selectedVehcileTypeDetails)}
             <ReactSelect
               permit={vehicle.permit}
               getSelectedPermit={getSelectedPermit}

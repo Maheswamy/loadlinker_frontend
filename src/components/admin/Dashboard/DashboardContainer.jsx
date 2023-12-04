@@ -17,7 +17,7 @@ const DashboardContainer = () => {
         <>
           <QueryContainer />
           <DetailContainer />
-          <GraphContainer data={info.users}/>
+          <GraphContainer data={info?.users}/>
         </>
       )}
     </Stack>

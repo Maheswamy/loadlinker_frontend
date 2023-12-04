@@ -92,6 +92,24 @@ export const startUpdateVehicle = ({
   };
 };
 
+export const startRemoveVehicle = ({ id, navigate, handleSpinner }) => {
+  return async (dispatch) => {
+    try {
+      const removeVehicleResponse = await axios.delete(`/api/vehicles/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(removeVehicleResponse.data);
+      dispatch(removeVehicle(removeVehicleResponse.data));
+      navigate("/myvehicle");
+    } catch (e) {
+      handleSpinner(false);
+      console.log(e);
+    }
+  };
+};
+
 const getVehicleType = (data) => {
   return { type: "GET_VEHICLE_TYPE_LIST", payload: data };
 };
@@ -123,6 +141,13 @@ export const clearVehicleOnLogOut = () => {
 const updatedVehicle = (data) => {
   return {
     type: "UPDATE_VEHICLE",
+    payload: data,
+  };
+};
+
+const removeVehicle = (data) => {
+  return {
+    type: "REMOVE_VEHICLE",
     payload: data,
   };
 };

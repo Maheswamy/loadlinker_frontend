@@ -92,14 +92,12 @@ const Login = () => {
           dispatch(startPermitList());
           dispatch(startGetAllMyShipments());
           dispatch(startGetCount());
-          dispatch(startGetReviews());
         }
         if (jwtDecode(localStorage.getItem("token")).role === "shipper") {
           dispatch(startGetMyEnquiries());
           dispatch(startGetAllMyShipments());
           dispatch(startVehicleType());
           dispatch(startGetCount());
-          dispatch(startGetReviews());
         }
 
         if (jwtDecode(localStorage.getItem("token")).role === "admin") {
@@ -118,7 +116,7 @@ const Login = () => {
       } catch (e) {
         setSpinner(false);
 
-        if (e.response.data.error.includes("verify")) {
+        if (e.response.data.error?.includes("verify")) {
           return toast.error("Please verify your account before SignIn", {
             position: toast.POSITION.TOP_RIGHT,
           });
@@ -128,6 +126,7 @@ const Login = () => {
           username: e.response.data.error,
           password: e.response.data.error,
         });
+        console.log(e)
       }
     }
   };

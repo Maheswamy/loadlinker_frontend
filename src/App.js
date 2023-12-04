@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { Grid, CssBaseline, Container } from "@mui/material";
+import {  CssBaseline, Container } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import axios from "./config/axios";
 import theme from "./config/theme";
@@ -33,10 +33,10 @@ import { UserContext } from "./contextAPI/UserContext";
 import BidTableShowPage from "./components/bid/BidTableShowPage";
 import AddEnquiryConatiner from "./components/enquiry/Shipper/EnquiryForm/AddEnquiryContainer";
 import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
-import { startGetReviews } from "./redux/action/reviewAction";
 import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
 import DashboardContainer from "./components/admin/Dashboard/DashboardContainer";
 import { startGetInfo } from "./redux/action/analysisAction";
+import Footer from "./components/Footer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -73,7 +73,6 @@ function App() {
               dispatch(startGetAllMyShipments());
               dispatch(startPermitList());
               dispatch(startVehicleType());
-              dispatch(startGetReviews());
               dispatch(startGetCount());
 
               break;
@@ -82,7 +81,6 @@ function App() {
               dispatch(startGetMyEnquiries());
               dispatch(startGetAllMyShipments());
               dispatch(startVehicleType());
-              dispatch(startGetReviews());
               dispatch(startGetCount());
 
               break;
@@ -93,6 +91,8 @@ function App() {
               dispatch(startGetMyEnquiries());
               dispatch(startGetVehicle());
               dispatch(startGetInfo());
+              dispatch(startPermitList());
+              dispatch(startVehicleType());
 
             default:
               break;
@@ -116,6 +116,7 @@ function App() {
           }}
         >
           <Navbar />
+
           <Container maxWidth="lg">
             <Routes>
               <Route path="/" element={<MarketContainer />} />
@@ -140,6 +141,7 @@ function App() {
               />
             </Routes>
           </Container>
+          <Footer />
         </div>
       </ThemeProvider>
     </UserContext.Provider>

@@ -1,11 +1,11 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo";
+import ProfileStatistics from "./ProfileStatistics";
 
 const ProfileContainer = () => {
-  console.log('skjdhskj')
   return (
-    
     <div>
+      <ProfileStatistics />
       <ProfileInfo />
     </div>
   );

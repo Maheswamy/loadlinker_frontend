@@ -56,6 +56,7 @@ const SearchMarket = ({ handleView }) => {
   };
 
   const handleClearSearch = () => {
+
     setSource("");
     setDestination("");
     setLoadWeight("");
@@ -68,6 +69,7 @@ const SearchMarket = ({ handleView }) => {
       direction="row"
       spacing={2} // Adjust the spacing between components
       alignItems="center" // Align items vertically in the center
+      onSubmit={handleSubmit}
     >
       <TextField
         id="source"
