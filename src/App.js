@@ -27,7 +27,6 @@ import { startGetMyBid } from "./redux/action/bidAction";
 import { startGetMyEnquiries } from "./redux/action/enquiryAction";
 import { startGetAllMyShipments } from "./redux/action/shipmentAction";
 import AddVehicleContainer from "./components/vehicle/AddVehicleContainer";
-// import EnquiryContainer from "./components/enquiry/common/EnquiryContainer";
 import EnquiryContainer from "./components/enquiry/common/EnquiryContainer";
 import SelectBidContainer from "./components/enquiry/Shipper/SelectBidContainer";
 import { UserContext } from "./contextAPI/UserContext";
