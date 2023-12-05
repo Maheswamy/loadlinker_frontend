@@ -78,9 +78,13 @@ const ProfileInfo = () => {
         setDisable(true);
         setSpinner(false);
       } catch (e) {
-        // setServerError(e.respone.data.errors)
-        console.log(e);
-        alert("server error");
+        if (e.response.status === 400) {
+          setServerError(e.response.data);
+          setSpinner(false);
+        } else if (e.response.status === 500) {
+          alert(e.response.statusText);
+          setSpinner(false);
+        }
       }
     }
   };
@@ -100,7 +104,7 @@ const ProfileInfo = () => {
   };
 
   useEffect(() => {
-    console.log(initialState,userState)
+    console.log(initialState, userState);
     setFormData(initialState);
   }, []);
 
@@ -219,7 +223,7 @@ const ProfileInfo = () => {
               Edit
             </Button>
           ) : (
-            <>
+            <Stack justifyContent={"center"} spacing={3} alignItems={'center'}>
               {spinner ? (
                 <CircularProgress />
               ) : (
@@ -242,7 +246,7 @@ const ProfileInfo = () => {
                   </Button>
                 </>
               )}
-            </>
+            </Stack>
           )}
         </Stack>
       </Grid>
