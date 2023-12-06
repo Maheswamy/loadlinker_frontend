@@ -17,7 +17,8 @@ const ShipmentShowPage = () => {
   const { myShipments } = useSelector((state) => state.shipment);
   const shipment = myShipments.find((ele) => ele?._id === id) || {};
   const { bidId = {}, enquiryId = {}, status, payment ,review } = shipment;
-  const socket = io("http://localhost:3080");
+  // const socket = io("http://localhost:3080");
+  const socket =io('https://loadlinker-backend.onrender.com')
  
   useEffect(() => {
     if (jwtDecode(localStorage.getItem("token")).role === "owner"&&status!=='unloaded') {
