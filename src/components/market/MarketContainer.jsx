@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MarketList from "./MarketList";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import MarketMapList from "./MarketMapList";
 import SearchMarket from "./SearchMarket";
 import PaginationConatiner from "./PaginationConatiner";
@@ -14,14 +14,13 @@ const MarketContainer = () => {
   };
 
   return (
-    <Box>
-      <HomePageCarousel />
-
+    <Stack alignItems={'center'} justifyContent={'center'} spacing={2}>
       <SearchMarket handleView={handleView} />
+      <HomePageCarousel />
       {view ? <MarketList /> : <MarketMapList />}
 
       <PaginationConatiner />
-    </Box>
+    </Stack>
   );
 };
 

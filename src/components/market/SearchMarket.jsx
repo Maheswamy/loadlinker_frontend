@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  Box,
   Stack,
   TextField,
   Button,
@@ -56,7 +57,6 @@ const SearchMarket = ({ handleView }) => {
   };
 
   const handleClearSearch = () => {
-
     setSource("");
     setDestination("");
     setLoadWeight("");
@@ -67,24 +67,27 @@ const SearchMarket = ({ handleView }) => {
     <Stack
       component="form"
       direction="row"
-      spacing={2} // Adjust the spacing between components
-      alignItems="center" // Align items vertically in the center
+      spacing={2}
+      alignItems="stretch"
+      justifyContent={'space-between'}
       onSubmit={handleSubmit}
     >
-      <TextField
-        id="source"
-        label="Pick-Up location"
-        variant="filled"
-        value={source}
-        onChange={(e) => setSource(e.target.value)}
-      />
-      <TextField
-        id="destination"
-        label="Drop-Off location"
-        variant="filled"
-        value={destination}
-        onChange={(e) => setDestination(e.target.value)}
-      />
+      <Stack direction="row" spacing={2}>
+        <TextField
+          id="source"
+          label="Pick-Up"
+          variant="outlined"
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
+        />
+        <TextField
+          id="destination"
+          label="Drop-Off"
+          variant="outlined"
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+        />
+      </Stack>
 
       <FormControl fullWidth>
         <InputLabel id="weight">Filter based on load Capacity</InputLabel>
@@ -102,34 +105,36 @@ const SearchMarket = ({ handleView }) => {
               Tonne(s)
             </MenuItem>
           ))}
-        </Select>
+        </Select >
       </FormControl>
 
-      <Button variant="contained" color="primary" type="submit">
-        Search
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        type="button"
-        onClick={handleClearSearch}
-      >
-        Clear Search
-      </Button>
+      <Stack direction={'row'} spacing={1}>
+        <Button variant="contained" color="primary" type="submit" >
+          Search
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          type="button"
+          onClick={handleClearSearch}
+        >
+          Clear Search
+        </Button>
 
-      <ToggleButtonGroup
-        orientation="horizontal"
-        value={toggle}
-        exclusive
-        onChange={handleToggle}
-      >
-        <ToggleButton value="list" color={toggle === "list" && "primary"}>
-          <ViewModuleIcon />
-        </ToggleButton>
-        <ToggleButton value="map" color={toggle === "map" && "primary"}>
-          <MapIcon />
-        </ToggleButton>
-      </ToggleButtonGroup>
+        <ToggleButtonGroup
+          orientation="horizontal"
+          value={toggle}
+          exclusive
+          onChange={handleToggle}
+        >
+          <ToggleButton value="list" color={toggle === "list" && "primary"}>
+            <ViewModuleIcon />
+          </ToggleButton>
+          <ToggleButton value="map" color={toggle === "map" && "primary"}>
+            <MapIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Stack>
     </Stack>
   );
 };
