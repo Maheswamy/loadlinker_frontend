@@ -19,27 +19,31 @@ const HomePageCarousel = () => {
           style: {
             bottom: "0",
             top: "unset",
+            color: "red",
           },
         }}
-        NextIcon="next" // Change the "inside" of the next button to "next"
-        PrevIcon="prev"
+        NextIcon=">" // Change the "inside" of the next button to "next"
+        PrevIcon="<"
       >
         <div>
           <img
             src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/3702270.jpg"
             alt="Image 1"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
         <div>
           <img
             src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/container-truck-ship-port-ai-generated-image.jpg"
             alt="Image 2"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
         <div>
           <img
             src="https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/many-transport-trucks-parked-service-station-sunset-ai-generative.jpg"
             alt="Image 3"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
         {/* Add more images as needed */}

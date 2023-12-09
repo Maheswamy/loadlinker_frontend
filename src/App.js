@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import {  CssBaseline, Container } from "@mui/material";
+import { CssBaseline, Container } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import axios from "./config/axios";
 import theme from "./config/theme";
@@ -36,7 +36,6 @@ import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
 import DashboardContainer from "./components/admin/Dashboard/DashboardContainer";
 import { startGetInfo } from "./redux/action/analysisAction";
-import Footer from "./components/Footer";
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -112,7 +111,6 @@ function App() {
         <div
           style={{
             backgroundColor: "#fff",
-            minHeight: "100vh",
           }}
         >
           <Navbar />
@@ -141,7 +139,6 @@ function App() {
               />
             </Routes>
           </Container>
-          <Footer />
         </div>
       </ThemeProvider>
     </UserContext.Provider>

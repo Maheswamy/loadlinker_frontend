@@ -104,9 +104,8 @@ const ProfileInfo = () => {
   };
 
   useEffect(() => {
-    console.log(initialState, userState);
     setFormData(initialState);
-  }, []);
+  }, [user]);
 
   const handleEditChanges = (e) => {
     setFormData((prev) => {
@@ -223,7 +222,7 @@ const ProfileInfo = () => {
               Edit
             </Button>
           ) : (
-            <Stack justifyContent={"center"} spacing={3} alignItems={'center'}>
+            <Stack justifyContent={"center"} spacing={3} alignItems={"center"}>
               {spinner ? (
                 <CircularProgress />
               ) : (

@@ -14,12 +14,14 @@ const MarketContainer = () => {
   };
 
   return (
-    <Stack alignItems={'center'} justifyContent={'center'} spacing={2}>
+    <Stack justifyContent={"center"} spacing={2}>
       <SearchMarket handleView={handleView} />
       <HomePageCarousel />
-      {view ? <MarketList /> : <MarketMapList />}
+      <Stack alignItems={"center"}>
+        {view ? <MarketList /> : <MarketMapList />}
 
-      <PaginationConatiner />
+        <PaginationConatiner />
+      </Stack>
     </Stack>
   );
 };
