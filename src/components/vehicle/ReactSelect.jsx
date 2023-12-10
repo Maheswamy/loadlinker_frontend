@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 
-const ReactSelect = ({ permit, getSelectedPermit }) => {
+const ReactSelect = ({ permit, getSelectedPermit, errors }) => {
   const options = permit.map((ele) => ({
     value: ele._id,
     label: ele.state,
@@ -24,22 +24,30 @@ const ReactSelect = ({ permit, getSelectedPermit }) => {
   }, [selectedOptions]);
 
   return (
-    <Select
-      isMulti
-      options={[{ value: "selectAll", label: "All India Permit" }, ...options]}
-      value={options.filter((option) => selectedOptions.includes(option.value))}
-      onChange={(selected) => {
-        if (selected.some((option) => option.value === "selectAll")) {
-          // If "Select All" is selected, handle it separately
-          handleSelectAll();
-        } else {
-          // Otherwise, update selected options
-          setSelectedOptions(selected.map((option) => option.value));
-        }
-      }}
-      placeholder="Select Permits of your Vehicle"
-      isSearchable
-    />
+    <>
+      <Select
+        isMulti
+        options={[
+          { value: "selectAll", label: "All India Permit" },
+          ...options,
+        ]}
+        value={options.filter((option) =>
+          selectedOptions.includes(option.value)
+        )}
+        onChange={(selected) => {
+          if (selected.some((option) => option.value === "selectAll")) {
+            // If "Select All" is selected, handle it separately
+            handleSelectAll();
+          } else {
+            // Otherwise, update selected options
+            setSelectedOptions(selected.map((option) => option.value));
+          }
+        }}
+        placeholder="Select Permits of your Vehicle"
+        isSearchable
+      />
+      {errors && <div style={{ color: "red", marginTop: "-10px" }}>{errors}</div>}
+    </>
   );
 };
 

@@ -36,6 +36,7 @@ import MyEnquiryList from "./components/enquiry/Shipper/MyEnquiryList";
 import VehicleApprovalContainer from "./components/admin/vehicleApproval/VehicleApprovalContainer";
 import DashboardContainer from "./components/admin/Dashboard/DashboardContainer";
 import { startGetInfo } from "./redux/action/analysisAction";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [userState, userDispatch] = useReducer(userReducer, {
@@ -117,6 +118,7 @@ function App() {
           <Navbar />
 
           <Container maxWidth="lg">
+            <ToastContainer/>
             <Routes>
               <Route path="/" element={<MarketContainer />} />
               <Route path="/market/:id" element={<EnquiryContainer />} />

@@ -29,7 +29,7 @@ export const startPermitList = () => {
   };
 };
 
-export const startAddVehicle = (body, navigate) => {
+export const startAddVehicle = (body, navigate, serverErrorsHandler) => {
   return async (dispatch) => {
     try {
       const addVehicleResponse = await axios.post("/api/vehicles", body, {
@@ -41,8 +41,12 @@ export const startAddVehicle = (body, navigate) => {
       navigate(`/myvehicle/${addVehicleResponse.data._id}`);
       dispatch(addVehicle(addVehicleResponse.data));
     } catch (e) {
-      console.log(e);
-      alert(e.message);
+      if (e.response.status === 400) {
+        serverErrorsHandler(e.response.data.errors);
+        console.log(e)
+      } else {
+        console.log(e);
+      }
     }
   };
 };
