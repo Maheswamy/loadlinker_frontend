@@ -48,6 +48,7 @@ function App() {
   useEffect(() => {
     dispatch(startGetMarketList());
     dispatch(startGetCount());
+    dispatch(startVehicleType());
 
     if (localStorage.getItem("token")) {
       (async () => {
