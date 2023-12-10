@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import MarketList from "./MarketList";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Hidden } from "@mui/material";
 import MarketMapList from "./MarketMapList";
 import SearchMarket from "./SearchMarket";
 import PaginationConatiner from "./PaginationConatiner";
 import HomePageCarousel from "./../HomePageCarousel ";
+import Footer from "./Footer";
 
 const MarketContainer = () => {
-  const [currentSkip, setCurrentSkip] = useState(0);
   const [view, setView] = useState(true);
   const handleView = () => {
     setView(!view);
@@ -16,11 +16,13 @@ const MarketContainer = () => {
   return (
     <Stack justifyContent={"center"} spacing={2}>
       <SearchMarket handleView={handleView} />
-      <HomePageCarousel />
+      <Hidden smDown>
+        <HomePageCarousel />
+      </Hidden>
       <Stack alignItems={"center"}>
         {view ? <MarketList /> : <MarketMapList />}
-
         <PaginationConatiner />
+        <Footer />
       </Stack>
     </Stack>
   );

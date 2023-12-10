@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   Stack,
   TextField,
   Button,
@@ -66,13 +65,13 @@ const SearchMarket = ({ handleView }) => {
   return (
     <Stack
       component="form"
-      direction="row"
+      direction={{ xs: "column", sm: "row" }}
       spacing={2}
       alignItems="stretch"
       justifyContent={'space-between'}
       onSubmit={handleSubmit}
     >
-      <Stack direction="row" spacing={2}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
         <TextField
           id="source"
           label="Pick-Up"
@@ -105,11 +104,11 @@ const SearchMarket = ({ handleView }) => {
               Tonne(s)
             </MenuItem>
           ))}
-        </Select >
+        </Select>
       </FormControl>
 
-      <Stack direction={'row'} spacing={1}>
-        <Button variant="contained" color="primary" type="submit" >
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+        <Button variant="contained" color="primary" type="submit">
           Search
         </Button>
         <Button
