@@ -8,7 +8,7 @@ import { CircularProgress, Stack } from "@mui/material";
 
 const DashboardContainer = () => {
   const { info } = useSelector((state) => state.analysis);
-  console.log(info, "sfsd");
+ 
   return (
     <Stack alignItems={"center"} justifyContent={"center"}>
       {isEmpty(info) ? (

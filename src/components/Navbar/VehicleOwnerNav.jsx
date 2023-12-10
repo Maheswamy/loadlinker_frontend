@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserContext } from "./../../contextAPI/UserContext";
@@ -25,15 +25,15 @@ const VehicleOwnerNav = () => {
   };
   return (
     <>
-      <Stack direction={"row"} gap={2}>
+      <Stack direction={{ sx: "column", md: "row" }} gap={2}>
         <Link to="/shipments" style={{ textDecoration: "none" }}>
           <Typography variant="button" color="primary">
-            My Shipments
+            Shipments
           </Typography>
         </Link>
         <Link to="/mybids" style={{ textDecoration: "none" }}>
           <Typography variant="button" color="primary">
-            My Bids
+            Bids
           </Typography>
         </Link>
         <Link to="/addvehicle" style={{ textDecoration: "none" }}>

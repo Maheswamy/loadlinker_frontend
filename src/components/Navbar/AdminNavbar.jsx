@@ -26,18 +26,7 @@ const AdminNavbar = () => {
   };
   return (
     <>
-      <Stack direction={"row"} gap={1}>
-        {/* <Link to="/shipments" style={{ textDecoration: "none" }}>
-          <Typography variant="button" color="primary">
-            All Shipments
-          </Typography>
-        </Link>
-        <Link to="/myenquiries" style={{ textDecoration: "none" }}>
-          <Typography variant="button" color="primary">
-            All Enquiries
-          </Typography>
-        </Link> */}
-
+      <Stack direction={{ sx: "column", md: "row" }} gap={1} >
         <Link to="/dashboard" style={{ textDecoration: "none" }}>
           <Typography variant="button" color="primary">
             Dashboard

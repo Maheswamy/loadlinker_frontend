@@ -15,9 +15,7 @@ const EnquiryContainer = () => {
     dispatch(startGetSingleEnquiry(id));
   }, []);
   const enquiry = useSelector((state) => state.market.singleEnquiry);
-  console.log(enquiry);
   const coordinatesObj = enquiry.coordinates;
-  console.log(coordinatesObj);
   const coordinates = [
     coordinatesObj?.pickUpCoordinate,
     coordinatesObj?.dropCoordinate,

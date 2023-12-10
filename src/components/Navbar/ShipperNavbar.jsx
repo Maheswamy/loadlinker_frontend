@@ -26,15 +26,15 @@ const ShipperNavbar = () => {
   };
   return (
     <>
-      <Stack direction={"row"} gap={1}>
+      <Stack direction={{sx:"column",md:'row'}} gap={1}>
         <Link to="/shipments" style={{ textDecoration: "none" }}>
           <Typography variant="button" color="primary">
-            My Shipments
+            Shipments
           </Typography>
         </Link>
         <Link to="/myenquiries" style={{ textDecoration: "none" }}>
           <Typography variant="button" color="primary">
-            My Enquiries
+            Enquiries
           </Typography>
         </Link>
         <Link to="/addenquiry" style={{ textDecoration: "none" }}>

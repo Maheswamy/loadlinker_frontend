@@ -76,7 +76,7 @@ const BidForm = ({ id, loadWeight }) => {
   };
 
   const handleServerError = (value) => {
-    console.log(value);
+    setServerErrors(value);
   };
 
   const handleBidPost = (e) => {
@@ -89,7 +89,6 @@ const BidForm = ({ id, loadWeight }) => {
         bidAmount: Number(bidAmount),
         vehicleId,
       };
-      console.log(postData);
       dispatch(
         startAddBid(postData, navigate, handleSpinner, handleServerError)
       );

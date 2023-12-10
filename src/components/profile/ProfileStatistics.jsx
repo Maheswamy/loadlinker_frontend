@@ -12,7 +12,12 @@ const ProfileStatistics = () => {
 
   const role = jwtDecode(localStorage.getItem("token")).role;
   return (
-    <Stack direction={"row"} alignItems={'center'} justifyContent={'space-around'}>
+    <Stack
+      direction={{ xs: "column", md: "row" }}
+      alignItems={"center"}
+      justifyContent={"space-around"}
+      fullWidth
+    >
       <DetailBox
         heading={"Total shipment"}
         info={myShipments?.length}
@@ -35,7 +40,7 @@ const ProfileStatistics = () => {
         <DetailBox
           heading={"Average bids per Enquiry"}
           alt={"bid-icon"}
-          info={userState?.user?.bidsPerEnquiry}
+          info={userState?.user?.bidsPerEnquiry?.toFixed(1)}
           image={
             "https://loadlinker.s3.ap-south-1.amazonaws.com/frontend_images/icons8-bid-50.png"
           }

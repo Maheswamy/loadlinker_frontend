@@ -35,7 +35,6 @@ const BidTableShowPage = () => {
     status,
     vehicleId,
   } = useSelector((state) => state.bid.singleBid);
-  console.log(vehicleId);
 
   const vehicleNumber = useSelector((state) =>
     state.vehicle?.myVehicle?.find((ele) => ele._id === vehicleId)

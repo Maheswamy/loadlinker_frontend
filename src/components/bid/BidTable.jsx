@@ -20,7 +20,6 @@ export default function BidTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const location = useLocation();
   useEffect(() => {
-    console.log(location.state?.message);
     if (location.state?.message) {
       toast.success(location.state?.message, {
         position: toast.POSITION.TOP_RIGHT,
