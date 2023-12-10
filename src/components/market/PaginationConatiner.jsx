@@ -1,12 +1,24 @@
 import React from "react";
 import { Pagination } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { startGetMarketList } from "../../redux/action/marketAction";
 
 const PaginationConatiner = () => {
   const count = useSelector((state) => state.market.count);
+  const dispatch = useDispatch();
+  
+
   return (
     <>
-      <Pagination count={count} color="primary" />
+      {count != 0 && (
+        <Pagination
+          count={count}
+          color="primary"
+          onChange={(event, value) => {
+            dispatch(startGetMarketList('','','',(value-1)*2));
+          }}
+        />
+      )}
     </>
   );
 };

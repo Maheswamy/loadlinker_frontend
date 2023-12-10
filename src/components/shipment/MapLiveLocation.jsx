@@ -1,12 +1,8 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useSelector } from "react-redux";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 
 const MarketMapList = ({ position }) => {
-  console.log(position);
-  //   const marketList = useSelector((state) => state.market.marketList);
-  //   console.log(marketList);
   function icon(iconSize) {
     return L.icon({
       iconUrl:
