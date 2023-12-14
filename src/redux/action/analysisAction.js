@@ -11,7 +11,7 @@ export const startGetInfo = () => {
       console.log(infoResponse.data);
       dispatch(getInfo(infoResponse.data));
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   };
 };

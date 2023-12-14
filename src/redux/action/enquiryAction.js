@@ -29,7 +29,8 @@ export const startGetEnquiryCalculation = (formData, SpinnerHandler) => {
   };
 };
 
-export const startAddEnquiry = (formData, handleNavigate, SpinnerHandler,) => {
+export const startAddEnquiry = (formData, handleNavigate, SpinnerHandler) => {
+  console.log(formData);
   return async (dispatch) => {
     try {
       const addEnquiryResponse = await axios.post(
@@ -42,8 +43,8 @@ export const startAddEnquiry = (formData, handleNavigate, SpinnerHandler,) => {
         }
       );
       console.log(addEnquiryResponse, "response of add enquiry");
-      handleNavigate();
       dispatch(addEnquiry(addEnquiryResponse.data));
+      handleNavigate(true);
     } catch (e) {
       SpinnerHandler(false);
 
@@ -51,10 +52,10 @@ export const startAddEnquiry = (formData, handleNavigate, SpinnerHandler,) => {
       if (e.request.status === 400) {
         console.log(e.response.data.errors);
         dispatch(serverErrors(e.response.data.errors));
-        handleNavigate(true);
+        handleNavigate(false);
       }
       if (e.request.status === 500) {
-        handleNavigate(true);
+        handleNavigate(false);
         alert(e.message);
       }
     }
